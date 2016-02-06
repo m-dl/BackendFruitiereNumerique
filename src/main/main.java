@@ -13,8 +13,7 @@ public class main {
 		String output = FileFactory.Read(file1);
 		System.out.println(output);
 
-
-		//ça fait un merge conflict izi
+		//bsartek ça compile
 
 	}
 
