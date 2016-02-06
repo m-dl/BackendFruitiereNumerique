@@ -6,35 +6,43 @@ import java.io.*;
 public class FileFactory {
 	
 	// LE GPS NEGRO
-	public static String Files(String path, String map) {
+	public static void CreateFile(String path) {
 		try {
 		      File file = new File(path);
-	 
-		      if (file.createNewFile()){ // écrire dans le fichier la map par défaut si le fichier n'existe pas
-		    	  Writer writer = null;
-
-		    	  try {
-		    	      writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path), "utf-8"));
-		    	      writer.write(map);
-		    	  } catch (IOException ex) {
-		    	    // erreur
-		    	  } finally {
-		    	     try {writer.close();} catch (Exception ex) {}
-		    	  }
-		      }else{ // lire dans le fichier la dernière map chargée
-		    	   try {
-		    	       FileReader reader = new FileReader(file);
-		    	       char[] chars = new char[(int) file.length()];
-		    	       reader.read(chars);
-		    	       map = new String(chars);
-		    	       reader.close();
-		    	   } catch (IOException e) {
-		    	       e.printStackTrace();
-		    	   }
+		      if(!file.createNewFile()){ 
+		    	  System.out.println("Erreur : Le fichier " + path + " existe déjà !");
 		      }
 	    	} catch (IOException e) {
 		      e.printStackTrace();
 		}
-		return map;
+	}
+	
+	// Read from a file
+	public static String Read(String path) {
+		String output = null;
+        File file = new File(path);
+	    try {
+	        FileReader reader = new FileReader(file);
+	        char[] chars = new char[(int) file.length()];
+	        reader.read(chars);
+	        output = new String(chars);
+	        reader.close();
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+		return output;
+	}
+	
+	// Write in a file
+	public static void Write(String path, String input) {
+		  Writer writer = null;
+		  try {
+		      writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path), "utf-8"));
+		      writer.write(input);
+		  } catch (IOException ex) {
+		    // error
+		  } finally {
+		     try {writer.close();} catch (Exception ex) {}
+		  }
 	}
 }

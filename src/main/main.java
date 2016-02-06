@@ -8,9 +8,12 @@ public class main {
 		
 		FileFactory FF = new FileFactory();
 	
-		String file1 = null, file2 = null;
+		String file1 = "toto.txt";
 		
-		String f = FileFactory.Files(file1, file2);
+		FileFactory.CreateFile(file1);
+		FileFactory.Write(file1, "salut rasse");
+		String output = FileFactory.Read(file1);
+		System.out.println(output);
 
 	}
 
