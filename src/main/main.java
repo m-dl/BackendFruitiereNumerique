@@ -5,7 +5,7 @@ import files.FileFactory;
 public class main {
 
 	public static void main(String[] args) {
-			
+			// bug de mort boucle infinie copie
 		String dir1 = "totot";
 		String dir = dir1 + "/totot/";
 		String file1 = dir1 + "/" + "totott.txt";
@@ -13,6 +13,8 @@ public class main {
 		String dir2 = "toto-rasse.txt";
 		
 		FileFactory.CreateDirectory(dir1);
+		FileFactory.Copy(dir1, dir);
+		/*
 		FileFactory.CreateDirectory(dir);
 		FileFactory.CreateFile(file1);
 		FileFactory.CreateFile(file2);
@@ -21,6 +23,7 @@ public class main {
 		FileFactory.Move(file1, dir2);
 		FileFactory.Delete(dir1);
 		System.out.println(output);
+		*/
 	}
 
 }

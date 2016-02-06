@@ -35,7 +35,6 @@ public class FileFactory {
 		else {
 			try {
 		        dir.mkdir();
-		        System.out.println("ok!");
 		    } 
 		    catch(SecurityException se){
 		    	 se.printStackTrace();
@@ -100,6 +99,45 @@ public class FileFactory {
 			       return FileVisitResult.CONTINUE;
 			   }
 			});
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// Copy a file / directory
+	public static void Copy(String pathFrom, String pathTo) {
+		Path fileFrom = Paths.get(pathFrom);
+		Path fileTo = Paths.get(pathTo);
+		try {
+			Files.walkFileTree(fileFrom, new SimpleFileVisitor<Path>() {
+			    @Override
+			    public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+			        Path targetPath = fileTo.resolve(fileFrom.relativize(dir));
+			        if(!Files.exists(targetPath)){
+			        	if(!fileFrom.equals(fileTo)) {
+			        		Files.createDirectory(targetPath);
+			        	}
+			        }
+			        return FileVisitResult.CONTINUE;
+			    }
+
+			    @Override
+			    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+			        Files.copy(file, fileTo.resolve(fileFrom.relativize(file)), REPLACE_EXISTING);
+			        return FileVisitResult.CONTINUE;
+			    }
+			});
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// Rename a file / directory
+	public static void Rename(String pathFrom, String pathTo) {
+		Path fileFrom = Paths.get(pathFrom);
+		Path fileTo = fileFrom.resolveSibling(pathTo);
+		try {
+			Files.move(fileFrom, fileTo);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
