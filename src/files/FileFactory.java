@@ -40,7 +40,7 @@ public class FileFactory {
 		      writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path), "utf-8"));
 		      writer.write(input);
 		  } catch (IOException ex) {
-		    // error
+			  ex.printStackTrace();
 		  } finally {
 		     try {writer.close();} catch (Exception ex) {}
 		  }
