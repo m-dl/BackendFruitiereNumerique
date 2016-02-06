@@ -5,9 +5,7 @@ import files.FileFactory;
 public class main {
 
 	public static void main(String[] args) {
-		
-		FileFactory FF = new FileFactory();
-	
+			
 		String file1 = "toto.txt";
 		
 		FileFactory.CreateFile(file1);
