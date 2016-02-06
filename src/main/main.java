@@ -1,9 +1,16 @@
 package main;
 
+import files.FileFactory;
+
 public class main {
 
 	public static void main(String[] args) {
-		System.out.println("ca compile");
+		
+		FileFactory FF = new FileFactory();
+	
+		String file1 = null, file2 = null;
+		
+		String f = FileFactory.Files(file1, file2);
 
 	}
 
