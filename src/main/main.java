@@ -3,8 +3,14 @@ package main;
 public class main {
 
 	public static void main(String[] args) {
-		System.out.println("ca compile");
-		//test du rasse
+			
+		String file1 = "toto.txt";
+		
+		FileFactory.CreateFile(file1);
+		FileFactory.Write(file1, "salut rasse");
+		String output = FileFactory.Read(file1);
+		System.out.println(output);
+
 	}
 
 }
