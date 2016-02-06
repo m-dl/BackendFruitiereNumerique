@@ -3,10 +3,12 @@ package files;
 import java.io.*;
 
 import static java.nio.file.StandardCopyOption.*;
-import java.nio.file.DirectoryNotEmptyException;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
 
 
 public class FileFactory {
@@ -70,7 +72,7 @@ public class FileFactory {
 		  }
 	}
 	
-	// Move a file
+	// Move a file / directory
 	public static void Move(String pathFrom, String pathTo) {
 		try {
 			Path fileFrom = Paths.get(pathFrom);
@@ -81,15 +83,25 @@ public class FileFactory {
 		}
 	}
 	
-	// Delete a file
+	// Delete a file / directory
 	public static void Delete(String path) {
 		Path file = Paths.get(path);
 		try {
-		  Files.deleteIfExists(file);
-		} catch(DirectoryNotEmptyException dnee) {
-		  System.err.println("Le repertoire " + file + " n'est pas vide");
-		} catch(IOException ioe) {
-		  System.err.println("Impossible de supprimer " + file + " : " + ioe);
+			Files.walkFileTree(file, new SimpleFileVisitor<Path>() {
+			   @Override
+			   public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+			       Files.delete(file);
+			       return FileVisitResult.CONTINUE;
+			   }
+
+			   @Override
+			   public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+			       Files.delete(dir);
+			       return FileVisitResult.CONTINUE;
+			   }
+			});
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }
