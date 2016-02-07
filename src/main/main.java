@@ -13,7 +13,7 @@ public class main {
 		String dir2 = "totorasse.txt";
 		
 		FileFactory.CreateDirectory(dir1);
-		FileFactory.CopyFile(dir2, "tt.txt");
+		FileFactory.ListDirectoryContent(dir1);
 		/*
 		FileFactory.CreateDirectory(dir);
 		FileFactory.CreateFile(file1);

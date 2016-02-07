@@ -1,10 +1,13 @@
 package files;
 
 import java.io.*;
+
 import static java.nio.file.StandardCopyOption.*;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 import org.apache.commons.io.FileUtils;
 
 
@@ -120,5 +123,20 @@ public class FileFactory {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	// List files and directories from a directory
+	public static void ListDirectoryContent(String pathFrom) {
+		File fileFrom = new File(pathFrom);
+		
+        File[] list = fileFrom.listFiles();
+        for(File file : list){
+            if(file.isDirectory()){
+                System.out.println("Dossier: " + file.getName());
+            }
+            if(file.isFile()){
+                System.out.println("Fichier: " + file.getName());
+            }
+        }
 	}
 }
