@@ -10,10 +10,10 @@ public class main {
 		String dir = dir1 + "/totot/";
 		String file1 = dir1 + "/" + "totott.txt";
 		String file2 = dir + "tt.txt";
-		String dir2 = "toto-rasse.txt";
+		String dir2 = "totorasse.txt";
 		
 		FileFactory.CreateDirectory(dir1);
-		FileFactory.Copy(dir1, dir);
+		FileFactory.CopyFile(dir2, "tt.txt");
 		/*
 		FileFactory.CreateDirectory(dir);
 		FileFactory.CreateFile(file1);

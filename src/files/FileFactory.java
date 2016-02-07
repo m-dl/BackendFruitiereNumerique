@@ -1,14 +1,11 @@
 package files;
 
 import java.io.*;
-
 import static java.nio.file.StandardCopyOption.*;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
+import org.apache.commons.io.FileUtils;
 
 
 public class FileFactory {
@@ -84,49 +81,31 @@ public class FileFactory {
 	
 	// Delete a file / directory
 	public static void Delete(String path) {
-		Path file = Paths.get(path);
+		File file = new File(path);
 		try {
-			Files.walkFileTree(file, new SimpleFileVisitor<Path>() {
-			   @Override
-			   public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-			       Files.delete(file);
-			       return FileVisitResult.CONTINUE;
-			   }
-
-			   @Override
-			   public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-			       Files.delete(dir);
-			       return FileVisitResult.CONTINUE;
-			   }
-			});
+			FileUtils.forceDelete(file);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	// Copy a file / directory
-	public static void Copy(String pathFrom, String pathTo) {
-		Path fileFrom = Paths.get(pathFrom);
-		Path fileTo = Paths.get(pathTo);
+	// Copy a directory
+	public static void CopyDirectory(String pathFrom, String pathTo) {
+		File fileFrom = new File(pathFrom);
+		File fileTo = new File(pathTo);
 		try {
-			Files.walkFileTree(fileFrom, new SimpleFileVisitor<Path>() {
-			    @Override
-			    public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
-			        Path targetPath = fileTo.resolve(fileFrom.relativize(dir));
-			        if(!Files.exists(targetPath)){
-			        	if(!fileFrom.equals(fileTo)) {
-			        		Files.createDirectory(targetPath);
-			        	}
-			        }
-			        return FileVisitResult.CONTINUE;
-			    }
-
-			    @Override
-			    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-			        Files.copy(file, fileTo.resolve(fileFrom.relativize(file)), REPLACE_EXISTING);
-			        return FileVisitResult.CONTINUE;
-			    }
-			});
+			FileUtils.copyDirectory(fileFrom, fileTo);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// Copy a file
+	public static void CopyFile(String pathFrom, String pathTo) {
+		File fileFrom = new File(pathFrom);
+		File fileTo = new File(pathTo);
+		try {
+			FileUtils.copyFile(fileFrom, fileTo);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
