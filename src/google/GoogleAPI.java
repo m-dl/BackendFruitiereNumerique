@@ -1,11 +1,5 @@
 package google;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.util.Collections;
-
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -25,6 +19,12 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.util.Collections;
 
 public class GoogleAPI {
 	   /**
@@ -92,7 +92,7 @@ public class GoogleAPI {
 	          APPLICATION_NAME).build();
 
 	      // run commands
-
+/*
 	      View.header1("Starting Resumable Media Upload");
 	      File uploadedFile = uploadFile(false);
 
@@ -108,7 +108,7 @@ public class GoogleAPI {
 	      View.header1("Starting Simple Media Download");
 	      downloadFile(true, uploadedFile);
 
-	      View.header1("Success!");
+	      View.header1("Success!");*/
 	      return;
 	    } catch (IOException e) {
 	      System.err.println(e.getMessage());
@@ -118,43 +118,43 @@ public class GoogleAPI {
 	    System.exit(1);
 	  }
 
-	  /** Uploads a file using either resumable or direct media upload. */
-	  private static File uploadFile(boolean useDirectUpload) throws IOException {
-	    File fileMetadata = new File();
-	    fileMetadata.setTitle(UPLOAD_FILE.getName());
-
-	    FileContent mediaContent = new FileContent("image/jpeg", UPLOAD_FILE);
-
-	    Drive.Files.Insert insert = drive.files().insert(fileMetadata, mediaContent);
-	    MediaHttpUploader uploader = insert.getMediaHttpUploader();
-	    uploader.setDirectUploadEnabled(useDirectUpload);
-	    uploader.setProgressListener(new FileUploadProgressListener());
-	    return insert.execute();
-	  }
-
-	  /** Updates the name of the uploaded file to have a "drivetest-" prefix. */
-	  private static File updateFileWithTestSuffix(String id) throws IOException {
-	    File fileMetadata = new File();
-	    fileMetadata.setTitle("drivetest-" + UPLOAD_FILE.getName());
-
-	    Drive.Files.Update update = drive.files().update(id, fileMetadata);
-	    return update.execute();
-	  }
-
-	  /** Downloads a file using either resumable or direct media download. */
-	  private static void downloadFile(boolean useDirectDownload, File uploadedFile)
-	      throws IOException {
-	    // create parent directory (if necessary)
-	    java.io.File parentDir = new java.io.File(DIR_FOR_DOWNLOADS);
-	    if (!parentDir.exists() && !parentDir.mkdirs()) {
-	      throw new IOException("Unable to create parent directory");
-	    }
-	    OutputStream out = new FileOutputStream(new java.io.File(parentDir, uploadedFile.getTitle()));
-
-	    MediaHttpDownloader downloader =
-	        new MediaHttpDownloader(httpTransport, drive.getRequestFactory().getInitializer());
-	    downloader.setDirectDownloadEnabled(useDirectDownload);
-	    downloader.setProgressListener(new FileDownloadProgressListener());
-	    downloader.download(new GenericUrl(uploadedFile.getDownloadUrl()), out);
-	  }
+//	  /** Uploads a file using either resumable or direct media upload. */
+//	  private static File uploadFile(boolean useDirectUpload) throws IOException {
+//	    File fileMetadata = new File();
+//	    fileMetadata.setTitle(UPLOAD_FILE.getName());
+//
+//	    FileContent mediaContent = new FileContent("image/jpeg", UPLOAD_FILE);
+//
+//	    Drive.Files.Insert insert = drive.files().insert(fileMetadata, mediaContent);
+//	    MediaHttpUploader uploader = insert.getMediaHttpUploader();
+//	    uploader.setDirectUploadEnabled(useDirectUpload);
+//	    uploader.setProgressListener(new FileUploadProgressListener());
+//	    return insert.execute();
+//	  }
+//
+//	  /** Updates the name of the uploaded file to have a "drivetest-" prefix. */
+//	  private static File updateFileWithTestSuffix(String id) throws IOException {
+//	    File fileMetadata = new File();
+//	    fileMetadata.setTitle("drivetest-" + UPLOAD_FILE.getName());
+//
+//	    Drive.Files.Update update = drive.files().update(id, fileMetadata);
+//	    return update.execute();
+//	  }
+//
+//	  /** Downloads a file using either resumable or direct media download. */
+//	  private static void downloadFile(boolean useDirectDownload, File uploadedFile)
+//	      throws IOException {
+//	    // create parent directory (if necessary)
+//	    java.io.File parentDir = new java.io.File(DIR_FOR_DOWNLOADS);
+//	    if (!parentDir.exists() && !parentDir.mkdirs()) {
+//	      throw new IOException("Unable to create parent directory");
+//	    }
+//	    OutputStream out = new FileOutputStream(new java.io.File(parentDir, uploadedFile.getTitle()));
+//
+//	    MediaHttpDownloader downloader =
+//	        new MediaHttpDownloader(httpTransport, drive.getRequestFactory().getInitializer());
+//	    downloader.setDirectDownloadEnabled(useDirectDownload);
+//	    downloader.setProgressListener(new FileDownloadProgressListener());
+//	    downloader.download(new GenericUrl(uploadedFile.getDownloadUrl()), out);
+//	  }
 	}
