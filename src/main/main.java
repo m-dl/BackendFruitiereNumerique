@@ -5,7 +5,6 @@ import files.FileFactory;
 public class main {
 
 	public static void main(String[] args) {
-			// bug de mort boucle infinie copie
 		String dir1 = "totot";
 		String dir = dir1 + "/totot/";
 		String file1 = dir1 + "/" + "totott.txt";
