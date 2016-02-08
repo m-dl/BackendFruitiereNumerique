@@ -1,5 +1,6 @@
 package main;
 
+import drive.java.com.google.api.services.samples.drive.cmdline.DriveSample;
 import files.FileFactory;
 
 public class main {
@@ -23,6 +24,8 @@ public class main {
 		FileFactory.Delete(dir1);
 		System.out.println(output);
 		*/
+
+		DriveSample.test();
 	}
 
 }

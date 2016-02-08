@@ -1,14 +1,13 @@
 package files;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.*;
-
-import static java.nio.file.StandardCopyOption.*;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.apache.commons.io.FileUtils;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 
 public class FileFactory {
