@@ -25,7 +25,7 @@ public class main {
      * System.out.println(output);
      */
 
-    DriveSample.test();
+    DriveSample.launch();
   }
 
 }

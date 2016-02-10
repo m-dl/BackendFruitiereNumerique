@@ -3,7 +3,7 @@
 	<name>BackendFruitiereNumerique</name>
 	<comment></comment>
 	<projects>
-		<project>DriveAPI</project>
+		<project>BackendFruitiereNumeriqueGAPI</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
