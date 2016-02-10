@@ -3,6 +3,7 @@
 	<name>BackendFruitiereNumerique</name>
 	<comment></comment>
 	<projects>
+		<project>DriveAPI</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
