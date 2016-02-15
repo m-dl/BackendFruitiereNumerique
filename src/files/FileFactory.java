@@ -9,7 +9,6 @@ import java.nio.file.Paths;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
-
 public class FileFactory {
 	
 	// Create a file
@@ -127,7 +126,6 @@ public class FileFactory {
 	// List files and directories from a directory
 	public static void ListDirectoryContent(String pathFrom) {
 		File fileFrom = new File(pathFrom);
-		
         File[] list = fileFrom.listFiles();
         for(File file : list){
             if(file.isDirectory()){
