@@ -10,29 +10,29 @@ public class InterestPoint {
   private String name;
   
   public InterestPoint(String name) {
-    this.setM(new ArrayList<Media>());
-    this.name = name;
+      this.setM(new ArrayList<Media>());
+      this.name = name;
   }
 
   /**
    * @return the M
    */
   public ArrayList<Media> getM() {
-    return M;
+      return M;
   }
 
   /**
    * @param M the M to set
    */
   public void setM(ArrayList<Media> M) {
-    this.M = M;
+      this.M = M;
   }
   
   public String getName() {
-    return name;
+      return name;
   }
 
   public void setName(String name) {
-    this.name = name;
+      this.name = name;
   }
 }

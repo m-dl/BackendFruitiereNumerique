@@ -125,7 +125,7 @@ public class FileTools {
 	}
 	
 	// List files and directories from a directory
-	public static void ListDirectoryContent(String pathFrom, Location l) {
+	public static void ListVisitContent(String pathFrom, Location l) {
 		File fileFrom = new File(pathFrom);
         File[] list = fileFrom.listFiles();
         for(File file : list){
@@ -138,4 +138,19 @@ public class FileTools {
             }
         }
 	}
+	// Gros bordel ici ... enregistrer le fichier le plus profond puis remonter et add la visite contenant deja tout le contenu...
+	// List files and directories from a directory
+    public static void ListInterestPointContent(String pathFrom, Location l) {
+        File fileFrom = new File(pathFrom);
+        File[] list = fileFrom.listFiles();
+        for(File file : list){
+            if(file.isDirectory()){
+                //l.getV().addInterestPoint(file.getName());
+                System.out.println("Dossier: " + file.getName());
+            }
+            if(file.isFile()){
+                System.out.println("Fichier: " + file.getName());
+            }
+        }
+    }
 }

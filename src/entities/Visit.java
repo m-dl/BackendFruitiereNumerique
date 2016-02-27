@@ -10,29 +10,34 @@ public class Visit {
   private String name;
   
   public Visit(String name) {
-    this.setIP(new ArrayList<InterestPoint>());
-    this.name = name;
+      this.setIP(new ArrayList<InterestPoint>());
+      this.name = name;
   }
 
   /**
    * @return the iP
    */
   public ArrayList<InterestPoint> getIP() {
-    return IP;
+      return IP;
   }
 
   /**
    * @param iP the iP to set
    */
   public void setIP(ArrayList<InterestPoint> IP) {
-    this.IP = IP;
+      this.IP = IP;
   }
   
   public String getName() {
-    return name;
+      return name;
   }
 
   public void setName(String name) {
-    this.name = name;
+      this.name = name;
+  }
+  
+  // Add a interest point to a visit
+  public void addInterestPoint(String s) {
+      this.IP.add(new InterestPoint(s));
   }
 }

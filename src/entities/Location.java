@@ -31,4 +31,22 @@ public class Location {
     public void addVisit(String s) {
         this.V.add(new Visit(s));
     }
+    
+    /*
+     * Debug : affichage de la lib de location
+     * 
+     */
+    public void display() {
+      for(Visit v : V) {
+        System.out.println(v.getName());
+        for(InterestPoint ip : v.getIP()) {
+          System.out.println("---"+ip.getName());
+          for(Media m : ip.getM()) {
+            System.out.println("------"+m.getName());
+          }
+        }
+      }
+    }
+    
+      
 }

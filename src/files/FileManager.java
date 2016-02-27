@@ -51,12 +51,12 @@ public class FileManager {
     // Init chateau media workspace
     public void InitChateau() {
         FileTools.CreateDirectory(WORKSPACE + CHATEAU);
-        FileTools.ListDirectoryContent(WORKSPACE + CHATEAU, chateauWorkspace);
+        FileTools.ListVisitContent(WORKSPACE + CHATEAU, chateauWorkspace);
     }
     
     // Init village media workspace
     public void InitVillage() {
         FileTools.CreateDirectory(WORKSPACE + VILLAGE);
-        FileTools.ListDirectoryContent(WORKSPACE + VILLAGE, villageWorkspace);
+        FileTools.ListVisitContent(WORKSPACE + VILLAGE, villageWorkspace);
     }
 }

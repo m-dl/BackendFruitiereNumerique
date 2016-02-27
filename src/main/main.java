@@ -23,6 +23,7 @@ public class main {
     FileManager FM = new FileManager();
     FM.Init();
     FM.InitChateau();
+    FM.getChateauWorkspace().display();
 
     // FileFactory.CreateDirectory(dir1);
     // FileFactory.ListDirectoryContent(dir1);
