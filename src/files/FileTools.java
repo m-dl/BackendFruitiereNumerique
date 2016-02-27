@@ -2,6 +2,8 @@ package files;
 
 import org.apache.commons.io.FileUtils;
 
+import entities.Location;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,30 +11,7 @@ import java.nio.file.Paths;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
-public class FileFactory {
-	
-    final private static String WORKSPACE = "medias";
-    final private static String CHATEAU = "/chateau";
-    final private static String VILLAGE = "/village";
-	
-    // Init global media workspace
-    public static void Init() {
-        CreateDirectory(WORKSPACE);
-        ListDirectoryContent(WORKSPACE);
-    }
-    
-    // Init chateau media workspace
-    public static void InitChateau() {
-        CreateDirectory(WORKSPACE + CHATEAU);
-        ListDirectoryContent(WORKSPACE + CHATEAU);
-    }
-    
-    // Init village media workspace
-    public static void InitVillage() {
-        CreateDirectory(WORKSPACE + VILLAGE);
-        ListDirectoryContent(WORKSPACE + VILLAGE);
-    }
-  
+public class FileTools {
 	// Create a file
 	public static void CreateFile(String path) {
 		try {
@@ -146,11 +125,12 @@ public class FileFactory {
 	}
 	
 	// List files and directories from a directory
-	public static void ListDirectoryContent(String pathFrom) {
+	public static void ListDirectoryContent(String pathFrom, Location l) {
 		File fileFrom = new File(pathFrom);
         File[] list = fileFrom.listFiles();
         for(File file : list){
             if(file.isDirectory()){
+                l.addVisit(file.getName());
                 System.out.println("Dossier: " + file.getName());
             }
             if(file.isFile()){

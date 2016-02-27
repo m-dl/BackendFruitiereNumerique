@@ -6,10 +6,10 @@ import java.util.ArrayList;
  * @author Maxime
  *
  */
-public class Village {
+public class Location {
     private ArrayList<Visit> V;
     
-    public Village() {
+    public Location() {
       this.setV(new ArrayList<Visit>());
     }
 
@@ -25,5 +25,10 @@ public class Village {
      */
     public void setV(ArrayList<Visit> V) {
       this.V = V;
+    }
+    
+    // Add a visit to a location
+    public void addVisit(String s) {
+        this.V.add(new Visit(s));
     }
 }

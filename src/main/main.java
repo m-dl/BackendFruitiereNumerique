@@ -1,6 +1,9 @@
 package main;
 
 import com.google.api.services.samples.drive.cmdline.DriveSample;
+
+import files.FileManager;
+
 import files.*;
 
 /*
@@ -17,8 +20,9 @@ public class main {
     String file2 = dir + "tt.txt";
     String dir2 = "totorasse.txt";
     
-    FileFactory.Init();
-    FileFactory.InitChateau();
+    FileManager FM = new FileManager();
+    FM.Init();
+    FM.InitChateau();
 
     // FileFactory.CreateDirectory(dir1);
     // FileFactory.ListDirectoryContent(dir1);
