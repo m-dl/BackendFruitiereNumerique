@@ -16,6 +16,9 @@ public class main {
     String file1 = dir1 + "/" + "totott.txt";
     String file2 = dir + "tt.txt";
     String dir2 = "totorasse.txt";
+    
+    FileFactory.Init();
+    FileFactory.InitChateau();
 
     // FileFactory.CreateDirectory(dir1);
     // FileFactory.ListDirectoryContent(dir1);
@@ -29,7 +32,7 @@ public class main {
     //DriveSample.launch();
     
     // zipmanager bug si le zip existe deja, et ne zip pas le dossier parent qu'on veut zipper et comment unzip ? 
-    ZipManager.zipDirectory("C:/Users/Maxime.PC/Pictures/toto", "C:/Users/Maxime.PC/Pictures/toto/t.zip");
+    //ZipManager.zipDirectory("C:/Users/Maxime.PC/Pictures/toto", "C:/Users/Maxime.PC/Pictures/toto/t.zip");
   }
 
 }

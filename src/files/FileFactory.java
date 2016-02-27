@@ -11,6 +11,28 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class FileFactory {
 	
+    final private static String WORKSPACE = "medias";
+    final private static String CHATEAU = "/chateau";
+    final private static String VILLAGE = "/village";
+	
+    // Init global media workspace
+    public static void Init() {
+        CreateDirectory(WORKSPACE);
+        ListDirectoryContent(WORKSPACE);
+    }
+    
+    // Init chateau media workspace
+    public static void InitChateau() {
+        CreateDirectory(WORKSPACE + CHATEAU);
+        ListDirectoryContent(WORKSPACE + CHATEAU);
+    }
+    
+    // Init village media workspace
+    public static void InitVillage() {
+        CreateDirectory(WORKSPACE + VILLAGE);
+        ListDirectoryContent(WORKSPACE + VILLAGE);
+    }
+  
 	// Create a file
 	public static void CreateFile(String path) {
 		try {
