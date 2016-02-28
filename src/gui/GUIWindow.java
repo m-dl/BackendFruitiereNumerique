@@ -1,6 +1,4 @@
-package gui;/**
- * Created by adriansalas on 28/02/2016.
- */
+package gui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
