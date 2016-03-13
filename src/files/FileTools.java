@@ -2,16 +2,56 @@ package files;
 
 import org.apache.commons.io.FileUtils;
 
+import entities.InterestPoint;
+import entities.Info;
+import entities.Overview;
+import entities.Visit;
 import entities.Location;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
+/**
+ * @author Maxime
+ */
 public class FileTools {
+    static final String[] IMAGES_EXTENSIONS = new String[]{
+        "gif", "png", "bmp", "jpeg", "jpg", "GIF", "PNG", "BMP", "JPEG", "JPG"
+    };
+    
+    static final FilenameFilter IMAGE_FILTER = new FilenameFilter() {
+        @Override
+        public boolean accept(final File dir, final String name) {
+            for (final String ext : IMAGES_EXTENSIONS) {
+                if (name.endsWith("." + ext)) {
+                    return (true);
+                }
+            }
+            return (false);
+        }
+    };
+    
+    static final String[] VIDEOS_EXTENSIONS = new String[]{
+        "mp4", "avi", "mkv", "webm", "mov", "MP4", "AVI", "MKV", "WEBM", "MOV"
+    };
+    
+    static final FilenameFilter VIDEO_FILTER = new FilenameFilter() {
+        @Override
+        public boolean accept(final File dir, final String name) {
+            for (final String ext : VIDEOS_EXTENSIONS) {
+                if (name.endsWith("." + ext)) {
+                    return (true);
+                }
+            }
+            return (false);
+        }
+    };
+    
 	// Create a file
 	public static void CreateFile(String path) {
 		try {
@@ -124,33 +164,61 @@ public class FileTools {
 		}
 	}
 	
-	// List files and directories from a directory
-	public static void ListVisitContent(String pathFrom, Location l) {
+	// List all pictures from a folder
+	public static ArrayList<File> ListFolderPictures(String p) {
+		ArrayList<File> picturesList = new ArrayList<File>();
+		File pathFrom = new File(p);
+		File[] list = pathFrom.listFiles(IMAGE_FILTER);
+		for(final File f : list) {
+        	// add picture to arraylist
+			picturesList.add(f);
+        }
+		return picturesList;
+	}
+	
+	// List all videos from a folder
+	public static ArrayList<File> ListFolderVideos(String p) {
+		ArrayList<File> videosList = new ArrayList<File>();
+		File pathFrom = new File(p);
+		File[] list = pathFrom.listFiles(VIDEO_FILTER);
+		for(final File f : list) {
+        	// add video to arraylist
+			videosList.add(f);
+        }
+		return videosList;
+	}
+
+	// List all visits from a location
+	public static void ListVisit(String pathFrom, Location l) {
 		File fileFrom = new File(pathFrom);
         File[] list = fileFrom.listFiles();
         for(File file : list){
-            if(file.isDirectory()){
-                l.addVisit(file.getName());
-                System.out.println("Dossier: " + file.getName());
-            }
-            if(file.isFile()){
-                System.out.println("Fichier: " + file.getName());
+            if(file.isDirectory()){ // Visits' folder
+                ListVisitContent(pathFrom + "/" + file.getName(), file.getName(), l);
             }
         }
 	}
-	// Gros bordel ici ... enregistrer le fichier le plus profond puis remonter et add la visite contenant deja tout le contenu...
-	// List files and directories from a directory
-    public static void ListInterestPointContent(String pathFrom, Location l) {
+	
+	// List a visit folder content
+    public static void ListVisitContent(String pathFrom, String visitName, Location l) {
         File fileFrom = new File(pathFrom);
         File[] list = fileFrom.listFiles();
-        for(File file : list){
-            if(file.isDirectory()){
-                //l.getV().addInterestPoint(file.getName());
+        Visit tmpVisit = new Visit(visitName);
+        for(File file : list) {
+            if(file.isDirectory()){ // Overview or Info or IP folder
+                if(file.getName().equals(FileManager.OVERVIEW_FOLDER)) {
+                	tmpVisit.setOverview(new Overview(pathFrom + "/" + FileManager.OVERVIEW_FOLDER));
+                }
+                else if(file.getName().equals(FileManager.INFO_FOLDER)) {
+                	tmpVisit.setInfo(new Info(pathFrom + "/" + FileManager.INFO_FOLDER));
+                }
+                else {
+                	InterestPoint tmpIP = new InterestPoint(pathFrom + "/" + file.getName(), file.getName());
+                	tmpVisit.addInterestPoint(tmpIP);
+                }
                 System.out.println("Dossier: " + file.getName());
             }
-            if(file.isFile()){
-                System.out.println("Fichier: " + file.getName());
-            }
         }
+        l.addVisit(tmpVisit);
     }
 }

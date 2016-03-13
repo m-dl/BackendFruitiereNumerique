@@ -28,8 +28,8 @@ public class Location {
     }
     
     // Add a visit to a location
-    public void addVisit(String s) {
-        this.V.add(new Visit(s));
+    public void addVisit(Visit v) {
+        this.V.add(v);
     }
     
     /*
@@ -41,9 +41,6 @@ public class Location {
         System.out.println(v.getName());
         for(InterestPoint ip : v.getIP()) {
           System.out.println("---"+ip.getName());
-          for(Media m : ip.getM()) {
-            System.out.println("------"+m.getName());
-          }
         }
       }
     }

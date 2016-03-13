@@ -2,14 +2,36 @@ package files;
 
 import entities.Location;
 
+/**
+ * @author Maxime
+ */
 public class FileManager {
 	
     final private static String WORKSPACE = "medias";
-    final private static String CHATEAU = "/chateau";
-    final private static String VILLAGE = "/village";
+    final private static String CHATEAU = "chateau";
+    final private static String VILLAGE = "village";
+	final public static String PHOTOS = "photo";
+	final public static String INTERIEUR = "interieur";
+	final public static String VIDEO = "video";
+    final public static String OVERVIEW_FOLDER = "visite-overview";
+    final public static String INFO_FOLDER = "visite-info";
+	final public static String PRESENTATION_FR = "content_fr.txt";
+    final public static String PRESENTATION_EN = "content_en.txt";
+    final public static String LENGTH_FR = "duree_fr.txt";
+    final public static String LENGTH_EN = "duree_en.txt";
+    final public static String MARKER = "marker.txt";
+    final public static String ROAD = "chemin.txt";
+	final public static String JPG = ".jpg";
     private Location chateauWorkspace;
     private Location villageWorkspace;
     
+    private static FileManager INSTANCE = new FileManager();
+    
+	// Singleton
+	public static FileManager getInstance() {	
+		return INSTANCE;
+	}
+	
     public FileManager() {
         this.setChateauWorkspace(new Location());
         this.setVillageWorkspace(new Location());
@@ -50,13 +72,13 @@ public class FileManager {
     
     // Init chateau media workspace
     public void InitChateau() {
-        FileTools.CreateDirectory(WORKSPACE + CHATEAU);
-        FileTools.ListVisitContent(WORKSPACE + CHATEAU, chateauWorkspace);
+        FileTools.CreateDirectory(WORKSPACE + "/" + CHATEAU);
+        FileTools.ListVisit(WORKSPACE + "/" + CHATEAU, chateauWorkspace);
     }
     
     // Init village media workspace
     public void InitVillage() {
-        FileTools.CreateDirectory(WORKSPACE + VILLAGE);
-        FileTools.ListVisitContent(WORKSPACE + VILLAGE, villageWorkspace);
+        FileTools.CreateDirectory(WORKSPACE + "/" + VILLAGE);
+        FileTools.ListVisit(WORKSPACE + "/" + VILLAGE, villageWorkspace);
     }
 }
