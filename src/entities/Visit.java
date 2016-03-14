@@ -1,5 +1,9 @@
 package entities;
 
+import files.FileManager;
+import files.FileTools;
+
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -12,12 +16,21 @@ public class Visit {
   private Info info;
   private String name;
   
-  public Visit(String name) {
-      this.setIP(new ArrayList<InterestPoint>());
-      this.setOverview(null);
-      this.setInfo(null);
-      this.name = name;
-  }
+	public Visit(String pathFrom, String name) {
+	    initVisit(pathFrom);
+	    
+	    this.setIP(new ArrayList<InterestPoint>());
+	    this.setOverview(new Overview(pathFrom + "/" + FileManager.OVERVIEW_FOLDER));
+	    this.setInfo(new Info(pathFrom + "/" + FileManager.INFO_FOLDER));
+	    this.name = name;
+	}
+  
+	private void initVisit(String pathFrom) {
+		if(!FileTools.Exist(new File(pathFrom + "/" + FileManager.OVERVIEW_FOLDER))) 
+			FileTools.CreateDirectory(pathFrom + "/" + FileManager.OVERVIEW_FOLDER);
+        if(!FileTools.Exist(new File(pathFrom + "/" + FileManager.INFO_FOLDER))) 
+        	FileTools.CreateDirectory(pathFrom + "/" + FileManager.INFO_FOLDER);	
+	}
 
   /**
    * @return the iP

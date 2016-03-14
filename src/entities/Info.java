@@ -20,10 +20,20 @@ public class Info {
 	public Info(String pathFrom) {
 		this.content_FR = new File(pathFrom + "/" + FileManager.PRESENTATION_FR);
 		this.content_EN = new File(pathFrom + "/" + FileManager.PRESENTATION_EN);
+		
+		initInfo(pathFrom);
+
 		ArrayList<File> tmpPicture = FileTools.ListFolderPictures(pathFrom);
 		if(!tmpPicture.isEmpty())
 			this.picture = tmpPicture.get(0);
-		this.photos = FileTools.ListFolderPictures(pathFrom + "/" + FileManager.PHOTOS);
+		this.photos = FileTools.ListFolderPictures(pathFrom + "/" + FileManager.PHOTOS);		
+	}
+	
+	private void initInfo(String pathFrom) {
+		if(!FileTools.Exist(this.content_FR))
+			FileTools.CreateFile(pathFrom + "/" + FileManager.PRESENTATION_FR);
+		if(!FileTools.Exist(this.content_EN))
+			FileTools.CreateFile(pathFrom + "/" + FileManager.PRESENTATION_EN);	
 	}
 	
 	public File getContent_FR() {

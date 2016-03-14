@@ -68,7 +68,7 @@ public class FileTools {
 	public static void CreateDirectory(String path) {
 		File dir = new File(path);
 		// if the directory does not exist, create it
-		if(dir.exists()) {
+		if(Exist(dir)) {
 		    System.out.println("Erreur : Le dossier " + path + " existe déjà !");     
 		}
 		else {
@@ -82,9 +82,8 @@ public class FileTools {
 	}
 	
 	// Read from a file
-	public static String Read(String path) {
+	public static String Read(File file) {
 		String output = null;
-        File file = new File(path);
 	    try {
 	        FileReader reader = new FileReader(file);
 	        char[] chars = new char[(int) file.length()];
@@ -98,10 +97,10 @@ public class FileTools {
 	}
 	
 	// Write in a file
-	public static void Write(String path, String input) {
+	public static void Write(File file, String input) {
 		  Writer writer = null;
 		  try {
-		      writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path), "utf-8"));
+		      writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "utf-8"));
 		      writer.write(input);
 		  } catch(IOException ex) {
 			  ex.printStackTrace();
@@ -164,10 +163,19 @@ public class FileTools {
 		}
 	}
 	
+	// Check if folder or file exists
+	public static boolean Exist(File f) {
+		if(f.exists())
+			return true;
+		return false;
+	}
+	
 	// List all pictures from a folder
 	public static ArrayList<File> ListFolderPictures(String p) {
 		ArrayList<File> picturesList = new ArrayList<File>();
 		File pathFrom = new File(p);
+		if(!Exist(pathFrom)) 
+			CreateDirectory(p);
 		File[] list = pathFrom.listFiles(IMAGE_FILTER);
 		for(final File f : list) {
         	// add picture to arraylist
@@ -180,6 +188,8 @@ public class FileTools {
 	public static ArrayList<File> ListFolderVideos(String p) {
 		ArrayList<File> videosList = new ArrayList<File>();
 		File pathFrom = new File(p);
+		if(!Exist(pathFrom)) 
+			CreateDirectory(p);
 		File[] list = pathFrom.listFiles(VIDEO_FILTER);
 		for(final File f : list) {
         	// add video to arraylist
@@ -192,6 +202,8 @@ public class FileTools {
 	public static void ListVisit(String pathFrom, Location l) {
 		File fileFrom = new File(pathFrom);
         File[] list = fileFrom.listFiles();
+        if(!Exist(fileFrom)) 
+        	CreateDirectory(pathFrom);
         for(File file : list){
             if(file.isDirectory()){ // Visits' folder
                 ListVisitContent(pathFrom + "/" + file.getName(), file.getName(), l);
@@ -203,16 +215,14 @@ public class FileTools {
     public static void ListVisitContent(String pathFrom, String visitName, Location l) {
         File fileFrom = new File(pathFrom);
         File[] list = fileFrom.listFiles();
-        Visit tmpVisit = new Visit(visitName);
+        
+        if(!Exist(fileFrom)) 
+        	CreateDirectory(pathFrom);
+        
+        Visit tmpVisit = new Visit(pathFrom, visitName);
         for(File file : list) {
             if(file.isDirectory()){ // Overview or Info or IP folder
-                if(file.getName().equals(FileManager.OVERVIEW_FOLDER)) {
-                	tmpVisit.setOverview(new Overview(pathFrom + "/" + FileManager.OVERVIEW_FOLDER));
-                }
-                else if(file.getName().equals(FileManager.INFO_FOLDER)) {
-                	tmpVisit.setInfo(new Info(pathFrom + "/" + FileManager.INFO_FOLDER));
-                }
-                else {
+                if(!file.getName().equals(FileManager.OVERVIEW_FOLDER) && !file.getName().equals(FileManager.INFO_FOLDER)) {
                 	InterestPoint tmpIP = new InterestPoint(pathFrom + "/" + file.getName(), file.getName());
                 	tmpVisit.addInterestPoint(tmpIP);
                 }

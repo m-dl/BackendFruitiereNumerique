@@ -22,8 +22,23 @@ public class Overview {
 		this.presentation_EN = new File(pathFrom + "/" + FileManager.PRESENTATION_EN);
 		this.length_FR = new File(pathFrom + "/" + FileManager.LENGTH_FR);
 		this.length_EN = new File(pathFrom + "/" + FileManager.LENGTH_EN);
+		
+		initOverview(pathFrom);
+		
 		this.photos = FileTools.ListFolderPictures(pathFrom + "/" + FileManager.PHOTOS);
 		this.imagesContent = FileTools.ListFolderPictures(pathFrom);
+	}
+	
+	private void initOverview(String pathFrom) {
+		System.out.println(this.presentation_FR.getPath());
+		if(!FileTools.Exist(this.presentation_FR))
+			FileTools.CreateFile(pathFrom + "/" + FileManager.PRESENTATION_FR);
+		if(!FileTools.Exist(this.presentation_EN))
+			FileTools.CreateFile(pathFrom + "/" + FileManager.PRESENTATION_EN);
+		if(!FileTools.Exist(this.length_FR))
+			FileTools.CreateFile(pathFrom + "/" + FileManager.LENGTH_FR);
+		if(!FileTools.Exist(this.length_EN))
+			FileTools.CreateFile(pathFrom + "/" + FileManager.LENGTH_EN);	
 	}
 
 	public File getPresentation_FR() {

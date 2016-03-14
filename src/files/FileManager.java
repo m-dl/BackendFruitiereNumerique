@@ -13,6 +13,7 @@ public class FileManager {
 	final public static String PHOTOS = "photo";
 	final public static String INTERIEUR = "interieur";
 	final public static String VIDEO = "video";
+	final public static String _360 = "360";
     final public static String OVERVIEW_FOLDER = "visite-overview";
     final public static String INFO_FOLDER = "visite-info";
 	final public static String PRESENTATION_FR = "content_fr.txt";

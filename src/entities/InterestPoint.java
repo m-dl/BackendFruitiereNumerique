@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class InterestPoint {    
 	private File presentation_FR, presentation_EN, marker, road, picture;
-	private ArrayList<File> photos, interieur, video;
+	private ArrayList<File> photos, interieur, _360, video;
 	String name;
 	
 	/**
@@ -21,14 +21,29 @@ public class InterestPoint {
 		this.presentation_FR = new File(pathFrom + "/" + FileManager.PRESENTATION_FR);
 		this.presentation_EN = new File(pathFrom + "/" + FileManager.PRESENTATION_EN);
 		this.marker = new File(pathFrom + "/" + FileManager.MARKER);
+		this.road = new File(pathFrom + "/" + FileManager.ROAD);
+
+		initInterestPoint(pathFrom);
+
 		this.photos = FileTools.ListFolderPictures(pathFrom + "/" + FileManager.PHOTOS);
+		this._360 = FileTools.ListFolderPictures(pathFrom + "/" + FileManager._360);
 		this.interieur = FileTools.ListFolderPictures(pathFrom + "/" + FileManager.INTERIEUR);
 		this.video = FileTools.ListFolderVideos(pathFrom + "/" + FileManager.VIDEO);
 		ArrayList<File> tmpPicture = FileTools.ListFolderPictures(pathFrom);
 		if(!tmpPicture.isEmpty())
 			this.picture = tmpPicture.get(0);
-		this.road = new File(pathFrom + "/" + FileManager.ROAD);
-		this.name = name;	
+		this.name = name;		
+	}
+	
+	private void initInterestPoint(String pathFrom) {
+		if(!FileTools.Exist(this.presentation_FR))
+			FileTools.CreateFile(pathFrom + "/" + FileManager.PRESENTATION_FR);
+		if(!FileTools.Exist(this.presentation_EN))
+			FileTools.CreateFile(pathFrom + "/" + FileManager.PRESENTATION_EN);
+		if(!FileTools.Exist(this.marker))
+			FileTools.CreateFile(pathFrom + "/" + FileManager.MARKER);
+		if(!FileTools.Exist(this.road))
+			FileTools.CreateFile(pathFrom + "/" + FileManager.ROAD);	
 	}
 
 	public File getPresentation_FR() {
@@ -101,5 +116,13 @@ public class InterestPoint {
 
 	public void setVideo(ArrayList<File> video) {
 		this.video = video;
+	}
+
+	public ArrayList<File> get_360() {
+		return _360;
+	}
+
+	public void set_360(ArrayList<File> _360) {
+		this._360 = _360;
 	}
 }

@@ -16,7 +16,6 @@ public class main {
 
   public static void main(String[] args) {
 	  
-    // TODO: Try and catch sur tous les new File()
     FileManager FM = FileManager.getInstance();
     FM.Init();
     FM.InitChateau();
