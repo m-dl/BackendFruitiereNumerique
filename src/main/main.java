@@ -19,7 +19,7 @@ public class main {
     FileManager FM = FileManager.getInstance();
     FM.Init();
     FM.InitChateau();
-    FM.getChateauWorkspace().display();
+    //FM.getChateauWorkspace().display();
 
     //DriveSample.launch();
     

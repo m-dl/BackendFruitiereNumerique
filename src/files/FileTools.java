@@ -2,9 +2,9 @@ package files;
 
 import org.apache.commons.io.FileUtils;
 
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import entities.InterestPoint;
-import entities.Info;
-import entities.Overview;
 import entities.Visit;
 import entities.Location;
 
@@ -13,6 +13,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
@@ -20,6 +22,22 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
  * @author Maxime
  */
 public class FileTools {
+	static final Pattern WINDOWS_FILES_FORMATS = Pattern.compile(
+	        "# Match a valid Windows filename (unspecified file system).          \n" +
+	        "^                                # Anchor to start of string.        \n" +
+	        "(?!                              # Assert filename is not: CON, PRN, \n" +
+	        "  (?:                            # AUX, NUL, COM1, COM2, COM3, COM4, \n" +
+	        "    CON|PRN|AUX|NUL|             # COM5, COM6, COM7, COM8, COM9,     \n" +
+	        "    COM[1-9]|LPT[1-9]            # LPT1, LPT2, LPT3, LPT4, LPT5,     \n" +
+	        "  )                              # LPT6, LPT7, LPT8, and LPT9...     \n" +
+	        "  (?:\\.[^.]*)?                  # followed by optional extension    \n" +
+	        "  $                              # and end of string                 \n" +
+	        ")                                # End negative lookahead assertion. \n" +
+	        "[^<>:\"/\\\\|?*\\x00-\\x1F]*     # Zero or more valid filename chars.\n" +
+	        "[^<>:\"/\\\\|?*\\x00-\\x1F\\ .]  # Last char is not a space or dot.  \n" +
+	        "$                                # Anchor to end of string.            ", 
+	        Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE | Pattern.COMMENTS);
+	
     static final String[] IMAGES_EXTENSIONS = new String[]{
         "gif", "png", "bmp", "jpeg", "jpg", "GIF", "PNG", "BMP", "JPEG", "JPG"
     };
@@ -152,16 +170,21 @@ public class FileTools {
 		}
 	}
 	
-	// Rename a file / directory
-	public static void Rename(String pathFrom, String pathTo) {
-		Path fileFrom = Paths.get(pathFrom);
-		Path fileTo = fileFrom.resolveSibling(pathTo);
-		try {
-			Files.move(fileFrom, fileTo);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+    // Rename a file / directory
+    public static boolean Rename(String pathFrom, String pathTo) {
+        Path fileFrom = Paths.get(pathFrom);
+        Path fileTo = Paths.get(pathTo);
+        File tmpf = new File(pathFrom);
+        if(tmpf.exists()) {
+	        try {
+	            Files.move(fileFrom, fileTo);
+	            return true; // success
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+        }
+        return false; // not renamed
+    }
 	
 	// Check if folder or file exists
 	public static boolean Exist(File f) {
@@ -169,6 +192,60 @@ public class FileTools {
 			return true;
 		return false;
 	}
+	
+    // Directory chooser
+    public static String DirectoryChooser(){
+    	DirectoryChooser directoryChooser = new DirectoryChooser();
+    	directoryChooser.setTitle("Sélectionner un dossier");
+    	File dir = directoryChooser.showDialog(null);
+    	if (dir != null) 
+    		return dir.getAbsolutePath();
+    	return null;
+    }
+    
+    // File chooser
+    public static String FileChooser(){
+    	FileChooser fileChooser = new FileChooser();
+    	fileChooser.setTitle("Sélectionner un dossier");
+    	File file = fileChooser.showOpenDialog(null);
+    	if (file != null) 
+    		return file.getAbsolutePath();
+    	return null;
+    }
+    
+    // Multiple File chooser
+    public static ArrayList<File> MultipleFileChooser(){
+    	FileChooser fileChooser = new FileChooser();
+    	fileChooser.setTitle("Sélectionner un dossier");
+    	return new ArrayList<File>(fileChooser.showOpenMultipleDialog(null));
+    }
+    
+    // Remove file extension
+    public static String RemoveExtension(String s) {
+    	int pos = s.lastIndexOf(".");
+    	if (pos > 0) {
+    	    s = s.substring(0, pos);
+    	}
+    	return s;
+    }
+    
+    // Get file extension
+    public static String GetExtension(String s) {
+    	int i = s.lastIndexOf('.');
+    	if (i > 0) {
+    	    return s.substring(i);
+    	}
+    	return "";
+    }
+    
+    // Get file extension without '.'
+    public static String GetShortExtension(String s) {
+    	int i = s.lastIndexOf('.');
+    	if (i > 0) {
+    	    return s.substring(i+1);
+    	}
+    	return "";
+    }
 	
 	// List all pictures from a folder
 	public static ArrayList<File> ListFolderPictures(String p) {
@@ -226,9 +303,20 @@ public class FileTools {
                 	InterestPoint tmpIP = new InterestPoint(pathFrom + "/" + file.getName(), file.getName());
                 	tmpVisit.addInterestPoint(tmpIP);
                 }
-                System.out.println("Dossier: " + file.getName());
             }
         }
         l.addVisit(tmpVisit);
+    }
+    
+    // Parse string
+    public static String ParseString(String input) {
+    	input = input.replaceAll("\\s+"," "); // removes spaces / line jump
+    	input = input.toLowerCase(); // to lower case
+    	Matcher matcher = WINDOWS_FILES_FORMATS.matcher(input);
+    	boolean isMatch = matcher.matches();
+    
+    	if(!isMatch)
+    		input = "";
+        return input;
     }
 }

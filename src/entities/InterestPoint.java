@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class InterestPoint {    
 	private File presentation_FR, presentation_EN, marker, road, picture;
-	private ArrayList<File> photos, interieur, _360, video;
+	private ArrayList<File> photos, interieur, _360, videos;
 	String name;
 	
 	/**
@@ -28,7 +28,7 @@ public class InterestPoint {
 		this.photos = FileTools.ListFolderPictures(pathFrom + "/" + FileManager.PHOTOS);
 		this._360 = FileTools.ListFolderPictures(pathFrom + "/" + FileManager._360);
 		this.interieur = FileTools.ListFolderPictures(pathFrom + "/" + FileManager.INTERIEUR);
-		this.video = FileTools.ListFolderVideos(pathFrom + "/" + FileManager.VIDEO);
+		this.videos = FileTools.ListFolderVideos(pathFrom + "/" + FileManager.VIDEOS);
 		ArrayList<File> tmpPicture = FileTools.ListFolderPictures(pathFrom);
 		if(!tmpPicture.isEmpty())
 			this.picture = tmpPicture.get(0);
@@ -44,6 +44,115 @@ public class InterestPoint {
 			FileTools.CreateFile(pathFrom + "/" + FileManager.MARKER);
 		if(!FileTools.Exist(this.road))
 			FileTools.CreateFile(pathFrom + "/" + FileManager.ROAD);	
+	}
+	
+	public String readPresentation_FR() {
+		return FileTools.Read(this.presentation_FR);
+	}
+	
+	public void writePresentation_FR(String input) {
+		FileTools.Write(this.presentation_FR, input);
+	}
+	
+	public String readPresentation_EN() {
+		return FileTools.Read(this.presentation_EN);
+	}
+	
+	public void writePresentation_EN(String input) {
+		FileTools.Write(this.presentation_EN, input);
+	}
+	
+	public String readMarker() {
+		return FileTools.Read(this.marker);
+	}
+	
+	public void writeMarker(String input) {
+		FileTools.Write(this.marker, input);
+	}
+	
+	public String readRoad() {
+		return FileTools.Read(this.road);
+	}
+	
+	public void writeRoad(String input) {
+		FileTools.Write(this.road, input);
+	}
+	
+	public void addPhotos(String pathFrom, String f) {
+		String newPath = pathFrom + "/" + FileManager.PHOTOS + "/" + f;
+		FileTools.CopyFile(f, newPath);
+		File file = new File(newPath);
+		this.photos.add(file);
+	}
+	
+	public void removePhotos(String pathFrom, String f) {
+		String path = pathFrom + "/" + FileManager.PHOTOS + "/" + f;
+		FileTools.Delete(path);
+		for(int i = 0; i < this.photos.size(); i++) {
+    		if(this.photos.get(i).getName().equals(f))
+    			this.photos.get(i).delete();
+		}
+	}
+	
+	public void add360(String pathFrom, String f) {
+		String newPath = pathFrom + "/" + FileManager._360 + "/" + f;
+		FileTools.CopyFile(f, newPath);
+		File file = new File(newPath);
+		this._360.add(file);
+	}
+	
+	public void remove360(String pathFrom, String f) {
+		String path = pathFrom + "/" + FileManager._360 + "/" + f;
+		FileTools.Delete(path);
+		for(int i = 0; i < this._360.size(); i++) {
+    		if(this._360.get(i).getName().equals(f))
+    			this._360.get(i).delete();
+		}
+	}
+	
+	public void addVideo(String pathFrom, String f) {
+		String newPath = pathFrom + "/" + FileManager.VIDEOS + "/" + f;
+		FileTools.CopyFile(f, newPath);
+		File file = new File(newPath);
+		this.videos.add(file);
+	}
+	
+	public void removeVideo(String pathFrom, String f) {
+		String path = pathFrom + "/" + FileManager.VIDEOS + "/" + f;
+		FileTools.Delete(path);
+		for(int i = 0; i < this.videos.size(); i++) {
+    		if(this.videos.get(i).getName().equals(f))
+    			this.videos.get(i).delete();
+		}
+	}
+	
+	public void addInterieur(String pathFrom, String f) {
+		String newPath = pathFrom + "/" + FileManager.INTERIEUR + "/" + f;
+		FileTools.CopyFile(f, newPath);
+		File file = new File(newPath);
+		this.interieur.add(file);
+	}
+	
+	public void removeInterieur(String pathFrom, String f) {
+		String path = pathFrom + "/" + FileManager.INTERIEUR + "/" + f;
+		FileTools.Delete(path);
+		for(int i = 0; i < this.interieur.size(); i++) {
+    		if(this.interieur.get(i).getName().equals(f))
+    			this.interieur.get(i).delete();
+		}
+	}
+	
+	public void addPicture(String pathFrom, String f) {
+		String newPath = pathFrom + "/" + f;
+		FileTools.CopyFile(f, newPath);
+		File file = new File(newPath);
+		this.picture = file;
+	}
+	
+	public void removePicture(String pathFrom, String f) {
+		String path = pathFrom + "/" + f;
+		FileTools.Delete(path);
+		this.picture = null;
 	}
 
 	public File getPresentation_FR() {
@@ -110,12 +219,12 @@ public class InterestPoint {
 		this.interieur = interieur;
 	}
 
-	public ArrayList<File> getVideo() {
-		return video;
+	public ArrayList<File> getVideos() {
+		return videos;
 	}
 
-	public void setVideo(ArrayList<File> video) {
-		this.video = video;
+	public void setVideos(ArrayList<File> videos) {
+		this.videos = videos;
 	}
 
 	public ArrayList<File> get_360() {

@@ -12,7 +12,7 @@ public class FileManager {
     final private static String VILLAGE = "village";
 	final public static String PHOTOS = "photo";
 	final public static String INTERIEUR = "interieur";
-	final public static String VIDEO = "video";
+	final public static String VIDEOS = "video";
 	final public static String _360 = "360";
     final public static String OVERVIEW_FOLDER = "visite-overview";
     final public static String INFO_FOLDER = "visite-info";
@@ -22,7 +22,6 @@ public class FileManager {
     final public static String LENGTH_EN = "duree_en.txt";
     final public static String MARKER = "marker.txt";
     final public static String ROAD = "chemin.txt";
-	final public static String JPG = ".jpg";
     private Location chateauWorkspace;
     private Location villageWorkspace;
     

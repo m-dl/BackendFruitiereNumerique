@@ -34,8 +34,6 @@ public class Location {
     
     /*
      * Debug : affichage de la lib de location
-     * 
-     */
     public void display() {
       for(Visit v : V) {
         System.out.println(v.getName());
@@ -44,6 +42,5 @@ public class Location {
         }
       }
     }
-    
-      
+    */      
 }

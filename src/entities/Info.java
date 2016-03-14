@@ -36,6 +36,51 @@ public class Info {
 			FileTools.CreateFile(pathFrom + "/" + FileManager.PRESENTATION_EN);	
 	}
 	
+	public String readContent_FR() {
+		return FileTools.Read(this.content_FR);
+	}
+	
+	public void writeContent_FR(String input) {
+		FileTools.Write(this.content_FR, input);
+	}
+	
+	public String readContent_EN() {
+		return FileTools.Read(this.content_EN);
+	}
+	
+	public void writeContent_EN(String input) {
+		FileTools.Write(this.content_EN, input);
+	}
+	
+	public void addPhotos(String pathFrom, String f) {
+		String newPath = pathFrom + "/" + FileManager.PHOTOS + "/" + f;
+		FileTools.CopyFile(f, newPath);
+		File file = new File(newPath);
+		this.photos.add(file);
+	}
+	
+	public void removePhotos(String pathFrom, String f) {
+		String path = pathFrom + "/" + FileManager.PHOTOS + "/" + f;
+		FileTools.Delete(path);
+		for(int i = 0; i < this.photos.size(); i++) {
+    		if(this.photos.get(i).getName().equals(f))
+    			this.photos.get(i).delete();
+		}
+	}
+	
+	public void addPicture(String pathFrom, String f) {
+		String newPath = pathFrom + "/" + f;
+		FileTools.CopyFile(f, newPath);
+		File file = new File(newPath);
+		this.picture = file;
+	}
+	
+	public void removePicture(String pathFrom, String f) {
+		String path = pathFrom + "/" + f;
+		FileTools.Delete(path);
+		this.picture = null;
+	}
+	
 	public File getContent_FR() {
 		return content_FR;
 	}
