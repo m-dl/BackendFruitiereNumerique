@@ -24,9 +24,25 @@
         <processorPath useClasspath="true" />
         <module name="BackendFruitiereNumerique" />
       </profile>
+      <profile default="false" name="Annotation profile for drive-cmdline-sample" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="drive-cmdline-sample" />
+      </profile>
+      <profile default="false" name="Annotation profile for drive-cmdline-sample (1)" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="drive-cmdline-sample (1)" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="BackendFruitiereNumerique" target="1.6" />
+      <module name="drive-cmdline-sample" target="1.8" />
+      <module name="drive-cmdline-sample (1)" target="1.6" />
     </bytecodeTargetLevel>
   </component>
 </project>
