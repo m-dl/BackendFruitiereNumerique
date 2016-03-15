@@ -29,14 +29,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="drive-cmdline-sample" />
       </profile>
       <profile default="false" name="Annotation profile for drive-cmdline-sample (1)" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="drive-cmdline-sample (1)" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

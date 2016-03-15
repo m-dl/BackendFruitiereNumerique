@@ -17,7 +17,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class GUIControllerCastle implements Initializable{
+public class GUIControllerChateau implements Initializable{
 
     private GUIWindow guiWindow;
     public ListView<Visit> visitListView;
@@ -27,7 +27,7 @@ public class GUIControllerCastle implements Initializable{
     public ObservableList<InterestPoint> iPList;
     public ObservableList<String> infoList;
 
-    public GUIControllerCastle(GUIWindow guiWindow) {
+    public GUIControllerChateau(GUIWindow guiWindow) {
         this.guiWindow = guiWindow;
         visitList = FXCollections.observableArrayList();
         iPList = FXCollections.observableArrayList();
@@ -36,8 +36,15 @@ public class GUIControllerCastle implements Initializable{
 
 
     @FXML
+    void addVisit() {
+        System.out.println("add visit");
+        guiWindow.displayChateauForm(true);
+    }
+
+    @FXML
     void editVisit() {
         System.out.println("edit visit : "+visitListView.getSelectionModel().getSelectedItem());
+        guiWindow.displayChateauForm(false);
     }
 
     @FXML
@@ -63,6 +70,10 @@ public class GUIControllerCastle implements Initializable{
     @FXML
     void delOld() {
         System.out.println("delOld");
+    }
+
+    public Visit getSelectedVisit() {
+        return visitListView.getSelectionModel().getSelectedItem();
     }
 
 

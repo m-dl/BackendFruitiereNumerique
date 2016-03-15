@@ -9,7 +9,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="java" level="project" />
     <orderEntry type="library" name="Maven: com.google.apis:google-api-services-drive:v2-rev135-1.19.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.api-client:google-api-client:1.19.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.oauth-client:google-oauth-client:1.19.0" level="project" />
