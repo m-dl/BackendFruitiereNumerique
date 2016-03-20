@@ -79,6 +79,7 @@ public class InterestPoint {
 	}
 	
 	public void addPhotos(String pathFrom, String f) {
+		f = FileTools.StringToLower(f);
 		String newPath = pathFrom + "/" + FileManager.PHOTOS + "/" + f;
 		FileTools.CopyFile(f, newPath);
 		File file = new File(newPath);
@@ -95,6 +96,7 @@ public class InterestPoint {
 	}
 	
 	public void add360(String pathFrom, String f) {
+		f = FileTools.StringToLower(f);
 		String newPath = pathFrom + "/" + FileManager._360 + "/" + f;
 		FileTools.CopyFile(f, newPath);
 		File file = new File(newPath);
@@ -111,6 +113,7 @@ public class InterestPoint {
 	}
 	
 	public void addVideo(String pathFrom, String f) {
+		f = FileTools.StringToLower(f);
 		String newPath = pathFrom + "/" + FileManager.VIDEOS + "/" + f;
 		FileTools.CopyFile(f, newPath);
 		File file = new File(newPath);
@@ -127,6 +130,7 @@ public class InterestPoint {
 	}
 	
 	public void addInterieur(String pathFrom, String f) {
+		f = FileTools.StringToLower(f);
 		String newPath = pathFrom + "/" + FileManager.INTERIEUR + "/" + f;
 		FileTools.CopyFile(f, newPath);
 		File file = new File(newPath);
@@ -143,6 +147,7 @@ public class InterestPoint {
 	}
 	
 	public void addPicture(String pathFrom, String f) {
+		f = FileTools.StringToLower(f);
 		String newPath = pathFrom + "/" + f;
 		FileTools.CopyFile(f, newPath);
 		File file = new File(newPath);

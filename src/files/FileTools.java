@@ -22,7 +22,7 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
  * @author Maxime
  */
 public class FileTools {
-	static final Pattern WINDOWS_FILES_FORMATS = Pattern.compile(
+	public static final Pattern WINDOWS_FILES_FORMATS = Pattern.compile(
 	        "# Match a valid Windows filename (unspecified file system).          \n" +
 	        "^                                # Anchor to start of string.        \n" +
 	        "(?!                              # Assert filename is not: CON, PRN, \n" +
@@ -38,11 +38,17 @@ public class FileTools {
 	        "$                                # Anchor to end of string.            ", 
 	        Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE | Pattern.COMMENTS);
 	
-    static final String[] IMAGES_EXTENSIONS = new String[]{
+	public static final Pattern GPS = Pattern.compile(
+			"([+-]?\\d+\\.?\\d+)\\s*,\\s*([+-]?\\d+\\.?\\d+)", 
+	        Pattern.CASE_INSENSITIVE);
+	
+    public static final String[] IMAGES_EXTENSIONS = new String[]{
         "gif", "png", "bmp", "jpeg", "jpg", "GIF", "PNG", "BMP", "JPEG", "JPG"
     };
     
-    static final FilenameFilter IMAGE_FILTER = new FilenameFilter() {
+    public static final FileChooser.ExtensionFilter IMAGES_FILE_FILTER = new FileChooser.ExtensionFilter("(Fichiers images)", "*.gif", "*.png", "*.bmp", "*.jpeg", "*.jpg", "*.GIF", "*.PNG", "*.BMP", "*.JPEG", "*.JPG");
+
+    public static final FilenameFilter IMAGE_FILTER = new FilenameFilter() {
         @Override
         public boolean accept(final File dir, final String name) {
             for (final String ext : IMAGES_EXTENSIONS) {
@@ -54,11 +60,13 @@ public class FileTools {
         }
     };
     
-    static final String[] VIDEOS_EXTENSIONS = new String[]{
+    public static final String[] VIDEOS_EXTENSIONS = new String[]{
         "mp4", "avi", "mkv", "webm", "mov", "MP4", "AVI", "MKV", "WEBM", "MOV"
     };
     
-    static final FilenameFilter VIDEO_FILTER = new FilenameFilter() {
+    public static final FileChooser.ExtensionFilter VIDEOS_FILE_FILTER = new FileChooser.ExtensionFilter("(Fichiers vidéos)", "*.mp4", "*.avi", "*.mkv", "*.webm", "*.mov", "*.MP4", "*.AVI", "*.MKV", "*.WEBM", "*.MOV");
+    
+    public static final FilenameFilter VIDEO_FILTER = new FilenameFilter() {
         @Override
         public boolean accept(final File dir, final String name) {
             for (final String ext : VIDEOS_EXTENSIONS) {
@@ -69,6 +77,8 @@ public class FileTools {
             return (false);
         }
     };
+    
+    public static final FileChooser.ExtensionFilter ALL_FILE_FILTER = new FileChooser.ExtensionFilter("*", "*.*");
     
 	// Create a file
 	public static void CreateFile(String path) {
@@ -204,9 +214,12 @@ public class FileTools {
     }
     
     // File chooser
-    public static String FileChooser(){
+    public static String FileChooser(FileChooser.ExtensionFilter extFilter){
+    	if(extFilter == null)
+    		extFilter = FileTools.ALL_FILE_FILTER;
     	FileChooser fileChooser = new FileChooser();
-    	fileChooser.setTitle("Sélectionner un dossier");
+    	fileChooser.getExtensionFilters().add(extFilter);
+    	fileChooser.setTitle("Sélectionner un fichier " + extFilter.getDescription());
     	File file = fileChooser.showOpenDialog(null);
     	if (file != null) 
     		return file.getAbsolutePath();
@@ -214,9 +227,12 @@ public class FileTools {
     }
     
     // Multiple File chooser
-    public static ArrayList<File> MultipleFileChooser(){
+    public static ArrayList<File> MultipleFileChooser(FileChooser.ExtensionFilter extFilter){
+    	if(extFilter == null)
+    		extFilter = FileTools.ALL_FILE_FILTER;
     	FileChooser fileChooser = new FileChooser();
-    	fileChooser.setTitle("Sélectionner un dossier");
+    	fileChooser.getExtensionFilters().add(extFilter);
+    	fileChooser.setTitle("Sélectionner des fichiers " + extFilter.getDescription());
     	return new ArrayList<File>(fileChooser.showOpenMultipleDialog(null));
     }
     
@@ -247,6 +263,21 @@ public class FileTools {
     	return "";
     }
 	
+    // String To lower case
+    public static String StringToLower(String input) {
+    	return input.toLowerCase(); // to lower case
+    }
+    
+    // Clear string double spaces / line jump
+    public static String StringClearSpaces(String input) {
+    	return input.replaceAll("\\s+"," "); // removes spaces / line jump
+    }
+    
+    // Clear string all spaces / line jump
+    public static String StringClearAllSpaces(String input) {
+    	return input.replaceAll("\\s+",""); // removes spaces / line jump
+    }
+    
 	// List all pictures from a folder
 	public static ArrayList<File> ListFolderPictures(String p) {
 		ArrayList<File> picturesList = new ArrayList<File>();
@@ -308,15 +339,30 @@ public class FileTools {
         l.addVisit(tmpVisit);
     }
     
-    // Parse string
-    public static String ParseString(String input) {
-    	input = input.replaceAll("\\s+"," "); // removes spaces / line jump
-    	input = input.toLowerCase(); // to lower case
+    // Parse file name
+    public static String ParseFileName(String input) {
+    	input = StringClearSpaces(input);
+    	input = StringToLower(input);
     	Matcher matcher = WINDOWS_FILES_FORMATS.matcher(input);
     	boolean isMatch = matcher.matches();
     
-    	if(!isMatch)
+    	if(!isMatch) {
     		input = "";
+    		System.out.println("Nom de fichier saisi invalide !");
+    	}
+        return input;
+    }
+    
+    // Parse GPS coordinates
+    public static String ParseCoordinates(String input) {
+    	input = StringClearAllSpaces(input);
+    	Matcher matcher = GPS.matcher(input);
+    	boolean isMatch = matcher.matches();
+    
+    	if(!isMatch) {
+    		input = "";
+    		System.out.println("Coordonnées saisies invalides !");
+    	}
         return input;
     }
 }

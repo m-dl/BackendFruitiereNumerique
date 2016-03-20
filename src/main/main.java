@@ -16,6 +16,7 @@ public class main {
 
   public static void main(String[] args) {
 	  
+	//TODO: gestion chemin (for each ligne parser la coord et rajouter à la fin le width et color).
     FileManager FM = FileManager.getInstance();
     FM.Init();
     FM.InitChateau();

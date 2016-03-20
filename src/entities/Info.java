@@ -53,6 +53,7 @@ public class Info {
 	}
 	
 	public void addPhotos(String pathFrom, String f) {
+		f = FileTools.StringToLower(f);
 		String newPath = pathFrom + "/" + FileManager.PHOTOS + "/" + f;
 		FileTools.CopyFile(f, newPath);
 		File file = new File(newPath);
@@ -69,6 +70,7 @@ public class Info {
 	}
 	
 	public void addPicture(String pathFrom, String f) {
+		f = FileTools.StringToLower(f);
 		String newPath = pathFrom + "/" + f;
 		FileTools.CopyFile(f, newPath);
 		File file = new File(newPath);
