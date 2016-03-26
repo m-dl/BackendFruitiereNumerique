@@ -2,6 +2,7 @@ package files;
 
 import org.apache.commons.io.FileUtils;
 
+import entities.Road;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import entities.InterestPoint;
@@ -13,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -364,5 +366,24 @@ public class FileTools {
     		System.out.println("Coordonnées saisies invalides !");
     	}
         return input;
+    }
+    
+    // Read road file
+    public static Road ReadRoad(File road) {
+    	String width = "", color = "";
+		ArrayList<String> coord = new ArrayList<String>();
+		Scanner scanner = new Scanner(Read(road));
+		while (scanner.hasNextLine()) {
+		  String line = scanner.nextLine();
+		  System.out.println(line);
+		  if(!ParseCoordinates(line).equals(""))
+			  coord.add(line);
+		  else if(line.contains(Road.ROAD_WIDTH))
+			  width = line.substring(Road.ROAD_WIDTH.length());
+		  else if(line.contains(Road.ROAD_COLOR))
+			  color = line.substring(Road.ROAD_COLOR.length());
+		}
+		scanner.close();
+		return new Road(coord, width, color);
     }
 }

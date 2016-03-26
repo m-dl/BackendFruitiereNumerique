@@ -12,7 +12,8 @@ import java.util.ArrayList;
 public class InterestPoint {    
 	private File presentation_FR, presentation_EN, marker, road, picture;
 	private ArrayList<File> photos, interieur, _360, videos;
-	String name;
+	private String name;
+	private Road roadItem;
 	
 	/**
 	 * @param pathFrom
@@ -70,11 +71,12 @@ public class InterestPoint {
 		FileTools.Write(this.marker, input);
 	}
 	
-	public String readRoad() {
-		return FileTools.Read(this.road);
+	public Road readRoad() {
+		return FileTools.ReadRoad(this.road);
 	}
 	
-	public void writeRoad(String input) {
+	public void writeRoad(String coord, String width, String color) {
+		String input = coord + "\n" + Road.ROAD_WIDTH + width + "\n" + Road.ROAD_COLOR + color;
 		FileTools.Write(this.road, input);
 	}
 	
@@ -238,5 +240,13 @@ public class InterestPoint {
 
 	public void set_360(ArrayList<File> _360) {
 		this._360 = _360;
+	}
+
+	public Road getRoadItem() {
+		return roadItem;
+	}
+
+	public void setRoadItem(Road roadItem) {
+		this.roadItem = roadItem;
 	}
 }
