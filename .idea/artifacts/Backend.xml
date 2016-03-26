@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Backend">
+    <output-path>$PROJECT_DIR$/generated-jar</output-path>
+    <root id="archive" name="Backend.jar">
+      <element id="module-output" name="drive-cmdline-sample" />
+    </root>
+  </artifact>
+</component>
