@@ -12,9 +12,9 @@
         <Pane prefHeight="800.0" prefWidth="600.0">
             <children>
                 <Label layoutX="183.0" layoutY="99.0" text="Nom du point:" />
-                <TextField fx:id="visitName" layoutX="315.0" layoutY="94.0" />
-                <TextArea fx:id="visitPresTextFR" layoutX="62.0" layoutY="168.0" prefHeight="200.0" prefWidth="200.0" />
-                <TextArea fx:id="visitPresTextEN" layoutX="345.0" layoutY="167.0" prefHeight="203.0" prefWidth="200.0" />
+                <TextField fx:id="ipName" layoutX="315.0" layoutY="94.0" />
+                <TextArea fx:id="ipPresTextFR" layoutX="62.0" layoutY="168.0" prefHeight="200.0" prefWidth="200.0" />
+                <TextArea fx:id="ipPresTextEN" layoutX="345.0" layoutY="167.0" prefHeight="203.0" prefWidth="200.0" />
                 <Label layoutX="56.0" layoutY="148.0" text="Texte de présentation en français:" />
                 <Label layoutX="344.0" layoutY="147.0" text="Texte de présentation en anglais:" />
                 <Button fx:id="addImages" layoutX="200.0" layoutY="593.0" mnemonicParsing="false" text="Ajouter des images d'interieur" />

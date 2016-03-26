@@ -19,11 +19,9 @@ public class GUIControllerChateauIPForm {
     private Stage stage;
 
     public boolean isAlreadyDisplayed = false;
-    public TextField visitName;
-    public TextArea visitPresTextFR;
-    public TextArea visitPresTextEN;
-    public TextArea visitLengthFR;
-    public TextArea visitLengthEN;
+    public TextField ipName;
+    public TextArea ipPresTextFR;
+    public TextArea ipPresTextEN;
 
 
     private GUIControllerChateauIPForm()
@@ -62,7 +60,7 @@ public class GUIControllerChateauIPForm {
 
                 if (!isNewVisit && selectedPoint != null) {
 
-                    //this.fillInputs(selectedPoint);
+                    this.fillInputs(selectedPoint);
                     stage.setTitle("Modification d'un point d'intérêt");
                     stage.show();
                 }
@@ -79,13 +77,10 @@ public class GUIControllerChateauIPForm {
 
 
     public void fillInputs(InterestPoint p) {
-        /*
-            visitName.setText(v.getName());
-            visitPresTextFR.setText(v.getOverview().readPresentation_FR());
-            visitPresTextEN.setText(v.getOverview().readPresentation_EN());
-            visitLengthFR.setText(v.getOverview().readLength_FR());
-            visitLengthEN.setText(v.getOverview().readLength_EN());
-*/
+
+            ipName.setText(p.getName());
+            ipPresTextFR.setText(p.readPresentation_FR());
+            ipPresTextEN.setText(p.readPresentation_EN());
     }
 
 
