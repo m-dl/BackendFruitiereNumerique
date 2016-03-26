@@ -75,7 +75,11 @@ public class InterestPoint {
 		return FileTools.ReadRoad(this.road);
 	}
 	
-	public void writeRoad(String coord, String width, String color) {
+	public void writeRoad(ArrayList<String> coordArr, String width, String color) {
+		String coord = "";
+		for(String s : coordArr) {
+			coord += s + "\n";
+		}
 		String input = coord + "\n" + Road.ROAD_WIDTH + width + "\n" + Road.ROAD_COLOR + color;
 		FileTools.Write(this.road, input);
 	}
