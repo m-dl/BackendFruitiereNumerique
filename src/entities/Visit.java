@@ -10,68 +10,68 @@ import java.util.ArrayList;
  * @author Maxime
  */
 public class Visit {
-	
-  private ArrayList<InterestPoint> IP;
-  private Overview overview;
-  private Info info;
-  private String name;
-  
-	public Visit(String pathFrom, String name) {
-	    initVisit(pathFrom);
-	    
-	    this.setIP(new ArrayList<InterestPoint>());
-	    this.setOverview(new Overview(pathFrom + "/" + FileManager.OVERVIEW_FOLDER));
-	    this.setInfo(new Info(pathFrom + "/" + FileManager.INFO_FOLDER));
-	    this.name = name;
-	}
-  
-	private void initVisit(String pathFrom) {
-		if(!FileTools.Exist(new File(pathFrom + "/" + FileManager.OVERVIEW_FOLDER))) 
-			FileTools.CreateDirectory(pathFrom + "/" + FileManager.OVERVIEW_FOLDER);
-        if(!FileTools.Exist(new File(pathFrom + "/" + FileManager.INFO_FOLDER))) 
-        	FileTools.CreateDirectory(pathFrom + "/" + FileManager.INFO_FOLDER);	
-	}
 
-  /**
-   * @return the iP
-   */
-  public ArrayList<InterestPoint> getIP() {
-      return IP;
-  }
+    private ArrayList<InterestPoint> IP;
+    private Overview overview;
+    private Info info;
+    private String name;
 
-  	/**
-  	 * @param iP the iP to set
-  	 */
-  	public void setIP(ArrayList<InterestPoint> IP) {
-  		this.IP = IP;
-  	}
-  
-  	public Overview getOverview() {
-		return overview;
-	}
+    public Visit(String pathFrom, String name) {
+        initVisit(pathFrom);
 
-	public void setOverview(Overview overview) {
-		this.overview = overview;
-	}
+        this.setIP(new ArrayList<InterestPoint>());
+        this.setOverview(new Overview(pathFrom + "/" + FileManager.OVERVIEW_FOLDER));
+        this.setInfo(new Info(pathFrom + "/" + FileManager.INFO_FOLDER));
+        this.name = name;
+    }
 
-	public Info getInfo() {
-		return info;
-	}
+    private void initVisit(String pathFrom) {
+        if (!FileTools.Exist(new File(pathFrom + "/" + FileManager.OVERVIEW_FOLDER)))
+            FileTools.CreateDirectory(pathFrom + "/" + FileManager.OVERVIEW_FOLDER);
+        if (!FileTools.Exist(new File(pathFrom + "/" + FileManager.INFO_FOLDER)))
+            FileTools.CreateDirectory(pathFrom + "/" + FileManager.INFO_FOLDER);
+    }
 
-	public void setInfo(Info info) {
-		this.info = info;
-	}
-	
-  public String getName() {
-      return name;
-  }
+    /**
+     * @return the iP
+     */
+    public ArrayList<InterestPoint> getIP() {
+        return IP;
+    }
 
-  public void setName(String name) {
-      this.name = name;
-  }
-  
-  // Add an interest point to a visit
-  public void addInterestPoint(InterestPoint IP) {
-      this.IP.add(IP);
-  }
+    /**
+     * @param iP the iP to set
+     */
+    public void setIP(ArrayList<InterestPoint> IP) {
+        this.IP = IP;
+    }
+
+    public Overview getOverview() {
+        return overview;
+    }
+
+    public void setOverview(Overview overview) {
+        this.overview = overview;
+    }
+
+    public Info getInfo() {
+        return info;
+    }
+
+    public void setInfo(Info info) {
+        this.info = info;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    // Add an interest point to a visit
+    public void addInterestPoint(InterestPoint IP) {
+        this.IP.add(IP);
+    }
 }
