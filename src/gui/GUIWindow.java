@@ -118,6 +118,7 @@ public class GUIWindow extends Application {
         this.guiControllerPhotos = new GUIControllerPhotos(this);
 
         this.guiControllerChateauVisitForm.getInstance().setMainClass(this);
+
         this.guiFormsController = new GUIFormsController(this);
 
 

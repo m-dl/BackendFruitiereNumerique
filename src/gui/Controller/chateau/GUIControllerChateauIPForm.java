@@ -1,8 +1,18 @@
 package gui.Controller.chateau;
 
-public class GUIControllerChateauIPForm {
+import entities.InterestPoint;
+import gui.GUIUtilities;
+import gui.GUIWindow;
+import javafx.fxml.FXML;
+import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
-    /*
+import java.io.IOException;
+
+public class GUIControllerChateauIPForm {
 
     private GUIWindow guiWindow;
     private static GUIControllerChateauIPForm INSTANCE = new GUIControllerChateauIPForm();
@@ -38,10 +48,10 @@ public class GUIControllerChateauIPForm {
 
                 GUIUtilities utilities = new GUIUtilities();
 
-                ScrollPane root = (ScrollPane) utilities.loadLayout("view/chateau/visitForm.fxml", this);
+                ScrollPane root = (ScrollPane) utilities.loadLayout("view/chateau/iPForm.fxml", this);
 
                 stage = new Stage();
-                stage.setTitle("Formulaire de visite");
+
                 stage.setScene(new Scene(root));
 
                 stage.setOnCloseRequest(closeEvent -> {
@@ -50,15 +60,15 @@ public class GUIControllerChateauIPForm {
                 });
 
 
-                if (!isNewVisit && selectedVisit != null) {
+                if (!isNewVisit && selectedPoint != null) {
 
-                    this.fillInputs(selectedVisit);
-
+                    //this.fillInputs(selectedPoint);
+                    stage.setTitle("Modification d'un point d'intérêt");
                     stage.show();
                 }
                 else if (isNewVisit){
 
-
+                    stage.setTitle("Ajout d'un point d'intérêt");
                     stage.show();
                 }
             } catch (IOException e) {
@@ -68,13 +78,14 @@ public class GUIControllerChateauIPForm {
     }
 
 
-    public void fillInputs(Visit v) {
+    public void fillInputs(InterestPoint p) {
+        /*
             visitName.setText(v.getName());
             visitPresTextFR.setText(v.getOverview().readPresentation_FR());
             visitPresTextEN.setText(v.getOverview().readPresentation_EN());
             visitLengthFR.setText(v.getOverview().readLength_FR());
             visitLengthEN.setText(v.getOverview().readLength_EN());
-
+*/
     }
 
 
@@ -84,6 +95,6 @@ public class GUIControllerChateauIPForm {
         stage.close();
 
     }
-*/
+
 
 }

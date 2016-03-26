@@ -32,7 +32,7 @@ public class GUIFormsController {
 
     public void displayChateauIPForm(boolean isNewVisit, InterestPoint selectedPoint) {
 
-        //chateauIPForm.getInstance().displayForm(isNewVisit, selectedVisit);
+        chateauIPForm.getInstance().displayForm(isNewVisit, selectedPoint);
     }
 
 }

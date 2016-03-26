@@ -116,23 +116,35 @@ public class GUIControllerChateau implements Initializable{
 
     @FXML
     void addPIC() {
-        System.out.println("add pic");
+        if(getSelectedVisit() != null) {
+            System.out.println("edit visit : " + iPListViewC.getSelectionModel().getSelectedItem());
+            guiForms.displayChateauIPForm(true, this.getSelectedPoint());
+        }
+        else {
+            System.out.println("choisissez une visite");
+        }
     }
 
     @FXML
     void editIPC() {
-        //System.out.println("edit IP : "+ iPListView.getSelectionModel().getSelectedItem());
+        if(getSelectedVisit() != null) {
+            System.out.println("edit visit : " + iPListViewC.getSelectionModel().getSelectedItem());
+            guiForms.displayChateauIPForm(false, this.getSelectedPoint());
+        }
+        else {
+            System.out.println("choisissez une visite");
+        }
     }
 
     @FXML
     void deleteVisitC() {
-        System.out.println("edit visit : "+visitListViewC.getSelectionModel().getSelectedItem());
+        System.out.println("del visit : "+visitListViewC.getSelectionModel().getSelectedItem());
         //guiWindow.displayChateauForm(false);
     }
 
     @FXML
     void deleteIPC() {
-        System.out.println("edit visit : "+visitListViewC.getSelectionModel().getSelectedItem());
+        System.out.println("del point : "+iPListViewC.getSelectionModel().getSelectedItem());
        // guiWindow.displayChateauForm(false);
     }
 
@@ -140,8 +152,9 @@ public class GUIControllerChateau implements Initializable{
         return visitListViewC.getSelectionModel().getSelectedItem();
     }
 
-
-
+    public InterestPoint getSelectedPoint() {
+        return iPListViewC.getSelectionModel().getSelectedItem();
+    }
 
     public void loadCastleData(ArrayList<Visit> visits) {
         for (int i = 0; i < visits.size(); i++) {
