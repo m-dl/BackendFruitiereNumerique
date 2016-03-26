@@ -3,6 +3,7 @@ package gui;
 import files.FileManager;
 import gui.Controller.*;
 import gui.Controller.chateau.GUIControllerChateau;
+import gui.Controller.chateau.GUIControllerChateauIPForm;
 import gui.Controller.chateau.GUIControllerChateauVisitForm;
 import gui.Controller.village.GUIControllerVillage;
 import javafx.application.Application;
@@ -26,11 +27,13 @@ public class GUIWindow extends Application {
 
     private GUIMainViewController guiMainViewController;
 
-    public GUIControllerChateau guiControllerChateau;
+    private GUIControllerChateau guiControllerChateau;
     private GUIControllerVillage guiControllerVillage;
     private GUIControllerPhotos guiControllerPhotos;
 
-    public GUIControllerChateauVisitForm guiControllerChateauVisitForm;
+    private GUIControllerChateauVisitForm guiControllerChateauVisitForm;
+    private GUIControllerChateauIPForm guiControllerChateauIPForm;
+
 
     private GUIFormsController guiFormsController;
 
@@ -118,6 +121,8 @@ public class GUIWindow extends Application {
         this.guiControllerPhotos = new GUIControllerPhotos(this);
 
         this.guiControllerChateauVisitForm.getInstance().setMainClass(this);
+        this.guiControllerChateauIPForm.getInstance().setMainClass(this);
+
 
         this.guiFormsController = new GUIFormsController(this);
 
