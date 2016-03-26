@@ -14,9 +14,8 @@ import files.*;
  */
 public class main {
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws Exception {
 	  
-	//TODO: gestion chemin (for each ligne parser la coord et rajouter à la fin le width et color).
     FileManager FM = FileManager.getInstance();
     FM.Init();
     FM.InitChateau();
@@ -24,8 +23,11 @@ public class main {
 
     //DriveSample.launch();
     
-    // zipmanager bug si le zip existe deja, et ne zip pas le dossier parent qu'on veut zipper et comment unzip ? 
-    //ZipManager.zipDirectory("C:/Users/Maxime.PC/Pictures/toto", "C:/Users/Maxime.PC/Pictures/toto/t.zip");
+    ZipManager.zipFolder("C:/Users/Maxime.PC/Desktop/CERI COURS/eclipse/JAVA/BackendFruitiereNumerique/medias","C:/Users/Maxime.PC/Desktop/t.zip");
+    ZipManager.unZipIt("C:/Users/Maxime.PC/Desktop/t.zip","C:/Users/Maxime.PC/Desktop");
+
   }
 
 }
+
+
