@@ -1,8 +1,9 @@
 package main;
 
-//import com.google.api.services.samples.drive.cmdline.DriveSample;
+import com.google.api.services.samples.drive.cmdline.DriveSample;
 
 import files.*;
+
 
 /*
  * Project > Properties > Project References > cocher la case du DriveAPI Puis aller sur la
@@ -24,7 +25,7 @@ public class main {
     //DriveSample.launch();
     
     ZipManager.zipFolder("C:/Users/Maxime.PC/Desktop/CERI COURS/eclipse/JAVA/BackendFruitiereNumerique/medias","C:/Users/Maxime.PC/Desktop/t.zip");
-    ZipManager.unZipIt("C:/Users/Maxime.PC/Desktop/t.zip","C:/Users/Maxime.PC/Desktop");
+    ZipManager.unZip("C:/Users/Maxime.PC/Desktop/t.zip","C:/Users/Maxime.PC/Desktop");
 
   }
 

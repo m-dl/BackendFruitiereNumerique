@@ -287,7 +287,7 @@ public class FileTools {
 		if(!Exist(pathFrom)) 
 			CreateDirectory(p);
 		File[] list = pathFrom.listFiles(IMAGE_FILTER);
-		for(final File f : list) {
+		for(File f : list) {
         	// add picture to arraylist
 			picturesList.add(f);
         }
@@ -301,7 +301,7 @@ public class FileTools {
 		if(!Exist(pathFrom)) 
 			CreateDirectory(p);
 		File[] list = pathFrom.listFiles(VIDEO_FILTER);
-		for(final File f : list) {
+		for(File f : list) {
         	// add video to arraylist
 			videosList.add(f);
         }
