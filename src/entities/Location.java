@@ -32,6 +32,11 @@ public class Location {
         this.V.add(v);
     }
     
+    // Delete a visit to a location
+    public void deleteVisit(Visit v) {
+        this.V.remove(v);
+    }
+    
     /*
      * Debug : affichage de la lib de location
     public void display() {
