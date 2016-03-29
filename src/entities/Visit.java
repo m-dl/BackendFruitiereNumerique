@@ -17,6 +17,9 @@ public class Visit {
     private String name;
 
     public Visit(String pathFrom, String name) {
+    	if(!FileTools.Exist(new File(pathFrom)))
+            FileTools.CreateDirectory(pathFrom);
+    	
         initVisit(pathFrom);
 
         this.setIP(new ArrayList<InterestPoint>());
