@@ -18,6 +18,9 @@ public class Info {
 	 * @param pathFrom
 	 */
 	public Info(String pathFrom) {
+		if(!FileTools.Exist(new File(pathFrom)))
+            FileTools.CreateDirectory(pathFrom);
+		
 		this.content_FR = new File(pathFrom + "/" + FileManager.PRESENTATION_FR);
 		this.content_EN = new File(pathFrom + "/" + FileManager.PRESENTATION_EN);
 		

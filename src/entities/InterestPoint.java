@@ -19,6 +19,9 @@ public class InterestPoint {
 	 * @param pathFrom
 	 */
 	public InterestPoint(String pathFrom, String name) {
+		if(!FileTools.Exist(new File(pathFrom)))
+            FileTools.CreateDirectory(pathFrom);
+		
 		this.presentation_FR = new File(pathFrom + "/" + FileManager.PRESENTATION_FR);
 		this.presentation_EN = new File(pathFrom + "/" + FileManager.PRESENTATION_EN);
 		this.marker = new File(pathFrom + "/" + FileManager.MARKER);

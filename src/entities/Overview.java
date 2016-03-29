@@ -18,6 +18,9 @@ public class Overview {
 	 * @param pathFrom
 	 */
 	public Overview(String pathFrom) {
+		if(!FileTools.Exist(new File(pathFrom)))
+            FileTools.CreateDirectory(pathFrom);
+		
 		this.presentation_FR = new File(pathFrom + "/" + FileManager.PRESENTATION_FR);
 		this.presentation_EN = new File(pathFrom + "/" + FileManager.PRESENTATION_EN);
 		this.length_FR = new File(pathFrom + "/" + FileManager.LENGTH_FR);

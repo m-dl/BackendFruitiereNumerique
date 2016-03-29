@@ -16,7 +16,7 @@ import files.*;
 public class main {
 
   public static void main(String[] args) throws Exception {
-	  
+	//TODO: supprimer visite ou PI, une fonction dans location et une dans visite ou PI  
     FileManager FM = FileManager.getInstance();
     FM.Init();
     FM.InitChateau();
