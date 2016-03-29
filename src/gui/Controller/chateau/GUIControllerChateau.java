@@ -23,17 +23,24 @@ public class GUIControllerChateau implements Initializable{
 
     private GUIWindow guiWindow;
     private GUIFormsController guiForms;
+    private static GUIControllerChateau INSTANCE = new GUIControllerChateau();
+
 
     public ListView<Visit> visitListViewC;
     public ListView<InterestPoint> iPListViewC;
     public ObservableList<Visit> visitListC;
     public ObservableList<InterestPoint> iPListC;
 
-    public GUIControllerChateau(GUIWindow guiWindow) {
-        this.guiWindow = guiWindow;
+
+    private GUIControllerChateau() {
+        this.guiWindow = GUIWindow.getInstance();
         this.guiForms = new GUIFormsController();
         visitListC = FXCollections.observableArrayList();
         iPListC = FXCollections.observableArrayList();
+    }
+
+    public static GUIControllerChateau getInstance() {
+        return INSTANCE;
     }
 
     @Override
@@ -138,8 +145,12 @@ public class GUIControllerChateau implements Initializable{
 
     @FXML
     void deleteVisitC() {
-        System.out.println("del visit : "+visitListViewC.getSelectionModel().getSelectedItem());
-        //guiWindow.displayChateauForm(false);
+        System.out.println("del visit : "+ visitListViewC.getSelectionModel().getSelectedItem());
+        System.out.println(guiWindow.FM.getChateauWorkspace().getV().size());
+        guiWindow.FM.getChateauWorkspace().deleteVisit(visitListViewC.getSelectionModel().getSelectedItem());
+        visitListC.remove(visitListViewC.getSelectionModel().getSelectedItem());
+        System.out.println(guiWindow.FM.getChateauWorkspace().getV().size());
+
     }
 
     @FXML

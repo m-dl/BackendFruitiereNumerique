@@ -20,6 +20,7 @@ public class GUIWindow extends Application {
 
     public FileManager FM = FileManager.getInstance();
     private GUIUtilities utilities;
+    private static GUIWindow INSTANCE = new GUIWindow();
 
 
     private Pane rootLayout;
@@ -37,13 +38,18 @@ public class GUIWindow extends Application {
 
     private GUIFormsController guiFormsController;
 
-    public GUIWindow() {
-        this.utilities = new GUIUtilities();
-    }
 
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public GUIWindow() {
+        this.utilities = new GUIUtilities();
+    }
+
+    public static GUIWindow getInstance() {
+        return INSTANCE;
     }
 
 
@@ -52,6 +58,7 @@ public class GUIWindow extends Application {
 
         FM.Init();
         FM.InitChateau();
+        FM.InitVillage();
 
         this.primaryStage = primaryStage;
         primaryStage.setTitle("Ajout de fichiers");
@@ -67,7 +74,8 @@ public class GUIWindow extends Application {
             rootLayout = (Pane) utilities.loadLayout("view/mainView.fxml", guiMainViewController);
 
             loadTabPane();
-            loadData();
+            loadChateauData();
+            loadVillageData();
 
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
@@ -116,7 +124,7 @@ public class GUIWindow extends Application {
 
         this.guiMainViewController = new GUIMainViewController(this);
 
-        this.guiControllerChateau = new GUIControllerChateau(this);
+        this.guiControllerChateau = GUIControllerChateau.getInstance();
         this.guiControllerVillage = new GUIControllerVillage(this);
         this.guiControllerPhotos = new GUIControllerPhotos(this);
 
@@ -133,7 +141,11 @@ public class GUIWindow extends Application {
         System.out.println("save stuff");
     }
 
-    public void loadData() {
+    public void loadChateauData() {
         guiControllerChateau.loadCastleData(FM.getChateauWorkspace().getV());
+    }
+
+    public void loadVillageData() {
+        guiControllerVillage.loadVisitData(FM.getVillageWorkspace().getV());
     }
 }
