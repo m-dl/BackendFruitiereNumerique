@@ -169,6 +169,11 @@ public class InterestPoint {
 		this.picture = null;
 	}
 
+    // Delete IP content
+    public void delete(String pathFrom) {
+        FileTools.Delete(pathFrom);
+    }
+    
 	public File getPresentation_FR() {
 		return presentation_FR;
 	}

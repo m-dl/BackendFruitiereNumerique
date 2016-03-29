@@ -33,8 +33,9 @@ public class Location {
     }
     
     // Delete a visit to a location
-    public void deleteVisit(Visit v) {
+    public void deleteVisit(Visit v, String pathFrom) {
         this.V.remove(v);
+        v.delete(pathFrom);
     }
     
     /*

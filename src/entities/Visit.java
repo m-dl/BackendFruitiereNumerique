@@ -73,6 +73,17 @@ public class Visit {
         this.name = name;
     }
 
+    // Delete visit content
+    public void delete(String pathFrom) {
+        FileTools.Delete(pathFrom);
+    }
+    
+    // Delete an IP to a visit
+    public void deleteInterestPoint(InterestPoint IP, String pathFrom) {
+        this.IP.remove(IP);
+        IP.delete(pathFrom);
+    }
+    
     // Add an interest point to a visit
     public void addInterestPoint(InterestPoint IP) {
         this.IP.add(IP);
