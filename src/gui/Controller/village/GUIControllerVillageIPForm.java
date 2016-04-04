@@ -36,7 +36,7 @@ public class GUIControllerVillageIPForm {
         this.guiWindow = guiWindow;
     }
 
-
+/*
     public void displayForm(boolean isNewVisit, InterestPoint selectedPoint) {
 
         if (!isAlreadyDisplayed) {
@@ -74,7 +74,7 @@ public class GUIControllerVillageIPForm {
             }
         }
     }
-
+*/
 
     public void fillInputs(InterestPoint p) {
 

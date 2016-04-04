@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.input.MouseEvent;
 import javafx.util.StringConverter;
@@ -21,24 +22,28 @@ import java.util.ResourceBundle;
 
 public class GUIControllerVillage implements Initializable{
 
-    private GUIWindow guiWindow;
     private GUIFormsController guiForms;
+    private static GUIControllerVillage INSTANCE = new GUIControllerVillage();
 
     public ListView<Visit> visitListViewV;
     public ListView<InterestPoint> iPListViewV;
     public ObservableList<Visit> visitListV;
     public ObservableList<InterestPoint> iPListV;
 
-    public GUIControllerVillage(GUIWindow guiWindow) {
-        this.guiWindow = guiWindow;
-        this.guiForms = new GUIFormsController();
-        visitListV = FXCollections.observableArrayList();
-        iPListV = FXCollections.observableArrayList();
+
+    private GUIControllerVillage()
+    {}
+
+    public static GUIControllerVillage getInstance() {
+        return INSTANCE;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        this.guiForms = new GUIFormsController();
+        visitListV = FXCollections.observableArrayList();
+        iPListV = FXCollections.observableArrayList();
 
         visitListViewV.setItems(visitListV);
         iPListViewV.setItems(iPListV);

@@ -24,17 +24,12 @@
         <processorPath useClasspath="true" />
         <module name="BackendFruitiereNumerique" />
       </profile>
-      <profile default="false" name="Annotation profile for drive-cmdline-sample" enabled="true">
+      <profile default="false" name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-      </profile>
-      <profile default="false" name="Annotation profile for drive-cmdline-sample (1)" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="true" />
+        <module name="drive-cmdline-sample" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

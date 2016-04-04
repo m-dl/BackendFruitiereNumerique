@@ -122,19 +122,16 @@ public class GUIWindow extends Application {
 
     public void loadControllers() {
 
-        this.guiMainViewController = new GUIMainViewController(this);
+        this.guiMainViewController = GUIMainViewController.getInstance();
 
         this.guiControllerChateau = GUIControllerChateau.getInstance();
-        this.guiControllerVillage = new GUIControllerVillage(this);
-        this.guiControllerPhotos = new GUIControllerPhotos(this);
+        this.guiControllerVillage = GUIControllerVillage.getInstance();
+        this.guiControllerPhotos = GUIControllerPhotos.getInstance();
 
-        this.guiControllerChateauVisitForm.getInstance().setMainClass(this);
-        this.guiControllerChateauIPForm.getInstance().setMainClass(this);
-
+        this.guiControllerChateauVisitForm = GUIControllerChateauVisitForm.getInstance();
+        this.guiControllerChateauIPForm = GUIControllerChateauIPForm.getInstance();
 
         this.guiFormsController = new GUIFormsController(this);
-
-
     }
 
     public void test() {

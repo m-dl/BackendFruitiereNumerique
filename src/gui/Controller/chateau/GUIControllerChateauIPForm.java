@@ -1,6 +1,8 @@
 package gui.Controller.chateau;
 
 import entities.InterestPoint;
+import entities.Visit;
+import files.FileManager;
 import gui.GUIUtilities;
 import gui.GUIWindow;
 import javafx.fxml.FXML;
@@ -11,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class GUIControllerChateauIPForm {
 
@@ -86,9 +89,39 @@ public class GUIControllerChateauIPForm {
 
     @FXML
     public void saveChanges() {
-        guiWindow.test();
-        stage.close();
+        if( validForm() ) {
+            if(/*isNew*/true) {
 
+                System.out.println("added");
+
+                String ipName = this.ipName.getText();
+
+                String ipPath = FileManager.getInstance().WORKSPACE + "/" + FileManager.getInstance().CHATEAU + "/" +
+                        GUIControllerChateau.getInstance().getSelectedVisit().getName() + "/" + ipName;
+
+                InterestPoint ip = new InterestPoint(ipPath, ipName);
+
+                ip.writePresentation_FR(ipPresTextFR.getText());
+                ip.writePresentation_EN(ipPresTextEN.getText());
+
+                ArrayList<Visit> v = FileManager.getInstance().getChateauWorkspace().getV();
+                v.get(v.indexOf(GUIControllerChateau.getInstance().getSelectedVisit())).addInterestPoint(ip);
+
+                GUIControllerChateau.getInstance().iPListC.add(ip);
+
+            }
+            else {
+                //si visite est modifiée
+            }
+
+            //isNew = false;
+            stage.close();
+        }
+
+    }
+
+    private boolean validForm() {
+        return true;
     }
 
 

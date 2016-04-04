@@ -18,9 +18,9 @@ import java.util.ArrayList;
 
 public class GUIControllerChateauVisitForm {
 
-    private GUIWindow guiWindow;
     private static GUIControllerChateauVisitForm INSTANCE = new GUIControllerChateauVisitForm();
     private Stage stage;
+
     Info visitInfos;
     Overview visitOverview;
 
@@ -35,31 +35,23 @@ public class GUIControllerChateauVisitForm {
     public TextArea visitPresTextENInf;
 
 
-    private GUIControllerChateauVisitForm()
-    {}
-
-
     public static GUIControllerChateauVisitForm getInstance() {
         return INSTANCE;
-    }
-
-    public void setMainClass(GUIWindow guiWindow) {
-        this.guiWindow = guiWindow;
     }
 
 
     public void displayForm(boolean isNewVisit, Visit selectedVisit) {
 
         this.isNew = isNewVisit;
+        System.out.println(isAlreadyDisplayed);
 
         if (!isAlreadyDisplayed) {
 
             try {
 
-
                 GUIUtilities utilities = new GUIUtilities();
 
-                ScrollPane root = (ScrollPane) utilities.loadLayout("view/chateau/visitForm.fxml", this);
+                ScrollPane root = (ScrollPane) utilities.loadLayout("view/village/visitForm.fxml", this);
 
                 stage = new Stage();
                 stage.setTitle("Formulaire de visite");
@@ -76,15 +68,18 @@ public class GUIControllerChateauVisitForm {
                     this.fillInputs(selectedVisit);
 
                     stage.show();
+                    isAlreadyDisplayed = true;
                 }
                 else if (isNewVisit){
-
-
                     stage.show();
+                    isAlreadyDisplayed = true;
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+        else {
+            stage.toFront();
         }
     }
 
@@ -111,6 +106,9 @@ public class GUIControllerChateauVisitForm {
                 String vName = this.visitName.getText();
                 String visitPath = FileManager.getInstance().WORKSPACE + "/" + FileManager.getInstance().CHATEAU + "/" + vName;
 
+                Visit v = new Visit(visitPath, vName);
+                v.setIP(new ArrayList<>());
+
                 visitOverview = new Overview(visitPath + "/" + "visite-overview");
 
                 visitOverview.writePresentation_FR(visitPresTextFROv.getText());
@@ -124,16 +122,11 @@ public class GUIControllerChateauVisitForm {
                 visitInfos.writeContent_FR(visitPresTextFRInf.getText());
 
 
-
-
-                Visit v = new Visit(visitPath, vName);
-                v.setIP(new ArrayList<>());
                 v.setInfo(visitInfos);
                 v.setOverview(visitOverview);
                 FileManager.getInstance().getChateauWorkspace().addVisit(v);
 
-                GUIControllerChateau gc = GUIControllerChateau.getInstance();
-                gc.visitListC.add(v);
+                GUIControllerChateau.getInstance().visitListC.add(v);
 
             }
             else {

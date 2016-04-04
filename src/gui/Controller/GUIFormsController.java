@@ -1,6 +1,8 @@
 package gui.Controller;
 
+import entities.Info;
 import entities.InterestPoint;
+import entities.Overview;
 import entities.Visit;
 import gui.Controller.chateau.GUIControllerChateauIPForm;
 import gui.Controller.chateau.GUIControllerChateauVisitForm;
@@ -8,46 +10,64 @@ import gui.Controller.village.GUIControllerVillageIPForm;
 import gui.Controller.village.GUIControllerVillageVisitForm;
 import gui.GUIUtilities;
 import gui.GUIWindow;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class GUIFormsController {
 
-    private GUIWindow guiWindow;
+    private static GUIFormsController INSTANCE = new GUIFormsController();
     private GUIUtilities utilities;
-    private GUIControllerChateauVisitForm chateauVisitForm;
-    private GUIControllerChateauIPForm chateauIPForm;
-    private GUIControllerVillageVisitForm villageVisitForm;
-    private GUIControllerVillageIPForm villageIPForm;
+    private Stage stage;
+    private boolean isFormDisplayed = false;
 
-
-
-    public GUIFormsController(GUIWindow guiWindow) {
-        this.guiWindow = guiWindow;
+    private GUIFormsController() {
         this.utilities = new GUIUtilities();
     }
 
-    public GUIFormsController() {
+
+    public static GUIFormsController getInstance() {
+        return INSTANCE;
+    }
+
+
+    public void displayStage(Stage s) {
+        if (!isFormDisplayed) {
+            this.stage = s;
+            stage.show();
+            isFormDisplayed = true;
+        }
+        else {
+            this.stage.toFront();
+        }
+
+    }
+
+    public void closeStage() {
+        stage.close();
+        isFormDisplayed = false;
     }
 
 
     public void displayChateauVisitForm(boolean isNewVisit, Visit selectedVisit) {
 
-        chateauVisitForm.getInstance().displayForm(isNewVisit, selectedVisit);
+        GUIControllerChateauVisitForm.getInstance().displayForm(isNewVisit, selectedVisit);
     }
 
     public void displayChateauIPForm(boolean isNewVisit, InterestPoint selectedPoint) {
 
-        chateauIPForm.getInstance().displayForm(isNewVisit, selectedPoint);
+        GUIControllerChateauIPForm.getInstance().displayForm(isNewVisit, selectedPoint);
     }
 
 
     public void displayVillageVisitForm(boolean isNewVisit, Visit selectedVisit) {
 
-        villageVisitForm.getInstance().displayForm(isNewVisit, selectedVisit);
+        GUIControllerVillageVisitForm.getInstance().displayForm(isNewVisit, selectedVisit);
     }
 
     public void displayVillageIPForm(boolean isNewVisit, InterestPoint selectedPoint) {
 
-        villageIPForm.getInstance().displayForm(isNewVisit, selectedPoint);
+        //villageIPForm.getInstance().displayForm(isNewVisit, selectedPoint);
     }
 
 }
