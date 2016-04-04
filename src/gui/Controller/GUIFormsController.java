@@ -1,28 +1,20 @@
 package gui.Controller;
 
-import entities.Info;
 import entities.InterestPoint;
-import entities.Overview;
 import entities.Visit;
 import gui.Controller.chateau.GUIControllerChateauIPForm;
 import gui.Controller.chateau.GUIControllerChateauVisitForm;
 import gui.Controller.village.GUIControllerVillageIPForm;
 import gui.Controller.village.GUIControllerVillageVisitForm;
-import gui.GUIUtilities;
-import gui.GUIWindow;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class GUIFormsController {
 
     private static GUIFormsController INSTANCE = new GUIFormsController();
-    private GUIUtilities utilities;
     private Stage stage;
     private boolean isFormDisplayed = false;
 
     private GUIFormsController() {
-        this.utilities = new GUIUtilities();
     }
 
 
@@ -32,7 +24,6 @@ public class GUIFormsController {
 
 
     public void displayStage(Stage s) {
-
         stage = s;
         isFormDisplayed = true;
     }
