@@ -41,7 +41,7 @@ public class GUIControllerVillage implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        this.guiForms = new GUIFormsController();
+        this.guiForms = GUIFormsController.getInstance();
         visitListV = FXCollections.observableArrayList();
         iPListV = FXCollections.observableArrayList();
 

@@ -1,6 +1,7 @@
 package gui.Controller.village;
 
 import entities.InterestPoint;
+import gui.Controller.GUIFormsController;
 import gui.GUIUtilities;
 import gui.GUIWindow;
 import javafx.fxml.FXML;
@@ -14,79 +15,61 @@ import java.io.IOException;
 
 public class GUIControllerVillageIPForm {
 
-    private GUIWindow guiWindow;
     private static GUIControllerVillageIPForm INSTANCE = new GUIControllerVillageIPForm();
     private Stage stage;
 
-    public boolean isAlreadyDisplayed = false;
     public TextField ipName;
     public TextArea ipPresTextFR;
     public TextArea ipPresTextEN;
 
 
-    private GUIControllerVillageIPForm()
-    {}
+    private GUIControllerVillageIPForm() {
+    }
 
 
     public static GUIControllerVillageIPForm getInstance() {
         return INSTANCE;
     }
 
-    public void setMainClass(GUIWindow guiWindow) {
-        this.guiWindow = guiWindow;
-    }
 
-/*
-    public void displayForm(boolean isNewVisit, InterestPoint selectedPoint) {
+    public void displayForm(boolean isNewPoint, InterestPoint selectedPoint) {
 
-        if (!isAlreadyDisplayed) {
+        try {
 
-            try {
+            ScrollPane root = (ScrollPane) GUIUtilities.loadLayout("view/village/iPForm.fxml", this);
+            stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setOnCloseRequest(closeEvent -> GUIFormsController.getInstance().closeStage());
 
-
-                GUIUtilities utilities = new GUIUtilities();
-
-                ScrollPane root = (ScrollPane) utilities.loadLayout("view/chateau/iPForm.fxml", this);
-
-                stage = new Stage();
-
-                stage.setScene(new Scene(root));
-
-                stage.setOnCloseRequest(closeEvent -> {
-                    System.out.println("Stage is closing");
-                    isAlreadyDisplayed = false;
-                });
-
-
-                if (!isNewVisit && selectedPoint != null) {
-
+            if (selectedPoint != null) {
+                if (!isNewPoint) {
                     this.fillInputs(selectedPoint);
-                    stage.setTitle("Modification d'un point d'intérêt");
+                    stage.setTitle("Modification du point: " + selectedPoint.getName());
+                    GUIFormsController.getInstance().displayStage(stage);
+                    stage.show();
+                } else {
+                    GUIFormsController.getInstance().displayStage(stage);
+                    stage.setTitle("Ajout d'un nouveau point");
                     stage.show();
                 }
-                else if (isNewVisit){
-
-                    stage.setTitle("Ajout d'un point d'intérêt");
-                    stage.show();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
     }
-*/
+
 
     public void fillInputs(InterestPoint p) {
 
-            ipName.setText(p.getName());
-            ipPresTextFR.setText(p.readPresentation_FR());
-            ipPresTextEN.setText(p.readPresentation_EN());
+        ipName.setText(p.getName());
+        ipPresTextFR.setText(p.readPresentation_FR());
+        ipPresTextEN.setText(p.readPresentation_EN());
     }
 
 
     @FXML
     public void saveChanges() {
-        guiWindow.test();
         stage.close();
 
     }

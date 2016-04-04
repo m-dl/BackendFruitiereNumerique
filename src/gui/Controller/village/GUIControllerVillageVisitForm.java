@@ -9,14 +9,18 @@ import gui.Controller.chateau.GUIControllerChateau;
 import gui.GUIUtilities;
 import gui.GUIWindow;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 public class GUIControllerVillageVisitForm {
 
@@ -26,8 +30,8 @@ public class GUIControllerVillageVisitForm {
     Info visitInfos;
     Overview visitOverview;
 
-    public boolean isAlreadyDisplayed = false;
     boolean isNew = false;
+    @FXML
     public TextField visitNameVillage;
     public TextArea visitPresTextFrOverviewVillage;
     public TextArea visitPresTextEnOverviewVillage;
@@ -35,6 +39,17 @@ public class GUIControllerVillageVisitForm {
     public TextArea visitLengthEnOverviewVillage;
     public TextArea visitPresTextFfInfoVillage;
     public TextArea visitPresTextEnInfoVillage;
+    public Button addPicturesOverview;
+
+    public GUIControllerVillageVisitForm() {
+    }
+
+
+    @FXML
+    public void addPicturesOverview() {
+
+    }
+
 
 
     public static GUIControllerVillageVisitForm getInstance() {
@@ -44,47 +59,36 @@ public class GUIControllerVillageVisitForm {
 
     public void displayForm(boolean isNewVisit, Visit selectedVisit) {
 
-        this.isNew = isNewVisit;
-        System.out.println(isAlreadyDisplayed);
+        try {
 
-        if (!this.isAlreadyDisplayed) {
+            ScrollPane root = (ScrollPane) GUIUtilities.loadLayout("view/village/visitForm.fxml", this);
 
-            try {
+            stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setOnCloseRequest(closeEvent -> GUIFormsController.getInstance().closeStage());
 
-
-                GUIUtilities utilities = new GUIUtilities();
-
-                ScrollPane root = (ScrollPane) utilities.loadLayout("view/chateau/visitForm.fxml", this);
-
-                stage = new Stage();
-                stage.setTitle("Formulaire de visite");
-                stage.setScene(new Scene(root));
-
-                stage.setOnCloseRequest(closeEvent -> {
-                    System.out.println("Stage is closing");
-                    isAlreadyDisplayed = false;
-                });
-
-
-                if (!isNewVisit && selectedVisit != null) {
-
+            if (selectedVisit != null) {
+                if(!isNewVisit) {
                     this.fillInputs(selectedVisit);
-
                     GUIFormsController.getInstance().displayStage(stage);
-                    isAlreadyDisplayed = true;
+                    stage.setTitle("Modification de la visite: " + selectedVisit.getName());
+                    stage.show();
                 }
-                else if (isNewVisit){
+                else {
                     GUIFormsController.getInstance().displayStage(stage);
-                    isAlreadyDisplayed = true;
+                    stage.setTitle("Ajout d'une nouvelle visite");
+                    stage.show();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
     }
 
 
     public void fillInputs(Visit v) {
+
         this.visitNameVillage.setText(v.getName());
         this.visitPresTextFrOverviewVillage.setText(v.getOverview().readPresentation_FR());
         this.visitPresTextEnOverviewVillage.setText(v.getOverview().readPresentation_EN());

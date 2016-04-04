@@ -131,12 +131,9 @@ public class GUIWindow extends Application {
         this.guiControllerChateauVisitForm = GUIControllerChateauVisitForm.getInstance();
         this.guiControllerChateauIPForm = GUIControllerChateauIPForm.getInstance();
 
-        this.guiFormsController = new GUIFormsController(this);
+        this.guiFormsController = GUIFormsController.getInstance();
     }
 
-    public void test() {
-        System.out.println("save stuff");
-    }
 
     public void loadChateauData() {
         guiControllerChateau.loadCastleData(FM.getChateauWorkspace().getV());

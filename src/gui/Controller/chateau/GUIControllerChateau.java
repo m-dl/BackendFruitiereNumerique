@@ -35,7 +35,7 @@ public class GUIControllerChateau implements Initializable{
 
     private GUIControllerChateau() {
         this.guiWindow = GUIWindow.getInstance();
-        this.guiForms = new GUIFormsController();
+        this.guiForms = GUIFormsController.getInstance();
         visitListC = FXCollections.observableArrayList();
         iPListC = FXCollections.observableArrayList();
     }

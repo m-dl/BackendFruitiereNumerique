@@ -4,6 +4,7 @@ import entities.Info;
 import entities.Overview;
 import entities.Visit;
 import files.FileManager;
+import gui.Controller.GUIFormsController;
 import gui.GUIUtilities;
 import gui.GUIWindow;
 import javafx.fxml.FXML;
@@ -42,44 +43,29 @@ public class GUIControllerChateauVisitForm {
 
     public void displayForm(boolean isNewVisit, Visit selectedVisit) {
 
-        this.isNew = isNewVisit;
-        System.out.println(isAlreadyDisplayed);
+        try {
 
-        if (!isAlreadyDisplayed) {
+            ScrollPane root = (ScrollPane) GUIUtilities.loadLayout("view/chateau/visitForm.fxml", this);
 
-            try {
+            stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setOnCloseRequest(closeEvent -> GUIFormsController.getInstance().closeStage());
 
-                GUIUtilities utilities = new GUIUtilities();
-
-                ScrollPane root = (ScrollPane) utilities.loadLayout("view/village/visitForm.fxml", this);
-
-                stage = new Stage();
-                stage.setTitle("Formulaire de visite");
-                stage.setScene(new Scene(root));
-
-                stage.setOnCloseRequest(closeEvent -> {
-                    System.out.println("Stage is closing");
-                    isAlreadyDisplayed = false;
-                });
-
-
-                if (!isNewVisit && selectedVisit != null) {
-
+            if (selectedVisit != null) {
+                if(!isNewVisit) {
                     this.fillInputs(selectedVisit);
-
+                    stage.setTitle("Modification de la visite: " + selectedVisit.getName());
+                    GUIFormsController.getInstance().displayStage(stage);
                     stage.show();
-                    isAlreadyDisplayed = true;
                 }
-                else if (isNewVisit){
+                else {
+                    GUIFormsController.getInstance().displayStage(stage);
+                    stage.setTitle("Ajout d'une nouvelle visite");
                     stage.show();
-                    isAlreadyDisplayed = true;
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-        }
-        else {
-            stage.toFront();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -133,7 +119,7 @@ public class GUIControllerChateauVisitForm {
                 //si visite est modifiée
             }
 
-            isNew = false;
+            GUIFormsController.getInstance().closeStage();
             stage.close();
         }
 

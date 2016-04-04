@@ -32,42 +32,53 @@ public class GUIFormsController {
 
 
     public void displayStage(Stage s) {
-        if (!isFormDisplayed) {
-            this.stage = s;
-            stage.show();
-            isFormDisplayed = true;
-        }
-        else {
-            this.stage.toFront();
-        }
 
+        stage = s;
+        isFormDisplayed = true;
     }
 
     public void closeStage() {
-        stage.close();
         isFormDisplayed = false;
+
+    }
+
+    public void toFront() {
+        stage.toFront();
     }
 
 
     public void displayChateauVisitForm(boolean isNewVisit, Visit selectedVisit) {
 
-        GUIControllerChateauVisitForm.getInstance().displayForm(isNewVisit, selectedVisit);
+        if(!isFormDisplayed)
+            GUIControllerChateauVisitForm.getInstance().displayForm(isNewVisit, selectedVisit);
+        else
+            toFront();
     }
 
     public void displayChateauIPForm(boolean isNewVisit, InterestPoint selectedPoint) {
 
-        GUIControllerChateauIPForm.getInstance().displayForm(isNewVisit, selectedPoint);
+        if(!isFormDisplayed)
+            GUIControllerChateauIPForm.getInstance().displayForm(isNewVisit, selectedPoint);
+        else
+            toFront();
     }
 
 
     public void displayVillageVisitForm(boolean isNewVisit, Visit selectedVisit) {
 
-        GUIControllerVillageVisitForm.getInstance().displayForm(isNewVisit, selectedVisit);
+        if(!isFormDisplayed)
+            GUIControllerVillageVisitForm.getInstance().displayForm(isNewVisit, selectedVisit);
+        else
+            toFront();
     }
 
     public void displayVillageIPForm(boolean isNewVisit, InterestPoint selectedPoint) {
 
-        //villageIPForm.getInstance().displayForm(isNewVisit, selectedPoint);
+
+        if(!isFormDisplayed)
+            GUIControllerVillageIPForm.getInstance().displayForm(isNewVisit, selectedPoint);
+        else
+            toFront();
     }
 
 }
