@@ -5,6 +5,7 @@ import gui.Controller.*;
 import gui.Controller.chateau.GUIControllerChateau;
 import gui.Controller.chateau.GUIControllerChateauIPForm;
 import gui.Controller.chateau.GUIControllerChateauVisitForm;
+import gui.Controller.photo.GUIControllerPhotos;
 import gui.Controller.village.GUIControllerVillage;
 import javafx.application.Application;
 import javafx.scene.Scene;
