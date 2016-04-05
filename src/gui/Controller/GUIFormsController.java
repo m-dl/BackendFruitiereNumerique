@@ -16,8 +16,6 @@ public class GUIFormsController {
 
     private GUIFormsController() {
     }
-
-
     public static GUIFormsController getInstance() {
         return INSTANCE;
     }
@@ -30,7 +28,6 @@ public class GUIFormsController {
 
     public void closeStage() {
         isFormDisplayed = false;
-
     }
 
     public void toFront() {
@@ -70,6 +67,13 @@ public class GUIFormsController {
             GUIControllerVillageIPForm.getInstance().displayForm(isNewVisit, selectedPoint);
         else
             toFront();
+    }
+
+    // TODO: 06/04/2016 plusieurs types de formulaires ici selon si overview, infos, images etc..
+    // TODO: 06/04/2016 avec un parametre ou plusieurs fonctions?
+    // TODO: 06/04/2016 est-ce qu'on peut afficher plusieurs fenetres d'ajout d'images?
+    public void displayPhotoForm() {
+        GUIControllerPhotoForm.getInstance().displayForm();
     }
 
 }

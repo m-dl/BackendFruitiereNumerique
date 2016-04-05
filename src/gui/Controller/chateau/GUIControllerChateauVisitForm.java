@@ -6,10 +6,8 @@ import entities.Visit;
 import files.FileManager;
 import gui.Controller.GUIFormsController;
 import gui.GUIUtilities;
-import gui.GUIWindow;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -21,11 +19,6 @@ import java.util.ArrayList;
 public class GUIControllerChateauVisitForm {
 
     private static GUIControllerChateauVisitForm INSTANCE = new GUIControllerChateauVisitForm();
-    private Stage stage;
-
-    Info visitInfos;
-    Overview visitOverview;
-
     public TextField visitName;
     public TextArea visitPresTextFROv;
     public TextArea visitPresTextENOv;
@@ -33,7 +26,9 @@ public class GUIControllerChateauVisitForm {
     public TextArea visitLengthENOv;
     public TextArea visitPresTextFRInf;
     public TextArea visitPresTextENInf;
-
+    Info visitInfos;
+    Overview visitOverview;
+    private Stage stage;
 
     public static GUIControllerChateauVisitForm getInstance() {
         return INSTANCE;
@@ -80,14 +75,17 @@ public class GUIControllerChateauVisitForm {
             visitPresTextENInf.setText(v.getInfo().readContent_EN());
     }
 
+
     @FXML
     public void addInfoPictures() {
-        System.out.print('I');
+        // TODO: 06/04/2016 formulaire différent car info
+        GUIFormsController.getInstance().displayPhotoForm();
     }
 
     @FXML
     public void addOverviewPictures() {
-        System.out.print('O');
+        // TODO: 06/04/2016  gérer plusieurs formulaires si one doit utiliser que trois images, si il faut que des vidéos ... etc
+        GUIFormsController.getInstance().displayPhotoForm();
     }
 
 
@@ -100,7 +98,7 @@ public class GUIControllerChateauVisitForm {
                 System.out.println("added");
 
                 String vName = this.visitName.getText();
-                String visitPath = FileManager.getInstance().WORKSPACE + "/" + FileManager.getInstance().CHATEAU + "/" + vName;
+                String visitPath = FileManager.WORKSPACE + "/" + FileManager.CHATEAU + "/" + vName;
 
                 Visit v = new Visit(visitPath, vName);
                 v.setIP(new ArrayList<>());
