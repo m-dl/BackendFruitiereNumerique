@@ -6,13 +6,16 @@ import javafx.scene.control.TabPane;
 
 public class GUIMainViewController {
 
-    private GUIWindow guiWindow;
+    private static GUIMainViewController INSTANCE = new GUIMainViewController();
 
     @FXML
     private TabPane tabPane;
 
-    public GUIMainViewController(GUIWindow guiWindow) {
-        this.guiWindow = guiWindow;
+    private GUIMainViewController()
+    {}
+
+    public static GUIMainViewController getInstance() {
+        return INSTANCE;
     }
 
     @FXML

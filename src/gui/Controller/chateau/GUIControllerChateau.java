@@ -2,6 +2,7 @@ package gui.Controller.chateau;
 
 import entities.InterestPoint;
 import entities.Visit;
+import files.FileManager;
 import gui.Controller.GUIFormsController;
 import gui.GUIWindow;
 import javafx.collections.FXCollections;
@@ -23,17 +24,24 @@ public class GUIControllerChateau implements Initializable{
 
     private GUIWindow guiWindow;
     private GUIFormsController guiForms;
+    private static GUIControllerChateau INSTANCE = new GUIControllerChateau();
+
 
     public ListView<Visit> visitListViewC;
     public ListView<InterestPoint> iPListViewC;
     public ObservableList<Visit> visitListC;
     public ObservableList<InterestPoint> iPListC;
 
-    public GUIControllerChateau(GUIWindow guiWindow) {
-        this.guiWindow = guiWindow;
-        this.guiForms = new GUIFormsController();
+
+    private GUIControllerChateau() {
+        this.guiWindow = GUIWindow.getInstance();
+        this.guiForms = GUIFormsController.getInstance();
         visitListC = FXCollections.observableArrayList();
         iPListC = FXCollections.observableArrayList();
+    }
+
+    public static GUIControllerChateau getInstance() {
+        return INSTANCE;
     }
 
     @Override
@@ -138,14 +146,18 @@ public class GUIControllerChateau implements Initializable{
 
     @FXML
     void deleteVisitC() {
-        System.out.println("del visit : "+visitListViewC.getSelectionModel().getSelectedItem());
-        //guiWindow.displayChateauForm(false);
+        String path = FileManager.getInstance().WORKSPACE + "/" + FileManager.getInstance().CHATEAU + "/" + visitListViewC.getSelectionModel().getSelectedItem().getName();
+        guiWindow.FM.getChateauWorkspace().deleteVisit(visitListViewC.getSelectionModel().getSelectedItem(),path);
+        visitListC.remove(visitListViewC.getSelectionModel().getSelectedItem());
     }
 
     @FXML
     void deleteIPC() {
         System.out.println("del point : "+iPListViewC.getSelectionModel().getSelectedItem());
-       // guiWindow.displayChateauForm(false);
+        String path = FileManager.getInstance().WORKSPACE + "/" + FileManager.getInstance().CHATEAU + "/" + visitListViewC.getSelectionModel().getSelectedItem().getName() + "/" + iPListViewC.getSelectionModel().getSelectedItem().getName();
+        ArrayList<Visit> visits = FileManager.getInstance().getChateauWorkspace().getV();
+        visits.get(visits.indexOf(visitListViewC.getSelectionModel().getSelectedItem())).deleteInterestPoint(iPListViewC.getSelectionModel().getSelectedItem(),path);
+        iPListC.remove(iPListViewC.getSelectionModel().getSelectedItem());
     }
 
     public Visit getSelectedVisit() {

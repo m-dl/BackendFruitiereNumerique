@@ -2,11 +2,19 @@ package gui.Controller.village;
 
 import entities.InterestPoint;
 import entities.Visit;
+import gui.Controller.GUIFormsController;
 import gui.GUIWindow;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.cell.TextFieldListCell;
+import javafx.scene.input.MouseEvent;
+import javafx.util.StringConverter;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -14,37 +22,40 @@ import java.util.ResourceBundle;
 
 public class GUIControllerVillage implements Initializable{
 
-    private GUIWindow guiWindow;
-    public ListView<Visit> visitListViewC;
-    public ListView<InterestPoint> iPListViewC;
-    public ListView<String> infoListView;
-    public ObservableList<Visit> visitList;
-    public ObservableList<InterestPoint> iPList;
-    public ObservableList<String> infoList;
+    private GUIFormsController guiForms;
+    private static GUIControllerVillage INSTANCE = new GUIControllerVillage();
 
-    public GUIControllerVillage(GUIWindow guiWindow) {
-        this.guiWindow = guiWindow;
-        //visitList = FXCollections.observableArrayList();
-       // iPList = FXCollections.observableArrayList();
-        //infoList = FXCollections.observableArrayList();
+    public ListView<Visit> visitListViewV;
+    public ListView<InterestPoint> iPListViewV;
+    public ObservableList<Visit> visitListV;
+    public ObservableList<InterestPoint> iPListV;
+
+
+    private GUIControllerVillage()
+    {}
+
+    public static GUIControllerVillage getInstance() {
+        return INSTANCE;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        /*
-        visitListView.setItems(visitList);
-        iPListView.setItems(iPList);
-        infoListView.setItems(infoList);
+        this.guiForms = GUIFormsController.getInstance();
+        visitListV = FXCollections.observableArrayList();
+        iPListV = FXCollections.observableArrayList();
+
+        visitListViewV.setItems(visitListV);
+        iPListViewV.setItems(iPListV);
 
         setFactories();
         setListeners();
-        */
+
     }
-/*
+
     public void setFactories() {
 
-        visitListView.setCellFactory(lv -> {
+        visitListViewV.setCellFactory(lv -> {
 
             StringConverter<Visit> converter = new StringConverter<Visit>() {
                 @Override
@@ -63,7 +74,7 @@ public class GUIControllerVillage implements Initializable{
             return cell;
         });
 
-        iPListView.setCellFactory(lv -> {
+        iPListViewV.setCellFactory(lv -> {
 
             StringConverter<InterestPoint> converter = new StringConverter<InterestPoint>() {
                 @Override
@@ -85,87 +96,81 @@ public class GUIControllerVillage implements Initializable{
 
     public void setListeners() {
 
-        visitListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        visitListViewV.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent event) {
-                iPList.clear();
-                infoList.clear();
-                loadIPData(visitListView.getSelectionModel().getSelectedItem());
+                iPListV.clear();
+                loadIPData(visitListViewV.getSelectionModel().getSelectedItem());
             }
         });
-
-        iPListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-                infoList.clear();
-                loadInfoData(iPListView.getSelectionModel().getSelectedItem());
-            }
-        });
-
     }
-    */
+
 
     @FXML
     void addVisitV() {
         System.out.println("add visit");
-        //guiWindow.displayChateauForm(true);
-    }
-
-    @FXML
-    void addPIV() {
-        System.out.println("add pic");
+        guiForms.displayVillageVisitForm(true,this.getSelectedVisit());
     }
 
     @FXML
     void editVisitV() {
-       // System.out.println("edit visit : "+visitListView.getSelectionModel().getSelectedItem());
-        //guiWindow.displayChateauForm(false);
+        System.out.println("edit visit : "+ visitListViewV.getSelectionModel().getSelectedItem());
+        guiForms.displayVillageVisitForm(false,this.getSelectedVisit());
+    }
+
+    @FXML
+    void addPIV() {
+        if(getSelectedVisit() != null) {
+            System.out.println("edit visit : " + iPListViewV.getSelectionModel().getSelectedItem());
+            guiForms.displayVillageIPForm(true, this.getSelectedPoint());
+        }
+        else {
+            System.out.println("choisissez une visite");
+        }
+    }
+
+    @FXML
+    void editIPV() {
+        if(getSelectedVisit() != null) {
+            System.out.println("edit visit : " + iPListViewV.getSelectionModel().getSelectedItem());
+            guiForms.displayVillageIPForm(false, this.getSelectedPoint());
+        }
+        else {
+            System.out.println("choisissez une visite");
+        }
     }
 
     @FXML
     void deleteVisitV() {
-        //System.out.println("edit visit : "+visitListView.getSelectionModel().getSelectedItem());
+        System.out.println("del visit : "+ visitListViewV.getSelectionModel().getSelectedItem());
         //guiWindow.displayChateauForm(false);
     }
 
     @FXML
     void deleteIPV() {
-        //System.out.println("edit visit : "+visitListView.getSelectionModel().getSelectedItem());
-        //guiWindow.displayChateauForm(false);
+        System.out.println("del point : "+ iPListViewV.getSelectionModel().getSelectedItem());
+       // guiWindow.displayChateauForm(false);
     }
 
-    @FXML
-    void editIPV() {
-        //System.out.println("edit IP : "+ iPListView.getSelectionModel().getSelectedItem());
+    public Visit getSelectedVisit() {
+        return visitListViewV.getSelectionModel().getSelectedItem();
     }
 
-
-    public void getSelectedVisit() {
-        //return visitListView.getSelectionModel().getSelectedItem();
+    public InterestPoint getSelectedPoint() {
+        return iPListViewV.getSelectionModel().getSelectedItem();
     }
 
-
-
-
-    public void loadCastleData(ArrayList<Visit> visits) {
+    public void loadVisitData(ArrayList<Visit> visits) {
         for (int i = 0; i < visits.size(); i++) {
-            this.visitList.add(visits.get(i));
+            this.visitListV.add(visits.get(i));
         }
     }
 
     public void loadIPData(Visit visit) {
 
         for (int i = 0; i < visit.getIP().size(); i++) {
-            this.iPList.add(visit.getIP().get(i));
-        }
-    }
-
-    public void loadInfoData(InterestPoint ip) {
-
-        for (int i = 0; i < ip.getPhotos().size(); i++) {
-            this.infoList.add(ip.getPhotos().get(i).getName());
+            this.iPListV.add(visit.getIP().get(i));
         }
     }
 

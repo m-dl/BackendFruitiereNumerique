@@ -9,7 +9,7 @@ import java.io.IOException;
  */
 public class GUIUtilities {
 
-    public Object loadLayout(String resourcePath, Object Controller) throws IOException {
+    public static Object loadLayout(String resourcePath, Object Controller) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(GUIWindow.class.getResource(resourcePath));
         fxmlLoader.setController(Controller);

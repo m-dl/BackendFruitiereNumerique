@@ -1,42 +1,58 @@
-package gui.Controller.chateau;
+package gui.Controller.village;
 
 import entities.Info;
 import entities.Overview;
 import entities.Visit;
 import files.FileManager;
 import gui.Controller.GUIFormsController;
+import gui.Controller.chateau.GUIControllerChateau;
 import gui.GUIUtilities;
 import gui.GUIWindow;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
-public class GUIControllerChateauVisitForm {
+public class GUIControllerVillageVisitForm {
 
-    private static GUIControllerChateauVisitForm INSTANCE = new GUIControllerChateauVisitForm();
+    private static GUIControllerVillageVisitForm INSTANCE = new GUIControllerVillageVisitForm();
     private Stage stage;
 
     Info visitInfos;
     Overview visitOverview;
 
-    public boolean isAlreadyDisplayed = false;
     boolean isNew = false;
-    public TextField visitName;
-    public TextArea visitPresTextFROv;
-    public TextArea visitPresTextENOv;
-    public TextArea visitLengthFROv;
-    public TextArea visitLengthENOv;
-    public TextArea visitPresTextFRInf;
-    public TextArea visitPresTextENInf;
+    @FXML
+    public TextField visitNameVillage;
+    public TextArea visitPresTextFrOverviewVillage;
+    public TextArea visitPresTextEnOverviewVillage;
+    public TextArea visitLengthFrOverviewVillage;
+    public TextArea visitLengthEnOverviewVillage;
+    public TextArea visitPresTextFfInfoVillage;
+    public TextArea visitPresTextEnInfoVillage;
+    public Button addPicturesOverview;
+
+    public GUIControllerVillageVisitForm() {
+    }
 
 
-    public static GUIControllerChateauVisitForm getInstance() {
+    @FXML
+    public void addPicturesOverview() {
+
+    }
+
+
+
+    public static GUIControllerVillageVisitForm getInstance() {
         return INSTANCE;
     }
 
@@ -45,7 +61,7 @@ public class GUIControllerChateauVisitForm {
 
         try {
 
-            ScrollPane root = (ScrollPane) GUIUtilities.loadLayout("view/chateau/visitForm.fxml", this);
+            ScrollPane root = (ScrollPane) GUIUtilities.loadLayout("view/village/visitForm.fxml", this);
 
             stage = new Stage();
             stage.setScene(new Scene(root));
@@ -54,8 +70,8 @@ public class GUIControllerChateauVisitForm {
             if (selectedVisit != null) {
                 if(!isNewVisit) {
                     this.fillInputs(selectedVisit);
-                    stage.setTitle("Modification de la visite: " + selectedVisit.getName());
                     GUIFormsController.getInstance().displayStage(stage);
+                    stage.setTitle("Modification de la visite: " + selectedVisit.getName());
                     stage.show();
                 }
                 else {
@@ -67,17 +83,19 @@ public class GUIControllerChateauVisitForm {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
 
     public void fillInputs(Visit v) {
-            visitName.setText(v.getName());
-            visitPresTextFROv.setText(v.getOverview().readPresentation_FR());
-            visitPresTextENOv.setText(v.getOverview().readPresentation_EN());
-            visitLengthFROv.setText(v.getOverview().readLength_FR());
-            visitLengthENOv.setText(v.getOverview().readLength_EN());
-            visitPresTextFRInf.setText(v.getInfo().readContent_FR());
-            visitPresTextENInf.setText(v.getInfo().readContent_EN());
+
+        this.visitNameVillage.setText(v.getName());
+        this.visitPresTextFrOverviewVillage.setText(v.getOverview().readPresentation_FR());
+        this.visitPresTextEnOverviewVillage.setText(v.getOverview().readPresentation_EN());
+        this.visitLengthFrOverviewVillage.setText(v.getOverview().readLength_FR());
+        this.visitLengthEnOverviewVillage.setText(v.getOverview().readLength_EN());
+        this.visitPresTextFfInfoVillage.setText(v.getInfo().readContent_FR());
+        this.visitPresTextEnInfoVillage.setText(v.getInfo().readContent_EN());
     }
 
 
@@ -89,7 +107,7 @@ public class GUIControllerChateauVisitForm {
 
                 System.out.println("added");
 
-                String vName = this.visitName.getText();
+                String vName = this.visitNameVillage.getText();
                 String visitPath = FileManager.getInstance().WORKSPACE + "/" + FileManager.getInstance().CHATEAU + "/" + vName;
 
                 Visit v = new Visit(visitPath, vName);
@@ -97,15 +115,15 @@ public class GUIControllerChateauVisitForm {
 
                 visitOverview = new Overview(visitPath + "/" + "visite-overview");
 
-                visitOverview.writePresentation_FR(visitPresTextFROv.getText());
-                visitOverview.writeLength_EN(visitPresTextENOv.getText());
-                visitOverview.writeLength_FR(visitLengthFROv.getText());
-                visitOverview.writeLength_EN(visitLengthENOv.getText());
+                visitOverview.writePresentation_FR(visitPresTextFrOverviewVillage.getText());
+                visitOverview.writeLength_EN(visitPresTextEnOverviewVillage.getText());
+                visitOverview.writeLength_FR(visitLengthFrOverviewVillage.getText());
+                visitOverview.writeLength_EN(visitLengthEnOverviewVillage.getText());
 
                 visitInfos = new Info(visitPath + "/" + "visite-info");
 
-                visitInfos.writeContent_EN(visitPresTextENInf.getText());
-                visitInfos.writeContent_FR(visitPresTextFRInf.getText());
+                visitInfos.writeContent_EN(visitPresTextFfInfoVillage.getText());
+                visitInfos.writeContent_FR(visitPresTextEnInfoVillage.getText());
 
 
                 v.setInfo(visitInfos);
@@ -119,7 +137,7 @@ public class GUIControllerChateauVisitForm {
                 //si visite est modifiée
             }
 
-            GUIFormsController.getInstance().closeStage();
+            isNew = false;
             stage.close();
         }
 

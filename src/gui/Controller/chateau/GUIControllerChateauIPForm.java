@@ -1,6 +1,9 @@
 package gui.Controller.chateau;
 
 import entities.InterestPoint;
+import entities.Visit;
+import files.FileManager;
+import gui.Controller.GUIFormsController;
 import gui.GUIUtilities;
 import gui.GUIWindow;
 import javafx.fxml.FXML;
@@ -11,14 +14,13 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class GUIControllerChateauIPForm {
 
-    private GUIWindow guiWindow;
     private static GUIControllerChateauIPForm INSTANCE = new GUIControllerChateauIPForm();
     private Stage stage;
 
-    public boolean isAlreadyDisplayed = false;
     public TextField ipName;
     public TextArea ipPresTextFR;
     public TextArea ipPresTextEN;
@@ -32,46 +34,31 @@ public class GUIControllerChateauIPForm {
         return INSTANCE;
     }
 
-    public void setMainClass(GUIWindow guiWindow) {
-        this.guiWindow = guiWindow;
-    }
+    public void displayForm(boolean isNewPoint, InterestPoint selectedPoint) {
 
+        try {
 
-    public void displayForm(boolean isNewVisit, InterestPoint selectedPoint) {
+            ScrollPane root = (ScrollPane) GUIUtilities.loadLayout("view/chateau/iPForm.fxml", this);
 
-        if (!isAlreadyDisplayed) {
+            stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setOnCloseRequest(closeEvent -> GUIFormsController.getInstance().closeStage());
 
-            try {
-
-
-                GUIUtilities utilities = new GUIUtilities();
-
-                ScrollPane root = (ScrollPane) utilities.loadLayout("view/chateau/iPForm.fxml", this);
-
-                stage = new Stage();
-
-                stage.setScene(new Scene(root));
-
-                stage.setOnCloseRequest(closeEvent -> {
-                    System.out.println("Stage is closing");
-                    isAlreadyDisplayed = false;
-                });
-
-
-                if (!isNewVisit && selectedPoint != null) {
-
+            if (selectedPoint != null) {
+                if(!isNewPoint) {
                     this.fillInputs(selectedPoint);
-                    stage.setTitle("Modification d'un point d'intérêt");
+                    stage.setTitle("Modification du point: " + selectedPoint.getName());
+                    GUIFormsController.getInstance().displayStage(stage);
                     stage.show();
                 }
-                else if (isNewVisit){
-
-                    stage.setTitle("Ajout d'un point d'intérêt");
+                else {
+                    GUIFormsController.getInstance().displayStage(stage);
+                    stage.setTitle("Ajout d'un nouveau point");
                     stage.show();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -86,9 +73,39 @@ public class GUIControllerChateauIPForm {
 
     @FXML
     public void saveChanges() {
-        guiWindow.test();
-        stage.close();
+        if( validForm() ) {
+            if(/*isNew*/true) {
 
+                System.out.println("added");
+
+                String ipName = this.ipName.getText();
+
+                String ipPath = FileManager.getInstance().WORKSPACE + "/" + FileManager.getInstance().CHATEAU + "/" +
+                        GUIControllerChateau.getInstance().getSelectedVisit().getName() + "/" + ipName;
+
+                InterestPoint ip = new InterestPoint(ipPath, ipName);
+
+                ip.writePresentation_FR(ipPresTextFR.getText());
+                ip.writePresentation_EN(ipPresTextEN.getText());
+
+                ArrayList<Visit> v = FileManager.getInstance().getChateauWorkspace().getV();
+                v.get(v.indexOf(GUIControllerChateau.getInstance().getSelectedVisit())).addInterestPoint(ip);
+
+                GUIControllerChateau.getInstance().iPListC.add(ip);
+
+            }
+            else {
+                //si visite est modifiée
+            }
+
+            //isNew = false;
+            stage.close();
+        }
+
+    }
+
+    private boolean validForm() {
+        return true;
     }
 
 

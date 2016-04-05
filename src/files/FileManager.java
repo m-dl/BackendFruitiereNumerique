@@ -7,8 +7,8 @@ import entities.Location;
  */
 public class FileManager {
 	
-    final private static String WORKSPACE = "medias";
-    final private static String CHATEAU = "chateau";
+    public final static String WORKSPACE = "medias";
+    public final static String CHATEAU = "chateau";
     final private static String VILLAGE = "village";
 	final public static String PHOTOS = "photo";
 	final public static String INTERIEUR = "interieur";
