@@ -41,18 +41,19 @@ public class GUIControllerVillageIPForm {
             stage.setScene(new Scene(root));
             stage.setOnCloseRequest(closeEvent -> GUIFormsController.getInstance().closeStage());
 
-            if (selectedPoint != null) {
+
                 if (!isNewPoint) {
-                    this.fillInputs(selectedPoint);
-                    stage.setTitle("Modification du point: " + selectedPoint.getName());
-                    GUIFormsController.getInstance().displayStage(stage);
-                    stage.show();
+                    if (selectedPoint != null) {
+                        this.fillInputs(selectedPoint);
+                        stage.setTitle("Modification du point: " + selectedPoint.getName());
+                        GUIFormsController.getInstance().displayStage(stage);
+                        stage.show();
+                    }
                 } else {
                     GUIFormsController.getInstance().displayStage(stage);
                     stage.setTitle("Ajout d'un nouveau point");
                     stage.show();
                 }
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }

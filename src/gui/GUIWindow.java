@@ -20,24 +20,11 @@ import java.io.IOException;
 public class GUIWindow extends Application {
 
     public FileManager FM = FileManager.getInstance();
-    private GUIUtilities utilities;
     private static GUIWindow INSTANCE = new GUIWindow();
 
 
     private Pane rootLayout;
     private Stage primaryStage;
-
-    private GUIMainViewController guiMainViewController;
-
-    private GUIControllerChateau guiControllerChateau;
-    private GUIControllerVillage guiControllerVillage;
-    private GUIControllerPhotos guiControllerPhotos;
-
-    private GUIControllerChateauVisitForm guiControllerChateauVisitForm;
-    private GUIControllerChateauIPForm guiControllerChateauIPForm;
-
-
-    private GUIFormsController guiFormsController;
 
 
 
@@ -46,7 +33,6 @@ public class GUIWindow extends Application {
     }
 
     public GUIWindow() {
-        this.utilities = new GUIUtilities();
     }
 
     public static GUIWindow getInstance() {
@@ -63,7 +49,6 @@ public class GUIWindow extends Application {
 
         this.primaryStage = primaryStage;
         primaryStage.setTitle("Ajout de fichiers");
-        loadControllers();
 
         initRootLayout();
 
@@ -72,7 +57,7 @@ public class GUIWindow extends Application {
     public void initRootLayout() {
 
         try {
-            rootLayout = (Pane) utilities.loadLayout("view/mainView.fxml", guiMainViewController);
+            rootLayout = (Pane) GUIUtilities.loadLayout("view/mainView.fxml", GUIMainViewController.getInstance());
 
             loadTabPane();
             loadChateauData();
@@ -93,11 +78,11 @@ public class GUIWindow extends Application {
     public void loadTabPane() throws IOException {
 
 
-        TabPane tabPane = guiMainViewController.getTabPane();
+        TabPane tabPane = GUIMainViewController.getInstance().getTabPane();
 
-        AnchorPane chateauPane = (AnchorPane) utilities.loadLayout("view/chateau/ChateauView.fxml",guiControllerChateau);
-        AnchorPane villagePane = (AnchorPane) utilities.loadLayout("view/village/VillageView.fxml",guiControllerVillage);
-        AnchorPane photosPane = (AnchorPane) utilities.loadLayout("view/photos/photosView.fxml",guiControllerPhotos);
+        AnchorPane chateauPane = (AnchorPane) GUIUtilities.loadLayout("view/chateau/ChateauView.fxml", GUIControllerChateau.getInstance());
+        AnchorPane villagePane = (AnchorPane) GUIUtilities.loadLayout("view/village/VillageView.fxml", GUIControllerVillage.getInstance());
+        AnchorPane photosPane = (AnchorPane) GUIUtilities.loadLayout("view/photos/photosView.fxml", GUIControllerPhotos.getInstance());
 
 
 
@@ -121,26 +106,11 @@ public class GUIWindow extends Application {
 
     }
 
-    public void loadControllers() {
-
-        this.guiMainViewController = GUIMainViewController.getInstance();
-
-        this.guiControllerChateau = GUIControllerChateau.getInstance();
-        this.guiControllerVillage = GUIControllerVillage.getInstance();
-        this.guiControllerPhotos = GUIControllerPhotos.getInstance();
-
-        this.guiControllerChateauVisitForm = GUIControllerChateauVisitForm.getInstance();
-        this.guiControllerChateauIPForm = GUIControllerChateauIPForm.getInstance();
-
-        this.guiFormsController = GUIFormsController.getInstance();
-    }
-
-
     public void loadChateauData() {
-        guiControllerChateau.loadCastleData(FM.getChateauWorkspace().getV());
+        GUIControllerChateau.getInstance().loadCastleData(FM.getChateauWorkspace().getV());
     }
 
     public void loadVillageData() {
-        guiControllerVillage.loadVisitData(FM.getVillageWorkspace().getV());
+        GUIControllerVillage.getInstance().loadVisitData(FM.getVillageWorkspace().getV());
     }
 }

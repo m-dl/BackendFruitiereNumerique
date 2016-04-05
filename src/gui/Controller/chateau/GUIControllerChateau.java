@@ -99,13 +99,9 @@ public class GUIControllerChateau implements Initializable{
 
     public void setListeners() {
 
-        visitListViewC.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-                iPListC.clear();
-                loadIPData(visitListViewC.getSelectionModel().getSelectedItem());
-            }
+        visitListViewC.setOnMouseClicked(event -> {
+            iPListC.clear();
+            loadIPData(visitListViewC.getSelectionModel().getSelectedItem());
         });
     }
 
@@ -113,13 +109,15 @@ public class GUIControllerChateau implements Initializable{
     @FXML
     void addVisitC() {
         System.out.println("add visit");
-        guiForms.displayChateauVisitForm(true,this.getSelectedVisit());
+        guiForms.displayChateauVisitForm(true, this.getSelectedVisit());
     }
 
     @FXML
     void editVisitC() {
         System.out.println("edit visit : "+visitListViewC.getSelectionModel().getSelectedItem());
-        guiForms.displayChateauVisitForm(false,this.getSelectedVisit());
+        if(this.getSelectedVisit() != null ) {
+            guiForms.displayChateauVisitForm(false, this.getSelectedVisit());
+        }
     }
 
     @FXML
@@ -175,9 +173,10 @@ public class GUIControllerChateau implements Initializable{
     }
 
     public void loadIPData(Visit visit) {
-
-        for (int i = 0; i < visit.getIP().size(); i++) {
-            this.iPListC.add(visit.getIP().get(i));
+        if(visit != null) {
+            for (int i = 0; i < visit.getIP().size(); i++) {
+                this.iPListC.add(visit.getIP().get(i));
+            }
         }
     }
 

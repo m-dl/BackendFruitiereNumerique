@@ -25,13 +25,7 @@ import java.util.ResourceBundle;
 public class GUIControllerVillageVisitForm {
 
     private static GUIControllerVillageVisitForm INSTANCE = new GUIControllerVillageVisitForm();
-    private Stage stage;
 
-    Info visitInfos;
-    Overview visitOverview;
-
-    boolean isNew = false;
-    @FXML
     public TextField visitNameVillage;
     public TextArea visitPresTextFrOverviewVillage;
     public TextArea visitPresTextEnOverviewVillage;
@@ -39,23 +33,24 @@ public class GUIControllerVillageVisitForm {
     public TextArea visitLengthEnOverviewVillage;
     public TextArea visitPresTextFfInfoVillage;
     public TextArea visitPresTextEnInfoVillage;
-    public Button addPicturesOverview;
+
+    Info visitInfos;
+    Overview visitOverview;
+
+    boolean isNew = false;
+    private Stage stage;
 
     public GUIControllerVillageVisitForm() {
     }
-
-
-    @FXML
-    public void addPicturesOverview() {
-
-    }
-
-
 
     public static GUIControllerVillageVisitForm getInstance() {
         return INSTANCE;
     }
 
+    @FXML
+    public void addPicturesOverview() {
+
+    }
 
     public void displayForm(boolean isNewVisit, Visit selectedVisit) {
 
@@ -67,18 +62,18 @@ public class GUIControllerVillageVisitForm {
             stage.setScene(new Scene(root));
             stage.setOnCloseRequest(closeEvent -> GUIFormsController.getInstance().closeStage());
 
-            if (selectedVisit != null) {
-                if(!isNewVisit) {
+
+            if (!isNewVisit) {
+                if (selectedVisit != null) {
                     this.fillInputs(selectedVisit);
                     GUIFormsController.getInstance().displayStage(stage);
                     stage.setTitle("Modification de la visite: " + selectedVisit.getName());
                     stage.show();
                 }
-                else {
-                    GUIFormsController.getInstance().displayStage(stage);
-                    stage.setTitle("Ajout d'une nouvelle visite");
-                    stage.show();
-                }
+            } else {
+                GUIFormsController.getInstance().displayStage(stage);
+                stage.setTitle("Ajout d'une nouvelle visite");
+                stage.show();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -102,8 +97,8 @@ public class GUIControllerVillageVisitForm {
     @FXML
     public void saveChanges() {
 
-        if( validForm() ) {
-            if(/*isNew*/true) {
+        if (validForm()) {
+            if (/*isNew*/true) {
 
                 System.out.println("added");
 
@@ -132,15 +127,13 @@ public class GUIControllerVillageVisitForm {
 
                 GUIControllerChateau.getInstance().visitListC.add(v);
 
-            }
-            else {
+            } else {
                 //si visite est modifiée
             }
 
             isNew = false;
             stage.close();
         }
-
 
 
     }

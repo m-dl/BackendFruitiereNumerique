@@ -9,6 +9,7 @@ import gui.GUIUtilities;
 import gui.GUIWindow;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -25,8 +26,6 @@ public class GUIControllerChateauVisitForm {
     Info visitInfos;
     Overview visitOverview;
 
-    public boolean isAlreadyDisplayed = false;
-    boolean isNew = false;
     public TextField visitName;
     public TextArea visitPresTextFROv;
     public TextArea visitPresTextENOv;
@@ -51,19 +50,20 @@ public class GUIControllerChateauVisitForm {
             stage.setScene(new Scene(root));
             stage.setOnCloseRequest(closeEvent -> GUIFormsController.getInstance().closeStage());
 
-            if (selectedVisit != null) {
-                if(!isNewVisit) {
+
+            if (!isNewVisit) {
+                if (selectedVisit != null) {
                     this.fillInputs(selectedVisit);
                     stage.setTitle("Modification de la visite: " + selectedVisit.getName());
                     GUIFormsController.getInstance().displayStage(stage);
                     stage.show();
                 }
-                else {
-                    GUIFormsController.getInstance().displayStage(stage);
-                    stage.setTitle("Ajout d'une nouvelle visite");
-                    stage.show();
-                }
+            } else {
+                GUIFormsController.getInstance().displayStage(stage);
+                stage.setTitle("Ajout d'une nouvelle visite");
+                stage.show();
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -78,6 +78,16 @@ public class GUIControllerChateauVisitForm {
             visitLengthENOv.setText(v.getOverview().readLength_EN());
             visitPresTextFRInf.setText(v.getInfo().readContent_FR());
             visitPresTextENInf.setText(v.getInfo().readContent_EN());
+    }
+
+    @FXML
+    public void addInfoPictures() {
+        System.out.print('I');
+    }
+
+    @FXML
+    public void addOverviewPictures() {
+        System.out.print('O');
     }
 
 
