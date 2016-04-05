@@ -57,7 +57,7 @@ public class ZipManager {
 	 * Unzip
 	 * 
 	 * @param zipFile input zip file
-	 * @param output zip file output folder
+	 * @param outputFolder zip file output folder
 	 */
 	public static void unZip(String zipFile, String outputFolder) {
 		byte[] buffer = new byte[1024];
