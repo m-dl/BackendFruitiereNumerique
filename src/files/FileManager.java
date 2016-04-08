@@ -122,17 +122,18 @@ public class FileManager {
     // Download media from drive Chateau
     public void downloadFromDriveChateau() {
     	// download file
-    	DriveTools.download(DriveTools.CHATEAU_MEDIAS);
-    	// delete old media folder
-    	if(FileTools.Exist(new File(WORKSPACE + "/" + CHATEAU))) {
-	    	FileTools.Delete(WORKSPACE + "/" + CHATEAU);
-    	}		
-    	// unzip
-    	View.header1("Unzipping file ...");
-        ZipManager.unZip(WORKSPACE + "/" + CHATEAU + ZIP_EXT, WORKSPACE);
-        View.header1("Unzipping file success !");
-        // delete zip
-        FileTools.Delete(WORKSPACE + "/" + CHATEAU + ZIP_EXT);
+    	if(DriveTools.download(DriveTools.CHATEAU_MEDIAS)) {
+	    	// delete old media folder
+	    	if(FileTools.Exist(new File(WORKSPACE + "/" + CHATEAU))) {
+		    	FileTools.Delete(WORKSPACE + "/" + CHATEAU);
+	    	}		
+	    	// unzip
+	    	View.header1("Unzipping file ...");
+	        ZipManager.unZip(WORKSPACE + "/" + CHATEAU + ZIP_EXT, WORKSPACE);
+	        View.header1("Unzipping file success !");
+	        // delete zip
+	        FileTools.Delete(WORKSPACE + "/" + CHATEAU + ZIP_EXT);
+    	}
     }
     
     // Upload media to drive Village
@@ -158,16 +159,17 @@ public class FileManager {
     // Download media from drive Village
     public void downloadFromDriveVillage() {
     	// download file
-    	DriveTools.download(DriveTools.VILLAGE_MEDIAS);
-    	// delete old media folder
-    	if(FileTools.Exist(new File(WORKSPACE + "/" + VILLAGE))) {
-    		FileTools.Delete(WORKSPACE + "/" + VILLAGE);
+    	if(DriveTools.download(DriveTools.VILLAGE_MEDIAS)) {
+	    	// delete old media folder
+	    	if(FileTools.Exist(new File(WORKSPACE + "/" + VILLAGE))) {
+	    		FileTools.Delete(WORKSPACE + "/" + VILLAGE);
+	    	}
+	    	// unzip
+	    	View.header1("Unzipping file ...");
+	        ZipManager.unZip(WORKSPACE + "/" + VILLAGE + ZIP_EXT, WORKSPACE);
+	        View.header1("Unzipping file success !");
+	        // delete zip
+	        FileTools.Delete(WORKSPACE + "/" + VILLAGE + ZIP_EXT);
     	}
-    	// unzip
-    	View.header1("Unzipping file ...");
-        ZipManager.unZip(WORKSPACE + "/" + VILLAGE + ZIP_EXT, WORKSPACE);
-        View.header1("Unzipping file success !");
-        // delete zip
-        FileTools.Delete(WORKSPACE + "/" + VILLAGE + ZIP_EXT);
     }
 }
