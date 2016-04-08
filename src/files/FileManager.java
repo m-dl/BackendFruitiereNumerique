@@ -1,5 +1,7 @@
 package files;
 
+import java.io.File;
+
 import entities.Location;
 
 /**
@@ -7,9 +9,14 @@ import entities.Location;
  */
 public class FileManager {
 	
-    public final static String WORKSPACE = "medias";
-    public final static String CHATEAU = "chateau";
-    final private static String VILLAGE = "village";
+    final public static String CLIENT_DRIVE_JSON_CONTENT = "{\"installed\":{\"client_id\":\"\",\""
+    		+ "project_id\":\"\",\"auth_uri\":\"\",\"token_uri\":\"\",\""
+    		+ "auth_provider_x509_cert_url\":\"\",\"client_secret\":\"\",\"redirect_uris\":[]}}";
+	final public static String WORKSPACE = "medias";
+    final public static String RES = "res";
+    final public static String CLIENT_DRIVE_JSON = "client_secrets.json";
+    final public static String CHATEAU = "VisiteChateau";
+    final public static String VILLAGE = "VisiteTablette";
 	final public static String PHOTOS = "photo";
 	final public static String INTERIEUR = "interieur";
 	final public static String VIDEOS = "video";
@@ -68,6 +75,12 @@ public class FileManager {
     // Init global media workspace
     public void Init() {
         FileTools.CreateDirectory(WORKSPACE);
+        FileTools.CreateDirectory(RES);
+        File clientDriveJSON = new File(RES + "/" + CLIENT_DRIVE_JSON);
+        if(!FileTools.Exist(clientDriveJSON)) {
+        	FileTools.CreateFile(RES + "/" + CLIENT_DRIVE_JSON);
+	        FileTools.Write(new File(RES + "/" + CLIENT_DRIVE_JSON), CLIENT_DRIVE_JSON_CONTENT);
+        }
     }
     
     // Init chateau media workspace

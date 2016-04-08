@@ -1,6 +1,6 @@
 package main;
 
-//import com.google.api.services.samples.drive.cmdline.DriveSample;
+import com.google.api.services.drive.cmdline.DriveTools;
 
 import files.*;
 
@@ -21,11 +21,10 @@ public class main {
     FM.Init();
     FM.InitChateau();
     //FM.getChateauWorkspace().display();
-
-    //DriveSample.launch();
     
-    ZipManager.zipFolder("C:/Users/Maxime.PC/Desktop/CERI COURS/eclipse/JAVA/BackendFruitiereNumerique/medias","C:/Users/Maxime.PC/Desktop/t.zip");
-    ZipManager.unZip("C:/Users/Maxime.PC/Desktop/t.zip","C:/Users/Maxime.PC/Desktop");
+    ZipManager.zipFolder("medias/VisiteChateau","medias/VisiteChateau.zip");
+    DriveTools.upload("medias/VisiteChateau.zip", "VisiteChateau");
+    //ZipManager.unZip("VisiteChateau.zip","C:/Users/Maxime.PC/Desktop");
 
   }
 
