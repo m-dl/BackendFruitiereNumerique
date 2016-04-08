@@ -22,9 +22,9 @@ public class main {
     FM.InitChateau();
     //FM.getChateauWorkspace().display();
     
-    ZipManager.zipFolder("medias/VisiteChateau","medias/VisiteChateau.zip");
-    DriveTools.upload("medias/VisiteChateau.zip", "VisiteChateau");
-    //ZipManager.unZip("VisiteChateau.zip","C:/Users/Maxime.PC/Desktop");
+    //ZipManager.zipFolder(FileManager.WORKSPACE + "/" + FileManager.CHATEAU, FileManager.WORKSPACE + "/" + FileManager.CHATEAU + FileManager.ZIP_EXT);
+    //DriveTools.download(DriveTools.VILLAGE_MEDIAS);
+    //ZipManager.unZip("medias/VisiteTablette.zip","C:/Users/Maxime.PC/Desktop");
 
   }
 

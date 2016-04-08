@@ -2,6 +2,8 @@ package files;
 
 import java.io.File;
 
+import com.google.api.services.drive.cmdline.DriveTools;
+
 import entities.Location;
 
 /**
@@ -15,6 +17,7 @@ public class FileManager {
 	final public static String WORKSPACE = "medias";
     final public static String RES = "res";
     final public static String CLIENT_DRIVE_JSON = "client_secrets.json";
+    final public static String ZIP_EXT = ".zip";
     final public static String CHATEAU = "VisiteChateau";
     final public static String VILLAGE = "VisiteTablette";
 	final public static String PHOTOS = "photo";
@@ -93,5 +96,21 @@ public class FileManager {
     public void InitVillage() {
         FileTools.CreateDirectory(WORKSPACE + "/" + VILLAGE);
         FileTools.ListVisit(WORKSPACE + "/" + VILLAGE, villageWorkspace);
+    }
+    
+    // Upload media to drive Chateau
+    public void uploadToDriveChateau() {
+        try {
+			ZipManager.zipFolder(FileManager.WORKSPACE + "/" + FileManager.CHATEAU, FileManager.WORKSPACE + "/" + FileManager.CHATEAU + FileManager.ZIP_EXT);
+			DriveTools.upload(DriveTools.UPLOAD_FILE_PATH_CHATEAU, DriveTools.CHATEAU_MEDIAS);
+		} catch (Exception exception) {
+			// TODO Auto-generated catch block
+			exception.printStackTrace();
+		}
+    }
+    
+    // Download media from drive Chateau
+    public void downloadFromDriveChateau() {
+        
     }
 }
