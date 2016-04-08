@@ -1,7 +1,5 @@
 package main;
 
-import com.google.api.services.drive.cmdline.DriveTools;
-
 import files.*;
 
 
@@ -22,10 +20,10 @@ public class main {
     FM.InitChateau();
     //FM.getChateauWorkspace().display();
     
-    //ZipManager.zipFolder(FileManager.WORKSPACE + "/" + FileManager.CHATEAU, FileManager.WORKSPACE + "/" + FileManager.CHATEAU + FileManager.ZIP_EXT);
-    //DriveTools.download(DriveTools.VILLAGE_MEDIAS);
-    //ZipManager.unZip("medias/VisiteTablette.zip","C:/Users/Maxime.PC/Desktop");
-
+    //FM.uploadToDriveChateau();
+    //FM.uploadToDriveVillage();
+    FM.downloadFromDriveChateau();
+    FM.downloadFromDriveVillage();
   }
 
 }

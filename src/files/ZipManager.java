@@ -68,7 +68,8 @@ public class ZipManager {
 				folder.mkdir();
 			}
 			// get the zip file content
-			ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile));
+			FileInputStream fis = new FileInputStream(zipFile);
+			ZipInputStream zis = new ZipInputStream(fis);
 			// get the zipped file list entry
 			ZipEntry ze = zis.getNextEntry();
 			while(ze != null) {
@@ -91,6 +92,7 @@ public class ZipManager {
 				}
 				ze = zis.getNextEntry();
 			}
+			fis.close();
 			zis.closeEntry();
 			zis.close();
 		} catch (IOException ex) {

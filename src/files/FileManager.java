@@ -3,6 +3,7 @@ package files;
 import java.io.File;
 
 import com.google.api.services.drive.cmdline.DriveTools;
+import com.google.api.services.drive.cmdline.View;
 
 import entities.Location;
 
@@ -101,8 +102,17 @@ public class FileManager {
     // Upload media to drive Chateau
     public void uploadToDriveChateau() {
         try {
-			ZipManager.zipFolder(FileManager.WORKSPACE + "/" + FileManager.CHATEAU, FileManager.WORKSPACE + "/" + FileManager.CHATEAU + FileManager.ZIP_EXT);
-			DriveTools.upload(DriveTools.UPLOAD_FILE_PATH_CHATEAU, DriveTools.CHATEAU_MEDIAS);
+        	// check if exist
+        	if(FileTools.Exist(new File(WORKSPACE + "/" + CHATEAU))) {
+        		// zip folder
+	        	View.header1("Zipping file ...");
+				ZipManager.zipFolder(WORKSPACE + "/" + CHATEAU, WORKSPACE + "/" + CHATEAU + ZIP_EXT);
+				View.header1("Zipping file success !");
+				// upload zip to drive
+				DriveTools.upload(DriveTools.UPLOAD_FILE_PATH_CHATEAU, DriveTools.CHATEAU_MEDIAS);
+				// delete zip
+				FileTools.Delete(WORKSPACE + "/" + CHATEAU + ZIP_EXT);
+        	}
 		} catch (Exception exception) {
 			// TODO Auto-generated catch block
 			exception.printStackTrace();
@@ -111,6 +121,53 @@ public class FileManager {
     
     // Download media from drive Chateau
     public void downloadFromDriveChateau() {
-        
+    	// download file
+    	DriveTools.download(DriveTools.CHATEAU_MEDIAS);
+    	// delete old media folder
+    	if(FileTools.Exist(new File(WORKSPACE + "/" + CHATEAU))) {
+	    	FileTools.Delete(WORKSPACE + "/" + CHATEAU);
+    	}		
+    	// unzip
+    	View.header1("Unzipping file ...");
+        ZipManager.unZip(WORKSPACE + "/" + CHATEAU + ZIP_EXT, WORKSPACE);
+        View.header1("Unzipping file success !");
+        // delete zip
+        FileTools.Delete(WORKSPACE + "/" + CHATEAU + ZIP_EXT);
+    }
+    
+    // Upload media to drive Village
+    public void uploadToDriveVillage() {
+        try {
+        	// check if exist
+        	if(FileTools.Exist(new File(WORKSPACE + "/" + VILLAGE))) {
+        		// zip folder
+	        	View.header1("Zipping file ...");
+				ZipManager.zipFolder(WORKSPACE + "/" + VILLAGE, WORKSPACE + "/" + VILLAGE + ZIP_EXT);
+				View.header1("Zipping file success !");
+				// upload zip to drive
+				DriveTools.upload(DriveTools.UPLOAD_FILE_PATH_VILLAGE, DriveTools.VILLAGE_MEDIAS);
+				// delete zip
+				FileTools.Delete(WORKSPACE + "/" + VILLAGE + ZIP_EXT);
+        	}
+		} catch (Exception exception) {
+			// TODO Auto-generated catch block
+			exception.printStackTrace();
+		}
+    }
+    
+    // Download media from drive Village
+    public void downloadFromDriveVillage() {
+    	// download file
+    	DriveTools.download(DriveTools.VILLAGE_MEDIAS);
+    	// delete old media folder
+    	if(FileTools.Exist(new File(WORKSPACE + "/" + VILLAGE))) {
+    		FileTools.Delete(WORKSPACE + "/" + VILLAGE);
+    	}
+    	// unzip
+    	View.header1("Unzipping file ...");
+        ZipManager.unZip(WORKSPACE + "/" + VILLAGE + ZIP_EXT, WORKSPACE);
+        View.header1("Unzipping file success !");
+        // delete zip
+        FileTools.Delete(WORKSPACE + "/" + VILLAGE + ZIP_EXT);
     }
 }
