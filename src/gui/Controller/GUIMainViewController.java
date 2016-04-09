@@ -9,11 +9,31 @@ import javafx.scene.control.TabPane;
 public class GUIMainViewController {
 
     private static GUIMainViewController INSTANCE = new GUIMainViewController();
-    Task<Void> downloadMedia = new Task<Void>() {
+    Task<Void> uploadChateauMedia = new Task<Void>() {
         @Override
         protected Void call() throws Exception {
-            //FileManager.getInstance().uploadToDriveChateau();
+            FileManager.getInstance().uploadToDriveChateau();
+            return null;
+        }
+    };
+    Task<Void> uploadVillageMedia = new Task<Void>() {
+        @Override
+        protected Void call() throws Exception {
             FileManager.getInstance().uploadToDriveVillage();
+            return null;
+        }
+    };
+    Task<Void> downloadChateauMedia = new Task<Void>() {
+        @Override
+        protected Void call() throws Exception {
+            FileManager.getInstance().downloadFromDriveChateau();
+            return null;
+        }
+    };
+    Task<Void> downloadVillageMedia = new Task<Void>() {
+        @Override
+        protected Void call() throws Exception {
+            FileManager.getInstance().downloadFromDriveVillage();
             return null;
         }
     };
@@ -29,27 +49,26 @@ public class GUIMainViewController {
         return INSTANCE;
     }
 
-    // TODO: 08/04/2016 Faut des threads (ça bloque l'affichage javafx aussi )
     @FXML
     void uploadMedia() {
         if (getTabPane().getSelectionModel().getSelectedIndex() == 0) {
             System.out.println("uploadMedia chateau");
-            new Thread(downloadMedia).start();
+            new Thread(uploadChateauMedia).start();
         } else if (getTabPane().getSelectionModel().getSelectedIndex() == 1) {
             System.out.println("uploadMedia village");
             FileManager.getInstance().uploadToDriveVillage();
+            new Thread(uploadVillageMedia).start();
         }
     }
 
-    // TODO: 08/04/2016 Faut des threads ici aussi
     @FXML
     void downloadMedia() {
         if (getTabPane().getSelectionModel().getSelectedIndex() == 0) {
             System.out.println("downloadMedia chateau");
-            FileManager.getInstance().downloadFromDriveChateau();
+            new Thread(downloadChateauMedia).start();
         } else if (getTabPane().getSelectionModel().getSelectedIndex() == 1) {
             System.out.println("downloadMedia village");
-            FileManager.getInstance().downloadFromDriveVillage();
+            new Thread(downloadVillageMedia).start();
         }
     }
 
