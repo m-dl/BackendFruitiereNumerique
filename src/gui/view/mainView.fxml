@@ -27,7 +27,11 @@
               <buttons>
                   <Button mnemonicParsing="false" onAction="#uploadMedia" text="Uploader médias" />
                 <Button mnemonicParsing="false" onAction="#downloadMedia" text="Télécharger médias" />
-                  <ProgressBar fx:id="progressBar" progress="0.0" visible="false"/>
+                  <ProgressIndicator maxWidth="50.0" minWidth="50.0" prefHeight="50.0" prefWidth="50.0" progress="0.37">
+                      <padding>
+                          <Insets bottom="5.0" left="15.0" right="15.0" top="5.0"/>
+                      </padding>
+                  </ProgressIndicator>
               </buttons>
                <padding>
                   <Insets left="15.0" right="15.0" />
