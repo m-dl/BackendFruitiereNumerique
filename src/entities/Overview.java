@@ -1,7 +1,7 @@
 package entities;
 
-import files.FileTools;
 import files.FileManager;
+import files.FileTools;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -83,8 +83,7 @@ public class Overview {
 	}
 	
 	public void removeImagesContent(String pathFrom, String f) {
-		String path = pathFrom + "/" + f;
-		FileTools.Delete(path);
+		FileTools.Delete(pathFrom);
 		for(int i = 0; i < this.imagesContent.size(); i++) {
     		if(this.imagesContent.get(i).getName().equals(f))
     			this.imagesContent.get(i).delete();

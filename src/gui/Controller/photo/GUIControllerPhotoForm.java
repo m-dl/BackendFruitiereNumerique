@@ -27,8 +27,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class GUIControllerPhotoForm {
+class FilePath {
 
+    protected String name;
+    protected String path;
+
+    FilePath(String n, String p) {
+        this.name = n;
+        this.path = p;
+    }
+}
+
+public class GUIControllerPhotoForm {
 
     private static GUIControllerPhotoForm INSTANCE = new GUIControllerPhotoForm();
     private ObservableList<CheckBox> picturesCheckBoxList = FXCollections.observableArrayList();
@@ -40,6 +50,7 @@ public class GUIControllerPhotoForm {
     private VisitType visitType;
     private PictureFormType pictureFormType;
 
+    private ArrayList<FilePath> test = new ArrayList<>();
     private GUIControllerPhotoForm() {
         initializeWindow();
     }
@@ -69,6 +80,7 @@ public class GUIControllerPhotoForm {
     private ScrollPane loadContent() {
         pictureContentContainer.clear();
         picturesCheckBoxList.clear();
+        test.clear();
 
         verticalContentDisplay = new VBox();
         verticalContentDisplay.setPadding(new Insets(1, 1, 1, 1));
@@ -165,7 +177,6 @@ public class GUIControllerPhotoForm {
         i.setLayoutY(29.0);
 
         CheckBox cb = new CheckBox();
-        cb.setId(ap.getId());
         cb.setLayoutX(42.0);
         cb.setLayoutY(70.0);
         cb.setId(file.getName());
@@ -175,6 +186,7 @@ public class GUIControllerPhotoForm {
         l.setLayoutX(249.0);
         l.setLayoutY(71.0);
 
+        test.add(new FilePath(file.getName(), file.getPath()));
         ap.getChildren().addAll(i, cb, l);
 
         return ap;
@@ -184,17 +196,76 @@ public class GUIControllerPhotoForm {
     public void deleteImages() {
         System.out.println("del");
 
+
+        ArrayList<Integer> indexToDel = new ArrayList<>();
+
         for (int i = 0; i < picturesCheckBoxList.size(); i++) {
             if (picturesCheckBoxList.get(i).isSelected()) {
-                pictureContentContainer.remove(i);
-                verticalContentDisplay.getChildren().remove(i);
-                //// TODO: 06/04/2016  chemin en dur: mettre le chemin selon l'image sélectionnée
-                GUIControllerChateau.getInstance().getSelectedVisit().getOverview().removeImagesContent("medias/chateau/visite-bosco/visite-overview", picturesCheckBoxList.get(i).getId());
-                picturesCheckBoxList.remove(i);
+                indexToDel.add(i);
             }
-
         }
 
+        for (int i = indexToDel.size(); i > 0; i--) {
+            int index = indexToDel.get(i - 1);
+            pictureContentContainer.remove(index);
+            verticalContentDisplay.getChildren().remove(index);
+            removeImagePos(index);
+            picturesCheckBoxList.remove(index);
+        }
+    }
+
+    private void removeImagePos(int i) {
+
+        if (visitType == VisitType.CHATEAU) {
+            switch (pictureFormType) {
+                case OVERVIEW:
+                    GUIControllerChateau.getInstance().getSelectedVisit().getOverview().removeImagesContent(test.get(i).path, test.get(i).name);
+                    break;
+                case INFO:
+                    GUIControllerChateau.getInstance().getSelectedVisit().getInfo().removePhotos(test.get(i).path, test.get(i).name);
+                    break;
+                case DESCRIPTIVE_PICTURE:
+
+                    break;
+                case INDOORS_PICTURES:
+                    GUIControllerChateau.getInstance().getSelectedPoint().getInterieur();
+                    break;
+                case PANORAMIC_PICTURES:
+                    GUIControllerChateau.getInstance().getSelectedPoint().get_360();
+                    break;
+                case PICTURES:
+                    GUIControllerChateau.getInstance().getSelectedPoint().getPhotos();
+                    break;
+                case VIDEOS:
+                    GUIControllerChateau.getInstance().getSelectedPoint().getVideos();
+                    break;
+            }
+        } else if (visitType == VisitType.VILLAGE) {
+            switch (pictureFormType) {
+                case OVERVIEW:
+                    GUIControllerVillage.getInstance().getSelectedVisit().getOverview().getImagesContent();
+                    break;
+                case INFO:
+                    GUIControllerVillage.getInstance().getSelectedVisit().getInfo().getPhotos();
+                    break;
+                case DESCRIPTIVE_PICTURE:
+
+                    break;
+                case INDOORS_PICTURES:
+                    GUIControllerVillage.getInstance().getSelectedPoint().getInterieur();
+                    break;
+                case PANORAMIC_PICTURES:
+                    GUIControllerVillage.getInstance().getSelectedPoint().get_360();
+                    break;
+                case PICTURES:
+                    GUIControllerVillage.getInstance().getSelectedPoint().getPhotos();
+                    break;
+                case VIDEOS:
+                    GUIControllerVillage.getInstance().getSelectedPoint().getVideos();
+                    break;
+            }
+        }
+        test.remove(i);
     }
 
     //// TODO: 06/04/2016 faire l'ajout d'images dans le workspace

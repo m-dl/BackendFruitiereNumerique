@@ -64,8 +64,7 @@ public class Info {
 	}
 	
 	public void removePhotos(String pathFrom, String f) {
-		String path = pathFrom + "/" + FileManager.PHOTOS + "/" + f;
-		FileTools.Delete(path);
+		FileTools.Delete(pathFrom);
 		for(int i = 0; i < this.photos.size(); i++) {
     		if(this.photos.get(i).getName().equals(f))
     			this.photos.get(i).delete();
