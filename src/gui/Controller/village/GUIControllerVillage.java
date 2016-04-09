@@ -3,7 +3,6 @@ package gui.Controller.village;
 import entities.InterestPoint;
 import entities.Visit;
 import gui.Controller.GUIFormsController;
-import gui.GUIWindow;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -11,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TabPane;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.input.MouseEvent;
 import javafx.util.StringConverter;
@@ -22,13 +20,12 @@ import java.util.ResourceBundle;
 
 public class GUIControllerVillage implements Initializable{
 
-    private GUIFormsController guiForms;
     private static GUIControllerVillage INSTANCE = new GUIControllerVillage();
-
     public ListView<Visit> visitListViewV;
     public ListView<InterestPoint> iPListViewV;
     public ObservableList<Visit> visitListV;
     public ObservableList<InterestPoint> iPListV;
+    private GUIFormsController guiForms;
 
 
     private GUIControllerVillage()

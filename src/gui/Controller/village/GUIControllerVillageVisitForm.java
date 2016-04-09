@@ -7,20 +7,15 @@ import files.FileManager;
 import gui.Controller.GUIFormsController;
 import gui.Controller.chateau.GUIControllerChateau;
 import gui.GUIUtilities;
-import gui.GUIWindow;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 public class GUIControllerVillageVisitForm {
 
@@ -37,7 +32,7 @@ public class GUIControllerVillageVisitForm {
     Info visitInfos;
     Overview visitOverview;
 
-    boolean isNew = false;
+    boolean isNew = true;
     private Stage stage;
 
     public GUIControllerVillageVisitForm() {
@@ -60,18 +55,18 @@ public class GUIControllerVillageVisitForm {
 
             stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.setOnCloseRequest(closeEvent -> GUIFormsController.getInstance().closeStage());
+            stage.setOnCloseRequest(closeEvent -> GUIFormsController.getInstance().closeForm());
 
 
             if (!isNewVisit) {
                 if (selectedVisit != null) {
                     this.fillInputs(selectedVisit);
-                    GUIFormsController.getInstance().displayStage(stage);
+                    GUIFormsController.getInstance().displayForm(stage);
                     stage.setTitle("Modification de la visite: " + selectedVisit.getName());
                     stage.show();
                 }
             } else {
-                GUIFormsController.getInstance().displayStage(stage);
+                GUIFormsController.getInstance().displayForm(stage);
                 stage.setTitle("Ajout d'une nouvelle visite");
                 stage.show();
             }
@@ -98,12 +93,12 @@ public class GUIControllerVillageVisitForm {
     public void saveChanges() {
 
         if (validForm()) {
-            if (/*isNew*/true) {
+            if (isNew) {
 
                 System.out.println("added");
 
                 String vName = this.visitNameVillage.getText();
-                String visitPath = FileManager.getInstance().WORKSPACE + "/" + FileManager.getInstance().CHATEAU + "/" + vName;
+                String visitPath = FileManager.WORKSPACE + "/" + FileManager.CHATEAU + "/" + vName;
 
                 Visit v = new Visit(visitPath, vName);
                 v.setIP(new ArrayList<>());
@@ -131,7 +126,7 @@ public class GUIControllerVillageVisitForm {
                 //si visite est modifiée
             }
 
-            isNew = false;
+            GUIFormsController.getInstance().closeForm();
             stage.close();
         }
 

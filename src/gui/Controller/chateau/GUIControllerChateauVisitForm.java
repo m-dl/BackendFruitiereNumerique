@@ -16,6 +16,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static gui.Controller.enums.PictureFormType.INFO;
+import static gui.Controller.enums.PictureFormType.OVERVIEW;
+import static gui.Controller.enums.VisitType.CHATEAU;
+
 public class GUIControllerChateauVisitForm {
 
     private static GUIControllerChateauVisitForm INSTANCE = new GUIControllerChateauVisitForm();
@@ -29,6 +33,7 @@ public class GUIControllerChateauVisitForm {
     Info visitInfos;
     Overview visitOverview;
     private Stage stage;
+    private boolean isNew = true;
 
     public static GUIControllerChateauVisitForm getInstance() {
         return INSTANCE;
@@ -43,18 +48,18 @@ public class GUIControllerChateauVisitForm {
 
             stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.setOnCloseRequest(closeEvent -> GUIFormsController.getInstance().closeStage());
+            stage.setOnCloseRequest(closeEvent -> GUIFormsController.getInstance().closeForm());
 
 
             if (!isNewVisit) {
                 if (selectedVisit != null) {
                     this.fillInputs(selectedVisit);
                     stage.setTitle("Modification de la visite: " + selectedVisit.getName());
-                    GUIFormsController.getInstance().displayStage(stage);
+                    GUIFormsController.getInstance().displayForm(stage);
                     stage.show();
                 }
             } else {
-                GUIFormsController.getInstance().displayStage(stage);
+                GUIFormsController.getInstance().displayForm(stage);
                 stage.setTitle("Ajout d'une nouvelle visite");
                 stage.show();
             }
@@ -77,23 +82,20 @@ public class GUIControllerChateauVisitForm {
 
 
     @FXML
-    public void addInfoPictures() {
-        // TODO: 06/04/2016 formulaire différent car info
-        GUIFormsController.getInstance().displayPhotoForm();
+    public void addOverviewPictures() {
+        GUIFormsController.getInstance().displayPhotoForm(CHATEAU, OVERVIEW);
     }
 
     @FXML
-    public void addOverviewPictures() {
-        // TODO: 06/04/2016  gérer plusieurs formulaires si one doit utiliser que trois images, si il faut que des vidéos ... etc
-        GUIFormsController.getInstance().displayPhotoForm();
+    public void addInfoPictures() {
+        GUIFormsController.getInstance().displayPhotoForm(CHATEAU, INFO);
     }
-
 
     @FXML
     public void saveChanges() {
 
         if( validForm() ) {
-            if(/*isNew*/true) {
+            if (isNew) {
 
                 System.out.println("added");
 
@@ -127,7 +129,7 @@ public class GUIControllerChateauVisitForm {
                 //si visite est modifiée
             }
 
-            GUIFormsController.getInstance().closeStage();
+            GUIFormsController.getInstance().closeForm();
             stage.close();
         }
 

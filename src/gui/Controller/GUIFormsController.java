@@ -4,6 +4,9 @@ import entities.InterestPoint;
 import entities.Visit;
 import gui.Controller.chateau.GUIControllerChateauIPForm;
 import gui.Controller.chateau.GUIControllerChateauVisitForm;
+import gui.Controller.enums.PictureFormType;
+import gui.Controller.enums.VisitType;
+import gui.Controller.photo.GUIControllerPhotoForm;
 import gui.Controller.village.GUIControllerVillageIPForm;
 import gui.Controller.village.GUIControllerVillageVisitForm;
 import javafx.stage.Stage;
@@ -11,8 +14,10 @@ import javafx.stage.Stage;
 public class GUIFormsController {
 
     private static GUIFormsController INSTANCE = new GUIFormsController();
-    private Stage stage;
+    private Stage formStage;
+    private Stage pictureFormStage;
     private boolean isFormDisplayed = false;
+    private boolean isPictureFormDisplayed = false;
 
     private GUIFormsController() {
     }
@@ -21,17 +26,30 @@ public class GUIFormsController {
     }
 
 
-    public void displayStage(Stage s) {
-        stage = s;
+    public void displayForm(Stage s) {
+        formStage = s;
         isFormDisplayed = true;
     }
 
-    public void closeStage() {
+    public void closeForm() {
         isFormDisplayed = false;
     }
 
-    public void toFront() {
-        stage.toFront();
+    public void formToFront() {
+        formStage.toFront();
+    }
+
+    public void displayPictureForm(Stage s) {
+        pictureFormStage = s;
+        isPictureFormDisplayed = true;
+    }
+
+    public void closePictureForm() {
+        isPictureFormDisplayed = false;
+    }
+
+    public void pictureFormToFront() {
+        pictureFormStage.toFront();
     }
 
 
@@ -40,7 +58,7 @@ public class GUIFormsController {
         if(!isFormDisplayed)
             GUIControllerChateauVisitForm.getInstance().displayForm(isNewVisit, selectedVisit);
         else
-            toFront();
+            formToFront();
     }
 
     public void displayChateauIPForm(boolean isNewVisit, InterestPoint selectedPoint) {
@@ -48,7 +66,7 @@ public class GUIFormsController {
         if(!isFormDisplayed)
             GUIControllerChateauIPForm.getInstance().displayForm(isNewVisit, selectedPoint);
         else
-            toFront();
+            formToFront();
     }
 
 
@@ -57,23 +75,22 @@ public class GUIFormsController {
         if(!isFormDisplayed)
             GUIControllerVillageVisitForm.getInstance().displayForm(isNewVisit, selectedVisit);
         else
-            toFront();
+            formToFront();
     }
 
     public void displayVillageIPForm(boolean isNewVisit, InterestPoint selectedPoint) {
-
-
         if(!isFormDisplayed)
             GUIControllerVillageIPForm.getInstance().displayForm(isNewVisit, selectedPoint);
         else
-            toFront();
+            formToFront();
     }
 
-    // TODO: 06/04/2016 plusieurs types de formulaires ici selon si overview, infos, images etc..
-    // TODO: 06/04/2016 avec un parametre ou plusieurs fonctions?
-    // TODO: 06/04/2016 est-ce qu'on peut afficher plusieurs fenetres d'ajout d'images?
-    public void displayPhotoForm() {
-        GUIControllerPhotoForm.getInstance().displayForm();
+    public void displayPhotoForm(VisitType visitType, PictureFormType pictureFormType) {
+
+        if (!isPictureFormDisplayed)
+            GUIControllerPhotoForm.getInstance().displayForm(visitType, pictureFormType);
+        else
+            pictureFormToFront();
     }
 
 }

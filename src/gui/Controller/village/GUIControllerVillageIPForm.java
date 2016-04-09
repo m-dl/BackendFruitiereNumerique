@@ -3,7 +3,6 @@ package gui.Controller.village;
 import entities.InterestPoint;
 import gui.Controller.GUIFormsController;
 import gui.GUIUtilities;
-import gui.GUIWindow;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
@@ -16,11 +15,10 @@ import java.io.IOException;
 public class GUIControllerVillageIPForm {
 
     private static GUIControllerVillageIPForm INSTANCE = new GUIControllerVillageIPForm();
-    private Stage stage;
-
     public TextField ipName;
     public TextArea ipPresTextFR;
     public TextArea ipPresTextEN;
+    private Stage stage;
 
 
     private GUIControllerVillageIPForm() {
@@ -39,18 +37,18 @@ public class GUIControllerVillageIPForm {
             ScrollPane root = (ScrollPane) GUIUtilities.loadLayout("view/village/iPForm.fxml", this);
             stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.setOnCloseRequest(closeEvent -> GUIFormsController.getInstance().closeStage());
+            stage.setOnCloseRequest(closeEvent -> GUIFormsController.getInstance().closeForm());
 
 
                 if (!isNewPoint) {
                     if (selectedPoint != null) {
                         this.fillInputs(selectedPoint);
                         stage.setTitle("Modification du point: " + selectedPoint.getName());
-                        GUIFormsController.getInstance().displayStage(stage);
+                        GUIFormsController.getInstance().displayForm(stage);
                         stage.show();
                     }
                 } else {
-                    GUIFormsController.getInstance().displayStage(stage);
+                    GUIFormsController.getInstance().displayForm(stage);
                     stage.setTitle("Ajout d'un nouveau point");
                     stage.show();
                 }
