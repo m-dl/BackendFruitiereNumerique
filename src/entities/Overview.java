@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class Overview {    
 	private File presentation_FR, presentation_EN, length_FR, length_EN;
-	private ArrayList<File> imagesContent, photos;
+	private ArrayList<File> imagesContent;
 	
 	/**
 	 * @param pathFrom
@@ -28,7 +28,6 @@ public class Overview {
 		
 		initOverview(pathFrom);
 		
-		this.photos = FileTools.ListFolderPictures(pathFrom + "/" + FileManager.PHOTOS);
 		this.imagesContent = FileTools.ListFolderPictures(pathFrom);
 	}
 	
@@ -73,23 +72,6 @@ public class Overview {
 	
 	public void writeLength_EN(String input) {
 		FileTools.Write(this.length_EN, input);
-	}
-	
-	public void addPhotos(String pathFrom, String f) {
-		f = FileTools.StringToLower(f);
-		String newPath = pathFrom + "/" + FileManager.PHOTOS + "/" + f;
-		FileTools.CopyFile(f, newPath);
-		File file = new File(newPath);
-		this.photos.add(file);
-	}
-	
-	public void removePhotos(String pathFrom, String f) {
-		String path = pathFrom + "/" + FileManager.PHOTOS + "/" + f;
-		FileTools.Delete(path);
-		for(int i = 0; i < this.photos.size(); i++) {
-    		if(this.photos.get(i).getName().equals(f))
-    			this.photos.get(i).delete();
-		}
 	}
 	
 	public void addImagesContent(String pathFrom, String f) {
@@ -147,13 +129,5 @@ public class Overview {
 
 	public void setImagesContent(ArrayList<File> imagesContent) {
 		this.imagesContent = imagesContent;
-	}
-
-	public ArrayList<File> getPhotos() {
-		return photos;
-	}
-
-	public void setPhotos(ArrayList<File> photos) {
-		this.photos = photos;
 	}
 }
