@@ -9,6 +9,7 @@ import javafx.scene.control.TabPane;
 public class GUIMainViewController {
 
     private static GUIMainViewController INSTANCE = new GUIMainViewController();
+    //threads
     Task<Void> uploadChateauMedia = new Task<Void>() {
         @Override
         protected Void call() throws Exception {
