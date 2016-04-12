@@ -74,7 +74,7 @@ public class Overview {
 		FileTools.Write(this.length_EN, input);
 	}
 	
-	public void addImagesContent(String pathFrom, String f) {
+	public void addImagesContent(String pathFrom, String pathTo, String f) {
 		f = FileTools.StringToLower(f);
 		String newPath = pathFrom + "/" + f;
 		FileTools.CopyFile(f, newPath);

@@ -86,8 +86,8 @@ public class InterestPoint {
 		String input = coord + "\n" + Road.ROAD_WIDTH + width + "\n" + Road.ROAD_COLOR + color;
 		FileTools.Write(this.road, input);
 	}
-	
-	public void addPhotos(String pathFrom, String f) {
+
+	public void addPhotos(String pathFrom, String pathTo, String f) {
 		f = FileTools.StringToLower(f);
 		String newPath = pathFrom + "/" + FileManager.PHOTOS + "/" + f;
 		FileTools.CopyFile(f, newPath);
@@ -96,15 +96,15 @@ public class InterestPoint {
 	}
 	
 	public void removePhotos(String pathFrom, String f) {
-		String path = pathFrom + "/" + FileManager.PHOTOS + "/" + f;
-		FileTools.Delete(path);
+		//String path = pathFrom + "/" + FileManager.PHOTOS + "/" + f;
+		FileTools.Delete(pathFrom);
 		for(int i = 0; i < this.photos.size(); i++) {
     		if(this.photos.get(i).getName().equals(f))
     			this.photos.get(i).delete();
 		}
 	}
 	
-	public void add360(String pathFrom, String f) {
+	public void add360(String pathFrom, String pathTo, String f) {
 		f = FileTools.StringToLower(f);
 		String newPath = pathFrom + "/" + FileManager._360 + "/" + f;
 		FileTools.CopyFile(f, newPath);
@@ -113,15 +113,15 @@ public class InterestPoint {
 	}
 	
 	public void remove360(String pathFrom, String f) {
-		String path = pathFrom + "/" + FileManager._360 + "/" + f;
-		FileTools.Delete(path);
+		//String path = pathFrom + "/" + FileManager._360 + "/" + f;
+		FileTools.Delete(pathFrom);
 		for(int i = 0; i < this._360.size(); i++) {
     		if(this._360.get(i).getName().equals(f))
     			this._360.get(i).delete();
 		}
 	}
 	
-	public void addVideo(String pathFrom, String f) {
+	public void addVideo(String pathFrom, String pathTo, String f) {
 		f = FileTools.StringToLower(f);
 		String newPath = pathFrom + "/" + FileManager.VIDEOS + "/" + f;
 		FileTools.CopyFile(f, newPath);
@@ -130,15 +130,15 @@ public class InterestPoint {
 	}
 	
 	public void removeVideo(String pathFrom, String f) {
-		String path = pathFrom + "/" + FileManager.VIDEOS + "/" + f;
-		FileTools.Delete(path);
+		//String path = pathFrom + "/" + FileManager.VIDEOS + "/" + f;
+		FileTools.Delete(pathFrom);
 		for(int i = 0; i < this.videos.size(); i++) {
     		if(this.videos.get(i).getName().equals(f))
     			this.videos.get(i).delete();
 		}
 	}
 	
-	public void addInterieur(String pathFrom, String f) {
+	public void addInterieur(String pathFrom, String pathTo, String f) {
 		f = FileTools.StringToLower(f);
 		String newPath = pathFrom + "/" + FileManager.INTERIEUR + "/" + f;
 		FileTools.CopyFile(f, newPath);
@@ -147,15 +147,15 @@ public class InterestPoint {
 	}
 	
 	public void removeInterieur(String pathFrom, String f) {
-		String path = pathFrom + "/" + FileManager.INTERIEUR + "/" + f;
-		FileTools.Delete(path);
+		//String path = pathFrom + "/" + FileManager.INTERIEUR + "/" + f;
+		FileTools.Delete(pathFrom);
 		for(int i = 0; i < this.interieur.size(); i++) {
     		if(this.interieur.get(i).getName().equals(f))
     			this.interieur.get(i).delete();
 		}
 	}
 	
-	public void addPicture(String pathFrom, String f) {
+	public void addPicture(String pathFrom, String pathTo, String f) {
 		f = FileTools.StringToLower(f);
 		String newPath = pathFrom + "/" + f;
 		FileTools.CopyFile(f, newPath);
@@ -164,8 +164,8 @@ public class InterestPoint {
 	}
 	
 	public void removePicture(String pathFrom, String f) {
-		String path = pathFrom + "/" + f;
-		FileTools.Delete(path);
+		//String path = pathFrom + "/" + f;
+		FileTools.Delete(pathFrom);
 		this.picture = null;
 	}
 
