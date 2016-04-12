@@ -106,6 +106,7 @@ public class GUIControllerVillageVisitForm {
                 visitOverview = new Overview(visitPath + "/" + "visite-overview");
 
                 visitOverview.writePresentation_FR(visitPresTextFrOverviewVillage.getText());
+                visitOverview.writePresentation_EN(visitPresTextEnOverviewVillage.getText());
                 visitOverview.writeLength_EN(visitPresTextEnOverviewVillage.getText());
                 visitOverview.writeLength_FR(visitLengthFrOverviewVillage.getText());
                 visitOverview.writeLength_EN(visitLengthEnOverviewVillage.getText());

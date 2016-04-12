@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<Pane xmlns:fx="http://javafx.com/fxml/1" prefHeight="660.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65">
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<Pane prefHeight="660.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TabPane fx:id="tabPane" blendMode="MULTIPLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
          <padding>
@@ -27,9 +35,9 @@
               <buttons>
                   <Button mnemonicParsing="false" onAction="#uploadMedia" text="Uploader médias" />
                 <Button mnemonicParsing="false" onAction="#downloadMedia" text="Télécharger médias" />
-                  <ProgressIndicator maxWidth="50.0" minWidth="50.0" prefHeight="50.0" prefWidth="50.0" progress="0.37">
+                  <ProgressIndicator maxWidth="50.0" minWidth="50.0" prefHeight="50.0" prefWidth="50.0" progress="0.42">
                       <padding>
-                          <Insets bottom="5.0" left="15.0" right="15.0" top="5.0"/>
+                          <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
                       </padding>
                   </ProgressIndicator>
               </buttons>
