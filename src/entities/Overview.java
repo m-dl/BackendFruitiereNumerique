@@ -76,8 +76,8 @@ public class Overview {
 	
 	public void addImagesContent(String pathFrom, String pathTo, String f) {
 		f = FileTools.StringToLower(f);
-		String newPath = pathFrom + "/" + f;
-		FileTools.CopyFile(f, newPath);
+		String newPath = pathTo + "/" + f;
+		FileTools.CopyFile(pathFrom, newPath);
 		File file = new File(newPath);
 		this.imagesContent.add(file);
 	}
