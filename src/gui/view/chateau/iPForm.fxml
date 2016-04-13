@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<ScrollPane xmlns:fx="http://javafx.com/fxml/1" hbarPolicy="NEVER" xmlns="http://javafx.com/javafx/8.0.65">
+
+<ScrollPane hbarPolicy="NEVER" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
     <content>
         <Pane prefHeight="800.0" prefWidth="600.0">
             <children>
@@ -16,28 +21,22 @@
                 <Label layoutX="56.0" layoutY="148.0" text="Texte de présentation en français:" />
                 <Label layoutX="344.0" layoutY="147.0" text="Texte de présentation en anglais:" />
                 <Button fx:id="saveChanges" layoutX="252.0" layoutY="757.0" mnemonicParsing="false" onAction="#saveChanges" text="Enregister" />
-                <Button fx:id="addDescImage" layoutX="201.0" layoutY="418.0" mnemonicParsing="false"
-                        onAction="#addDescriptivePicture" text="Ajouter une image descriptive"/>
+                <Button fx:id="addDescImage" layoutX="201.0" layoutY="418.0" mnemonicParsing="false" onAction="#addDescriptivePicture" text="Ajouter une image descriptive" />
             <Button fx:id="placePoint" layoutX="212.0" layoutY="457.0" mnemonicParsing="false" text="Placer le point sur la carte" />
-                <VBox alignment="CENTER" layoutX="175.0" layoutY="530.0" prefHeight="200.0" prefWidth="250.0"
-                      spacing="5.0">
+                <VBox alignment="CENTER" layoutX="160.0" layoutY="529.0" prefHeight="200.0" spacing="5.0">
                     <children>
-                        <Label text="Optionnel"/>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                        <Label text="Optionnel" />
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="283.0" spacing="5.0">
                             <children>
-                                <Button fx:id="addImages" mnemonicParsing="false" onAction="#addPictures"
-                                        text="Ajouter des images"/>
-                                <Button fx:id="addVids" mnemonicParsing="false" onAction="#addVideos"
-                                        text="Ajouter des vidéos"/>
+                                <Button fx:id="addImages" mnemonicParsing="false" onAction="#addPictures" prefHeight="27.0" prefWidth="159.0" text="Ajouter des images" />
+                                <Button fx:id="addVids" mnemonicParsing="false" onAction="#addVideos" prefHeight="27.0" prefWidth="162.0" text="Ajouter des vidéos" />
                             </children>
                         </HBox>
-                        <Button fx:id="addInteriorImages" mnemonicParsing="false" onAction="#addIndoors"
-                                text="Ajouter des images d'interieur"/>
-                        <Button fx:id="addPanoImages" mnemonicParsing="false" onAction="#addPanoramic"
-                                text="Ajouter des images panoramiques"/>
+                        <Button fx:id="addInteriorImages" mnemonicParsing="false" onAction="#addIndoors" text="Ajouter des images d'interieur" />
+                        <Button fx:id="addPanoImages" mnemonicParsing="false" onAction="#addPanoramic" text="Ajouter des images panoramiques" />
                     </children>
                     <padding>
-                        <Insets bottom="5.0" top="5.0"/>
+                        <Insets bottom="5.0" top="5.0" />
                     </padding>
                 </VBox>
             </children>

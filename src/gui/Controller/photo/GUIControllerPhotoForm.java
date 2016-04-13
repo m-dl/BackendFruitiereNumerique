@@ -31,16 +31,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-class FilePath {
-
-    protected String name;
-    protected String path;
-
-    FilePath(String n, String p) {
-        this.name = n;
-        this.path = p;
-    }
-}
 
 // TODO: 11/04/2016 quand creer visite, form doit etre vide
 public class GUIControllerPhotoForm {
@@ -55,7 +45,7 @@ public class GUIControllerPhotoForm {
     private VisitType visitType;
     private PictureFormType pictureFormType;
 
-    private ArrayList<FilePath> test = new ArrayList<>();
+    private ArrayList<File> test = new ArrayList<>();
     private GUIControllerPhotoForm() {
         initializeWindow();
     }
@@ -193,7 +183,7 @@ public class GUIControllerPhotoForm {
         l.setLayoutX(249.0);
         l.setLayoutY(71.0);
 
-        test.add(new FilePath(file.getName(), file.getPath()));
+        test.add(file);
         ap.getChildren().addAll(i, cb, l);
 
         return ap;
@@ -220,77 +210,89 @@ public class GUIControllerPhotoForm {
         }
     }
 
-    // TODO: 13/04/2016 bug quand on ajoute puis on supprime derriere
-    // TODO: 13/04/2016 aussi quand on supprime directement, il reste une trace fantome quelque part
+    @FXML
+    public void test() {
+
+        System.out.println("----");
+        for (int i = 0; i < test.size(); i++) {
+
+            System.out.println("test: " + test.get(i).getName());
+        }
+
+        for (int i = 0; i < pictureContentContainer.size(); i++) {
+            System.out.println("pictureContentContainer: " + pictureContentContainer.get(i).getId());
+        }
+
+        for (int i = 0; i < picturesCheckBoxList.size(); i++) {
+            System.out.println("picturesCheckBoxList: " + picturesCheckBoxList.get(i).getId());
+        }
+
+        for (int i = 0; i < getArrayList().size(); i++) {
+            System.out.println("Arraylist: " + getArrayList().get(i).getName());
+
+        }
+        System.out.println("----");
+    }
+
     private void removeImagePos(int i) {
 
         if (visitType == VisitType.CHATEAU) {
             switch (pictureFormType) {
                 case OVERVIEW:
-                    GUIControllerChateau.getInstance().getSelectedVisit().getOverview().removeImagesContent(test.get(i).path, test.get(i).name);
+                    GUIControllerChateau.getInstance().getSelectedVisit().getOverview().removeImagesContent(test.get(i).getPath(), test.get(i));
                     break;
                 case INFO:
-                    GUIControllerChateau.getInstance().getSelectedVisit().getInfo().removePhotos(test.get(i).path, test.get(i).name);
+                    GUIControllerChateau.getInstance().getSelectedVisit().getInfo().removePhotos(test.get(i).getPath(), test.get(i));
                     break;
                 case DESCRIPTIVE_PICTURE:
-                    GUIControllerChateau.getInstance().getSelectedPoint().removePicture(test.get(i).path, test.get(i).name);
+                    GUIControllerChateau.getInstance().getSelectedPoint().removePicture(test.get(i).getPath(), test.get(i));
                     break;
                 case INDOORS_PICTURES:
-                    GUIControllerChateau.getInstance().getSelectedPoint().removeInterieur(test.get(i).path, test.get(i).name);
+                    GUIControllerChateau.getInstance().getSelectedPoint().removeInterieur(test.get(i).getPath(), test.get(i));
                     break;
                 case PANORAMIC_PICTURES:
-                    GUIControllerChateau.getInstance().getSelectedPoint().remove360(test.get(i).path, test.get(i).name);
+                    GUIControllerChateau.getInstance().getSelectedPoint().remove360(test.get(i).getPath(), test.get(i));
                     break;
                 case PICTURES:
-                    GUIControllerChateau.getInstance().getSelectedPoint().removePhotos(test.get(i).path, test.get(i).name);
+                    GUIControllerChateau.getInstance().getSelectedPoint().removePhotos(test.get(i).getPath(), test.get(i));
                     break;
                 case VIDEOS:
-                    GUIControllerChateau.getInstance().getSelectedPoint().removeVideo(test.get(i).path, test.get(i).name);
+                    GUIControllerChateau.getInstance().getSelectedPoint().removeVideo(test.get(i).getPath(), test.get(i));
                     break;
             }
         } else if (visitType == VisitType.VILLAGE) {
             switch (pictureFormType) {
                 case OVERVIEW:
-                    GUIControllerVillage.getInstance().getSelectedVisit().getOverview().removeImagesContent(test.get(i).path, test.get(i).name);
+                    GUIControllerVillage.getInstance().getSelectedVisit().getOverview().removeImagesContent(test.get(i).getPath(), test.get(i));
                     break;
                 case INFO:
-                    GUIControllerVillage.getInstance().getSelectedVisit().getInfo().removePhotos(test.get(i).path, test.get(i).name);
+                    GUIControllerVillage.getInstance().getSelectedVisit().getInfo().removePhotos(test.get(i).getPath(), test.get(i));
                     break;
                 case DESCRIPTIVE_PICTURE:
-                    GUIControllerVillage.getInstance().getSelectedPoint().removePicture(test.get(i).path, test.get(i).name);
+                    GUIControllerVillage.getInstance().getSelectedPoint().removePicture(test.get(i).getPath(), test.get(i));
                     break;
                 case INDOORS_PICTURES:
-                    GUIControllerVillage.getInstance().getSelectedPoint().removeInterieur(test.get(i).path, test.get(i).name);
+                    GUIControllerVillage.getInstance().getSelectedPoint().removeInterieur(test.get(i).getPath(), test.get(i));
                     break;
                 case PANORAMIC_PICTURES:
-                    GUIControllerVillage.getInstance().getSelectedPoint().remove360(test.get(i).path, test.get(i).name);
+                    GUIControllerVillage.getInstance().getSelectedPoint().remove360(test.get(i).getPath(), test.get(i));
                     break;
                 case PICTURES:
-                    GUIControllerVillage.getInstance().getSelectedPoint().removePhotos(test.get(i).path, test.get(i).name);
+                    GUIControllerVillage.getInstance().getSelectedPoint().removePhotos(test.get(i).getPath(), test.get(i));
                     break;
                 case VIDEOS:
-                    GUIControllerVillage.getInstance().getSelectedPoint().removeVideo(test.get(i).path, test.get(i).name);
+                    GUIControllerVillage.getInstance().getSelectedPoint().removeVideo(test.get(i).getPath(), test.get(i));
                     break;
             }
         }
         test.remove(i);
     }
 
-    //// TODO: 06/04/2016 faire l'ajout d'images dans le workspace
     @FXML
     public void addImage() {
-        /*
-        System.out.println(GUIControllerChateau.getInstance().getSelectedVisit().getOverview().getImagesContent().size());
-        ArrayList<File> f = FileTools.MultipleFileChooser(FileTools.IMAGES_FILE_FILTER);
-        for (int i = 0; i < f.size(); i++) {
-            //GUIControllerChateau.getInstance().getSelectedVisit().getOverview().addImagesContent()
 
-        }*/
-
-
-        ArrayList<File> selectedMedias = new ArrayList<>();
+        ArrayList<File> selectedMedias;
         String visitPath;
-
 
         if (visitType == VisitType.CHATEAU) {
             switch (pictureFormType) {
@@ -314,61 +316,55 @@ public class GUIControllerPhotoForm {
                     selectedMedias = FileTools.MultipleFileChooser(FileTools.IMAGES_FILE_FILTER);
                     visitPath = FileManager.WORKSPACE + "/" + FileManager.CHATEAU + "/" + GUIControllerChateau.getInstance().getSelectedVisit().getName() + "/" + FileManager.INFO_FOLDER + "/" + FileManager.PHOTOS;
 
-
                     for (int i = 0; i < selectedMedias.size(); i++) {
-                        GUIControllerChateau.getInstance().getSelectedVisit().getOverview().addImagesContent(selectedMedias.get(i).getAbsolutePath(), visitPath, selectedMedias.get(i).getName());
+                        GUIControllerChateau.getInstance().getSelectedVisit().getInfo().addPhotos(selectedMedias.get(i).getAbsolutePath(), visitPath, selectedMedias.get(i).getName());
                     }
-
-
                     break;
+
                 case DESCRIPTIVE_PICTURE:
 
-                    /*
                     File f = FileTools.FileChooser(FileTools.IMAGES_FILE_FILTER);
                     visitPath = FileManager.WORKSPACE + "/" + FileManager.CHATEAU + "/" + GUIControllerChateau.getInstance().getSelectedVisit().getName() + "/" + FileManager.INFO_FOLDER + "/" + FileManager.PHOTOS;
-                    GUIControllerChateau.getInstance().getSelectedVisit().getOverview().addImagesContent(selectedMedias.get(i).getAbsolutePath(), visitPath, selectedMedias.get(i).getName());
-                    */
-
+                    GUIControllerChateau.getInstance().getSelectedPoint().addPicture(f.getAbsolutePath(), visitPath, f.getName());
                     break;
-                case INDOORS_PICTURES:
 
+                case INDOORS_PICTURES:
 
                     selectedMedias = FileTools.MultipleFileChooser(FileTools.IMAGES_FILE_FILTER);
                     visitPath = FileManager.WORKSPACE + "/" + FileManager.CHATEAU + "/" + GUIControllerChateau.getInstance().getSelectedPoint().getName() + "/" + FileManager.INTERIEUR;
 
                     for (int i = 0; i < selectedMedias.size(); i++) {
-                        GUIControllerChateau.getInstance().getSelectedVisit().getOverview().addImagesContent(selectedMedias.get(i).getAbsolutePath(), visitPath, selectedMedias.get(i).getName());
+                        GUIControllerChateau.getInstance().getSelectedPoint().addInterieur(selectedMedias.get(i).getAbsolutePath(), visitPath, selectedMedias.get(i).getName());
                     }
-
                     break;
-                case PANORAMIC_PICTURES:
 
+                case PANORAMIC_PICTURES:
 
                     selectedMedias = FileTools.MultipleFileChooser(FileTools.IMAGES_FILE_FILTER);
                     visitPath = FileManager.WORKSPACE + "/" + FileManager.CHATEAU + "/" + GUIControllerChateau.getInstance().getSelectedPoint().getName() + "/" + FileManager._360;
 
                     for (int i = 0; i < selectedMedias.size(); i++) {
-                        GUIControllerChateau.getInstance().getSelectedVisit().getOverview().addImagesContent(selectedMedias.get(i).getAbsolutePath(), visitPath, selectedMedias.get(i).getName());
+                        GUIControllerChateau.getInstance().getSelectedPoint().add360(selectedMedias.get(i).getAbsolutePath(), visitPath, selectedMedias.get(i).getName());
                     }
                     break;
-                case PICTURES:
 
+                case PICTURES:
 
                     selectedMedias = FileTools.MultipleFileChooser(FileTools.IMAGES_FILE_FILTER);
                     visitPath = FileManager.WORKSPACE + "/" + FileManager.CHATEAU + "/" + GUIControllerChateau.getInstance().getSelectedPoint().getName() + "/" + FileManager.PHOTOS;
 
                     for (int i = 0; i < selectedMedias.size(); i++) {
-                        GUIControllerChateau.getInstance().getSelectedVisit().getOverview().addImagesContent(selectedMedias.get(i).getAbsolutePath(), visitPath, selectedMedias.get(i).getName());
+                        GUIControllerChateau.getInstance().getSelectedPoint().addPhotos(selectedMedias.get(i).getAbsolutePath(), visitPath, selectedMedias.get(i).getName());
                     }
                     break;
-                case VIDEOS:
 
+                case VIDEOS:
 
                     selectedMedias = FileTools.MultipleFileChooser(FileTools.VIDEOS_FILE_FILTER);
                     visitPath = FileManager.WORKSPACE + "/" + FileManager.CHATEAU + "/" + GUIControllerChateau.getInstance().getSelectedPoint().getName() + "/" + FileManager.VIDEOS;
 
                     for (int i = 0; i < selectedMedias.size(); i++) {
-                        GUIControllerChateau.getInstance().getSelectedVisit().getOverview().addImagesContent(selectedMedias.get(i).getAbsolutePath(), visitPath, selectedMedias.get(i).getName());
+                        GUIControllerChateau.getInstance().getSelectedPoint().addVideo(selectedMedias.get(i).getAbsolutePath(), visitPath, selectedMedias.get(i).getName());
                     }
                     break;
             }
@@ -387,8 +383,8 @@ public class GUIControllerPhotoForm {
                             GUIControllerVillage.getInstance().getSelectedVisit().getOverview().addImagesContent(selectedMedias.get(i).getAbsolutePath(), visitPath, selectedMedias.get(i).getName());
                         }
                     }
-
                     break;
+
                 case INFO:
 
                     selectedMedias = FileTools.MultipleFileChooser(FileTools.IMAGES_FILE_FILTER);
@@ -396,31 +392,27 @@ public class GUIControllerPhotoForm {
 
 
                     for (int i = 0; i < selectedMedias.size(); i++) {
-                        GUIControllerVillage.getInstance().getSelectedVisit().getOverview().addImagesContent(selectedMedias.get(i).getAbsolutePath(), visitPath, selectedMedias.get(i).getName());
+                        GUIControllerVillage.getInstance().getSelectedVisit().getInfo().addPhotos(selectedMedias.get(i).getAbsolutePath(), visitPath, selectedMedias.get(i).getName());
                     }
-
-
                     break;
+
                 case DESCRIPTIVE_PICTURE:
 
-                    /*
                     File f = FileTools.FileChooser(FileTools.IMAGES_FILE_FILTER);
                     visitPath = FileManager.WORKSPACE + "/" + FileManager.CHATEAU + "/" + GUIControllerVillage.getInstance().getSelectedVisit().getName() + "/" + FileManager.INFO_FOLDER + "/" + FileManager.PHOTOS;
-                    GUIControllerVillage.getInstance().getSelectedVisit().getOverview().addImagesContent(selectedMedias.get(i).getAbsolutePath(), visitPath, selectedMedias.get(i).getName());
-                    */
-
+                    GUIControllerVillage.getInstance().getSelectedPoint().addPicture(f.getAbsolutePath(), visitPath, f.getName());
                     break;
-                case INDOORS_PICTURES:
 
+                case INDOORS_PICTURES:
 
                     selectedMedias = FileTools.MultipleFileChooser(FileTools.IMAGES_FILE_FILTER);
                     visitPath = FileManager.WORKSPACE + "/" + FileManager.CHATEAU + "/" + GUIControllerVillage.getInstance().getSelectedPoint().getName() + "/" + FileManager.INTERIEUR;
 
                     for (int i = 0; i < selectedMedias.size(); i++) {
-                        GUIControllerVillage.getInstance().getSelectedVisit().getOverview().addImagesContent(selectedMedias.get(i).getAbsolutePath(), visitPath, selectedMedias.get(i).getName());
+                        GUIControllerVillage.getInstance().getSelectedPoint().addInterieur(selectedMedias.get(i).getAbsolutePath(), visitPath, selectedMedias.get(i).getName());
                     }
-
                     break;
+
                 case PANORAMIC_PICTURES:
 
 
@@ -428,34 +420,32 @@ public class GUIControllerPhotoForm {
                     visitPath = FileManager.WORKSPACE + "/" + FileManager.CHATEAU + "/" + GUIControllerVillage.getInstance().getSelectedPoint().getName() + "/" + FileManager._360;
 
                     for (int i = 0; i < selectedMedias.size(); i++) {
-                        GUIControllerVillage.getInstance().getSelectedVisit().getOverview().addImagesContent(selectedMedias.get(i).getAbsolutePath(), visitPath, selectedMedias.get(i).getName());
+                        GUIControllerVillage.getInstance().getSelectedPoint().add360(selectedMedias.get(i).getAbsolutePath(), visitPath, selectedMedias.get(i).getName());
                     }
                     break;
-                case PICTURES:
 
+                case PICTURES:
 
                     selectedMedias = FileTools.MultipleFileChooser(FileTools.IMAGES_FILE_FILTER);
                     visitPath = FileManager.WORKSPACE + "/" + FileManager.CHATEAU + "/" + GUIControllerVillage.getInstance().getSelectedPoint().getName() + "/" + FileManager.PHOTOS;
 
                     for (int i = 0; i < selectedMedias.size(); i++) {
-                        GUIControllerVillage.getInstance().getSelectedVisit().getOverview().addImagesContent(selectedMedias.get(i).getAbsolutePath(), visitPath, selectedMedias.get(i).getName());
+                        GUIControllerVillage.getInstance().getSelectedPoint().addPhotos(selectedMedias.get(i).getAbsolutePath(), visitPath, selectedMedias.get(i).getName());
                     }
                     break;
-                case VIDEOS:
 
+                case VIDEOS:
 
                     selectedMedias = FileTools.MultipleFileChooser(FileTools.VIDEOS_FILE_FILTER);
                     visitPath = FileManager.WORKSPACE + "/" + FileManager.CHATEAU + "/" + GUIControllerVillage.getInstance().getSelectedPoint().getName() + "/" + FileManager.VIDEOS;
 
                     for (int i = 0; i < selectedMedias.size(); i++) {
-                        GUIControllerVillage.getInstance().getSelectedVisit().getOverview().addImagesContent(selectedMedias.get(i).getAbsolutePath(), visitPath, selectedMedias.get(i).getName());
+                        GUIControllerVillage.getInstance().getSelectedPoint().addVideo(selectedMedias.get(i).getAbsolutePath(), visitPath, selectedMedias.get(i).getName());
                     }
                     break;
             }
         }
-
         pictureForm.setCenter(loadContent());
-
     }
 
 

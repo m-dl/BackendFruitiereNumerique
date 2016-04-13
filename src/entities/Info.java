@@ -63,7 +63,7 @@ public class Info {
 		this.photos.add(file);
 	}
 	
-	public void removePhotos(String pathFrom, String f) {
+	public void removePhotos(String pathFrom, File f) {
 		FileTools.Delete(pathFrom);
 		for(int i = 0; i < this.photos.size(); i++) {
     		if(this.photos.get(i).getName().equals(f))

@@ -82,12 +82,17 @@ public class Overview {
 		this.imagesContent.add(file);
 	}
 	
-	public void removeImagesContent(String pathFrom, String f) {
+	public void removeImagesContent(String pathFrom, File f) {
 		FileTools.Delete(pathFrom);
+
+		this.imagesContent.remove(this.imagesContent.indexOf(f));
+
+		/*
 		for(int i = 0; i < this.imagesContent.size(); i++) {
     		if(this.imagesContent.get(i).getName().equals(f))
     			this.imagesContent.get(i).delete();
 		}
+		*/
 	}
 
 	public File getPresentation_FR() {

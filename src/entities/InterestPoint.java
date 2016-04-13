@@ -95,7 +95,7 @@ public class InterestPoint {
 		this.photos.add(file);
 	}
 	
-	public void removePhotos(String pathFrom, String f) {
+	public void removePhotos(String pathFrom, File f) {
 		//String path = pathFrom + "/" + FileManager.PHOTOS + "/" + f;
 		FileTools.Delete(pathFrom);
 		for(int i = 0; i < this.photos.size(); i++) {
@@ -112,7 +112,7 @@ public class InterestPoint {
 		this._360.add(file);
 	}
 	
-	public void remove360(String pathFrom, String f) {
+	public void remove360(String pathFrom, File f) {
 		//String path = pathFrom + "/" + FileManager._360 + "/" + f;
 		FileTools.Delete(pathFrom);
 		for(int i = 0; i < this._360.size(); i++) {
@@ -129,7 +129,7 @@ public class InterestPoint {
 		this.videos.add(file);
 	}
 	
-	public void removeVideo(String pathFrom, String f) {
+	public void removeVideo(String pathFrom, File f) {
 		//String path = pathFrom + "/" + FileManager.VIDEOS + "/" + f;
 		FileTools.Delete(pathFrom);
 		for(int i = 0; i < this.videos.size(); i++) {
@@ -146,7 +146,7 @@ public class InterestPoint {
 		this.interieur.add(file);
 	}
 	
-	public void removeInterieur(String pathFrom, String f) {
+	public void removeInterieur(String pathFrom, File f) {
 		//String path = pathFrom + "/" + FileManager.INTERIEUR + "/" + f;
 		FileTools.Delete(pathFrom);
 		for(int i = 0; i < this.interieur.size(); i++) {
@@ -163,7 +163,7 @@ public class InterestPoint {
 		this.picture = file;
 	}
 	
-	public void removePicture(String pathFrom, String f) {
+	public void removePicture(String pathFrom, File f) {
 		//String path = pathFrom + "/" + f;
 		FileTools.Delete(pathFrom);
 		this.picture = null;
