@@ -89,8 +89,8 @@ public class InterestPoint {
 
 	public void addPhotos(String pathFrom, String pathTo, String f) {
 		f = FileTools.StringToLower(f);
-		String newPath = pathFrom + "/" + FileManager.PHOTOS + "/" + f;
-		FileTools.CopyFile(f, newPath);
+		String newPath = pathTo + "/" + FileManager.PHOTOS + "/" + f;
+		FileTools.CopyFile(pathFrom, newPath);
 		File file = new File(newPath);
 		this.photos.add(file);
 	}
@@ -106,8 +106,8 @@ public class InterestPoint {
 	
 	public void add360(String pathFrom, String pathTo, String f) {
 		f = FileTools.StringToLower(f);
-		String newPath = pathFrom + "/" + FileManager._360 + "/" + f;
-		FileTools.CopyFile(f, newPath);
+		String newPath = pathTo + "/" + FileManager._360 + "/" + f;
+		FileTools.CopyFile(pathFrom, newPath);
 		File file = new File(newPath);
 		this._360.add(file);
 	}
@@ -123,8 +123,8 @@ public class InterestPoint {
 	
 	public void addVideo(String pathFrom, String pathTo, String f) {
 		f = FileTools.StringToLower(f);
-		String newPath = pathFrom + "/" + FileManager.VIDEOS + "/" + f;
-		FileTools.CopyFile(f, newPath);
+		String newPath = pathTo + "/" + FileManager.VIDEOS + "/" + f;
+		FileTools.CopyFile(pathFrom, newPath);
 		File file = new File(newPath);
 		this.videos.add(file);
 	}
@@ -140,8 +140,8 @@ public class InterestPoint {
 	
 	public void addInterieur(String pathFrom, String pathTo, String f) {
 		f = FileTools.StringToLower(f);
-		String newPath = pathFrom + "/" + FileManager.INTERIEUR + "/" + f;
-		FileTools.CopyFile(f, newPath);
+		String newPath = pathTo + "/" + FileManager.INTERIEUR + "/" + f;
+		FileTools.CopyFile(pathFrom, newPath);
 		File file = new File(newPath);
 		this.interieur.add(file);
 	}
@@ -157,8 +157,8 @@ public class InterestPoint {
 	
 	public void addPicture(String pathFrom, String pathTo, String f) {
 		f = FileTools.StringToLower(f);
-		String newPath = pathFrom + "/" + f;
-		FileTools.CopyFile(f, newPath);
+		String newPath = pathTo + "/" + f;
+		FileTools.CopyFile(pathFrom, newPath);
 		File file = new File(newPath);
 		this.picture = file;
 	}

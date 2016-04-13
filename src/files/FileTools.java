@@ -206,26 +206,20 @@ public class FileTools {
 	}
 	
     // Directory chooser
-    public static String DirectoryChooser(){
+    public static File DirectoryChooser(){
     	DirectoryChooser directoryChooser = new DirectoryChooser();
     	directoryChooser.setTitle("Sélectionner un dossier");
-    	File dir = directoryChooser.showDialog(null);
-    	if (dir != null) 
-    		return dir.getAbsolutePath();
-    	return null;
+    	return directoryChooser.showDialog(null);
     }
     
     // File chooser
-    public static String FileChooser(FileChooser.ExtensionFilter extFilter){
+    public static File FileChooser(FileChooser.ExtensionFilter extFilter){
     	if(extFilter == null)
     		extFilter = FileTools.ALL_FILE_FILTER;
     	FileChooser fileChooser = new FileChooser();
     	fileChooser.getExtensionFilters().add(extFilter);
     	fileChooser.setTitle("Sélectionner un fichier " + extFilter.getDescription());
-    	File file = fileChooser.showOpenDialog(null);
-    	if (file != null) 
-    		return file.getAbsolutePath();
-    	return null;
+    	return fileChooser.showOpenDialog(null);
     }
     
     // Multiple File chooser
