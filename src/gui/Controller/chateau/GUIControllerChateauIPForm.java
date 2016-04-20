@@ -25,6 +25,7 @@ public class GUIControllerChateauIPForm {
     public TextArea ipPresTextFR;
     public TextArea ipPresTextEN;
     private Stage stage;
+    private boolean isNewPoint;
 
     private GUIControllerChateauIPForm()
     {}
@@ -35,6 +36,8 @@ public class GUIControllerChateauIPForm {
     }
 
     public void displayForm(boolean isNewPoint, InterestPoint selectedPoint) {
+
+        this.isNewPoint = isNewPoint;
 
         try {
 
@@ -110,27 +113,28 @@ public class GUIControllerChateauIPForm {
 
     @FXML
     public void addDescriptivePicture() {
-        GUIFormsController.getInstance().displayPhotoForm(CHATEAU, DESCRIPTIVE_PICTURE);
+        GUIFormsController.getInstance().displayPhotoForm(CHATEAU, DESCRIPTIVE_PICTURE, this.isNewPoint);
     }
 
     @FXML
     public void addPictures() {
-        GUIFormsController.getInstance().displayPhotoForm(CHATEAU, PICTURES);
+
+        GUIFormsController.getInstance().displayPhotoForm(CHATEAU, PICTURES, this.isNewPoint);
     }
 
     @FXML
     public void addVideos() {
-        GUIFormsController.getInstance().displayPhotoForm(CHATEAU, VIDEOS);
+        GUIFormsController.getInstance().displayPhotoForm(CHATEAU, VIDEOS, this.isNewPoint);
     }
 
     @FXML
     public void addPanoramic() {
-        GUIFormsController.getInstance().displayPhotoForm(CHATEAU, PANORAMIC_PICTURES);
+        GUIFormsController.getInstance().displayPhotoForm(CHATEAU, PANORAMIC_PICTURES, this.isNewPoint);
     }
 
     @FXML
     public void addIndoors() {
-        GUIFormsController.getInstance().displayPhotoForm(CHATEAU, INDOORS_PICTURES);
+        GUIFormsController.getInstance().displayPhotoForm(CHATEAU, INDOORS_PICTURES, this.isNewPoint);
     }
 
 

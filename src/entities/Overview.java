@@ -81,18 +81,16 @@ public class Overview {
 		File file = new File(newPath);
 		this.imagesContent.add(file);
 	}
-	
+
 	public void removeImagesContent(String pathFrom, File f) {
 		FileTools.Delete(pathFrom);
-
 		this.imagesContent.remove(this.imagesContent.indexOf(f));
-
-		/*
-		for(int i = 0; i < this.imagesContent.size(); i++) {
-    		if(this.imagesContent.get(i).getName().equals(f))
-    			this.imagesContent.get(i).delete();
+	}
+	public void removeAll() {
+		for (int i = 0; i < this.imagesContent.size(); i++) {
+			
+			removeImagesContent(this.imagesContent.get(i).getPath(),this.imagesContent.get(i));
 		}
-		*/
 	}
 
 	public File getPresentation_FR() {
@@ -131,7 +129,18 @@ public class Overview {
 		return imagesContent;
 	}
 
-	public void setImagesContent(ArrayList<File> imagesContent) {
+	public void setImagesContent(ArrayList<File> imagesContent, String pathTo) {
+
+		for (int i = 0; i < imagesContent.size(); i++) {
+
+				System.out.println(imagesContent.get(i).getPath());
+
+				String name = FileTools.StringToLower(imagesContent.get(i).getName());
+				String newPath = pathTo + "/" + name;
+				if (!imagesContent.get(i).getPath().equals(newPath))
+					FileTools.CopyFile(imagesContent.get(i).getPath(), newPath);
+		}
+
 		this.imagesContent = imagesContent;
 	}
 }

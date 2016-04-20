@@ -176,7 +176,7 @@ public class FileTools {
 		File fileFrom = new File(pathFrom);
 		File fileTo = new File(pathTo);
 		try {
-			FileUtils.copyFile(fileFrom, fileTo);
+			FileUtils.copyFile(fileFrom, fileTo, false);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

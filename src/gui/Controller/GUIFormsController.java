@@ -85,7 +85,7 @@ public class GUIFormsController {
             formToFront();
     }
 
-    public void displayPhotoForm(VisitType visitType, PictureFormType pictureFormType) {
+    public void displayPhotoForm(VisitType visitType, PictureFormType pictureFormType, boolean isNew) {
 
         if (!isPictureFormDisplayed)
             GUIControllerPhotoForm.getInstance().displayForm(visitType, pictureFormType);
