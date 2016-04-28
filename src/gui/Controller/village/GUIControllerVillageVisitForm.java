@@ -1,8 +1,8 @@
 package gui.Controller.village;
 
-import entities.Info;
-import entities.Overview;
-import entities.Visit;
+import entities.village.Info;
+import entities.village.Overview;
+import entities.village.Visit;
 import files.FileManager;
 import gui.Controller.GUIFormsController;
 import gui.Controller.chateau.GUIControllerChateau;
@@ -89,6 +89,7 @@ public class GUIControllerVillageVisitForm {
     }
 
 
+    /*
     @FXML
     public void saveChanges() {
 
@@ -133,6 +134,7 @@ public class GUIControllerVillageVisitForm {
 
 
     }
+    */
 
     //pour véfirier les entrées
     private boolean validForm() {

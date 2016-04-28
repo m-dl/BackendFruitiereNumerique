@@ -1,7 +1,7 @@
 package gui.Controller.village;
 
-import entities.InterestPoint;
-import entities.Visit;
+import entities.village.InterestPoint;
+import entities.village.Visit;
 import gui.Controller.GUIFormsController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

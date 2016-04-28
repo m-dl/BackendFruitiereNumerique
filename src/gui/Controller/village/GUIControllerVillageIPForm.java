@@ -1,6 +1,6 @@
 package gui.Controller.village;
 
-import entities.InterestPoint;
+import entities.village.InterestPoint;
 import gui.Controller.GUIFormsController;
 import gui.GUIUtilities;
 import javafx.fxml.FXML;

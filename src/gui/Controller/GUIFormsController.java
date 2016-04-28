@@ -1,7 +1,5 @@
 package gui.Controller;
 
-import entities.InterestPoint;
-import entities.Visit;
 import gui.Controller.chateau.GUIControllerChateauIPForm;
 import gui.Controller.chateau.GUIControllerChateauVisitForm;
 import gui.Controller.enums.PictureFormType;
@@ -53,7 +51,7 @@ public class GUIFormsController {
     }
 
 
-    public void displayChateauVisitForm(boolean isNewVisit, Visit selectedVisit) {
+    public void displayChateauVisitForm(boolean isNewVisit, entities.chateau.Visit selectedVisit) {
 
         if(!isFormDisplayed)
             GUIControllerChateauVisitForm.getInstance().displayForm(isNewVisit, selectedVisit);
@@ -61,7 +59,7 @@ public class GUIFormsController {
             formToFront();
     }
 
-    public void displayChateauIPForm(boolean isNewVisit, InterestPoint selectedPoint) {
+    public void displayChateauIPForm(boolean isNewVisit, entities.chateau.InterestPoint selectedPoint) {
 
         if(!isFormDisplayed)
             GUIControllerChateauIPForm.getInstance().displayForm(isNewVisit, selectedPoint);
@@ -70,7 +68,7 @@ public class GUIFormsController {
     }
 
 
-    public void displayVillageVisitForm(boolean isNewVisit, Visit selectedVisit) {
+    public void displayVillageVisitForm(boolean isNewVisit, entities.village.Visit selectedVisit) {
 
         if(!isFormDisplayed)
             GUIControllerVillageVisitForm.getInstance().displayForm(isNewVisit, selectedVisit);
@@ -78,7 +76,7 @@ public class GUIFormsController {
             formToFront();
     }
 
-    public void displayVillageIPForm(boolean isNewVisit, InterestPoint selectedPoint) {
+    public void displayVillageIPForm(boolean isNewVisit, entities.village.InterestPoint selectedPoint) {
         if(!isFormDisplayed)
             GUIControllerVillageIPForm.getInstance().displayForm(isNewVisit, selectedPoint);
         else

@@ -1,7 +1,7 @@
 package gui.Controller.chateau;
 
-import entities.InterestPoint;
-import entities.Visit;
+import entities.chateau.InterestPoint;
+import entities.chateau.Visit;
 import files.FileManager;
 import gui.Controller.GUIFormsController;
 import gui.GUIWindow;

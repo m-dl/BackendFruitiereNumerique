@@ -1,10 +1,9 @@
 package gui.Controller.chateau;
 
-import entities.Info;
-import entities.Overview;
-import entities.Visit;
+import entities.chateau.Info;
+import entities.chateau.Overview;
+import entities.chateau.Visit;
 import files.FileManager;
-import files.FileTools;
 import gui.Controller.GUIFormsController;
 import gui.GUIUtilities;
 import javafx.fxml.FXML;
@@ -63,9 +62,9 @@ public class GUIControllerChateauVisitForm {
 
             if (!isNewVisit) {
                 if (selectedVisit != null) {
-                    int index = FileManager.getInstance().getChateauWorkspace().getV().indexOf(GUIControllerChateau.getInstance().getSelectedVisit());
-                    overviewImages = FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().getImagesContent();
-                    infoImages = FileManager.getInstance().getChateauWorkspace().getV().get(index).getInfo().getPhotos();
+                    //int index = FileManager.getInstance().getChateauWorkspace().getV().indexOf(GUIControllerChateau.getInstance().getSelectedVisit());
+                   // overviewImages = FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().getImagesContent();
+                   // infoImages = FileManager.getInstance().getChateauWorkspace().getV().get(index).getInfo().getPhotos();
                     this.fillInputs(selectedVisit);
                     stage.setTitle("Modification de la visite: " + selectedVisit.getName());
                     GUIFormsController.getInstance().displayForm(stage);
