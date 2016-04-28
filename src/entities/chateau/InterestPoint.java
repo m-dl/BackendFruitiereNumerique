@@ -1,4 +1,4 @@
-package entities;
+package entities.chateau;
 
 import files.FileManager;
 import files.FileTools;
@@ -13,7 +13,6 @@ public class InterestPoint {
 	private File presentation_FR, presentation_EN, marker, road, picture;
 	private ArrayList<File> photos, interieur, _360, videos;
 	private String name;
-	private Road roadItem;
 	
 	/**
 	 * @param pathFrom
@@ -72,19 +71,6 @@ public class InterestPoint {
 	
 	public void writeMarker(String input) {
 		FileTools.Write(this.marker, input);
-	}
-	
-	public Road readRoad() {
-		return FileTools.ReadRoad(this.road);
-	}
-	
-	public void writeRoad(ArrayList<String> coordArr, String width, String color) {
-		String coord = "";
-		for(String s : coordArr) {
-			coord += s + "\n";
-		}
-		String input = coord + "\n" + Road.ROAD_WIDTH + width + "\n" + Road.ROAD_COLOR + color;
-		FileTools.Write(this.road, input);
 	}
 
 	public void addPhotos(String pathFrom, String pathTo, String f) {
@@ -252,13 +238,5 @@ public class InterestPoint {
 
 	public void set_360(ArrayList<File> _360) {
 		this._360 = _360;
-	}
-
-	public Road getRoadItem() {
-		return roadItem;
-	}
-
-	public void setRoadItem(Road roadItem) {
-		this.roadItem = roadItem;
 	}
 }

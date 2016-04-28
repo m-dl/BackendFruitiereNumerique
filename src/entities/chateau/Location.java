@@ -1,4 +1,4 @@
-package entities;
+package entities.chateau;
 
 import java.util.ArrayList;
 
@@ -7,6 +7,7 @@ import java.util.ArrayList;
  *
  */
 public class Location {
+	
     private ArrayList<Visit> V;
     
     public Location() {
@@ -36,17 +37,5 @@ public class Location {
     public void deleteVisit(Visit v, String pathFrom) {
         this.V.remove(v);
         v.delete(pathFrom);
-    }
-    
-    /*
-     * Debug : affichage de la lib de location
-    public void display() {
-      for(Visit v : V) {
-        System.out.println(v.getName());
-        for(InterestPoint ip : v.getIP()) {
-          System.out.println("---"+ip.getName());
-        }
-      }
-    }
-    */      
+    }     
 }

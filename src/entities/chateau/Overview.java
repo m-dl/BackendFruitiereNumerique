@@ -1,4 +1,4 @@
-package entities;
+package entities.chateau;
 
 import files.FileManager;
 import files.FileTools;
@@ -86,9 +86,9 @@ public class Overview {
 		FileTools.Delete(pathFrom);
 		this.imagesContent.remove(this.imagesContent.indexOf(f));
 	}
+	
 	public void removeAll() {
 		for (int i = 0; i < this.imagesContent.size(); i++) {
-			
 			removeImagesContent(this.imagesContent.get(i).getPath(),this.imagesContent.get(i));
 		}
 	}

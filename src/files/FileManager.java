@@ -5,8 +5,6 @@ import java.io.File;
 import com.google.api.services.drive.cmdline.DriveTools;
 import com.google.api.services.drive.cmdline.View;
 
-import entities.Location;
-
 /**
  * @author Maxime
  */
@@ -33,8 +31,8 @@ public class FileManager {
     final public static String LENGTH_EN = "duree_en.txt";
     final public static String MARKER = "marker.txt";
     final public static String ROAD = "chemin.txt";
-    private Location chateauWorkspace;
-    private Location villageWorkspace;
+    private entities.chateau.Location chateauWorkspace;
+    private entities.village.Location villageWorkspace;
     
     private static FileManager INSTANCE = new FileManager();
     
@@ -44,35 +42,35 @@ public class FileManager {
 	}
 	
     public FileManager() {
-        this.setChateauWorkspace(new Location());
-        this.setVillageWorkspace(new Location());
+        this.setChateauWorkspace(new entities.chateau.Location());
+        this.setVillageWorkspace(new entities.village.Location());
     }
     
     /**
      * @return the villageWorkspace
      */
-    public Location getVillageWorkspace() {
+    public entities.village.Location getVillageWorkspace() {
         return villageWorkspace;
     }
 
     /**
      * @param villageWorkspace the villageWorkspace to set
      */
-    public void setVillageWorkspace(Location villageWorkspace) {
+    public void setVillageWorkspace(entities.village.Location villageWorkspace) {
         this.villageWorkspace = villageWorkspace;
     }
 
     /**
      * @return the chateauWorkspace
      */
-    public Location getChateauWorkspace() {
+    public entities.chateau.Location getChateauWorkspace() {
         return chateauWorkspace;
     }
 
     /**
      * @param chateauWorkspace the chateauWorkspace to set
      */
-    public void setChateauWorkspace(Location chateauWorkspace) {
+    public void setChateauWorkspace(entities.chateau.Location chateauWorkspace) {
         this.chateauWorkspace = chateauWorkspace;
     }
 	
@@ -90,13 +88,13 @@ public class FileManager {
     // Init chateau media workspace
     public void InitChateau() {
         FileTools.CreateDirectory(WORKSPACE + "/" + CHATEAU);
-        FileTools.ListVisit(WORKSPACE + "/" + CHATEAU, chateauWorkspace);
+        FileTools.ListVisitChateau(WORKSPACE + "/" + CHATEAU, chateauWorkspace);
     }
     
     // Init village media workspace
     public void InitVillage() {
         FileTools.CreateDirectory(WORKSPACE + "/" + VILLAGE);
-        FileTools.ListVisit(WORKSPACE + "/" + VILLAGE, villageWorkspace);
+        FileTools.ListVisitVillage(WORKSPACE + "/" + VILLAGE, villageWorkspace);
     }
     
     // Upload media to drive Chateau

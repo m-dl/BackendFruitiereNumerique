@@ -1,4 +1,4 @@
-package entities;
+package entities.village;
 
 import files.FileManager;
 import files.FileTools;

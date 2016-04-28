@@ -2,12 +2,9 @@ package files;
 
 import org.apache.commons.io.FileUtils;
 
-import entities.Road;
+import entities.village.Road;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
-import entities.InterestPoint;
-import entities.Visit;
-import entities.Location;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -302,32 +299,65 @@ public class FileTools {
 		return videosList;
 	}
 
-	// List all visits from a location
-	public static void ListVisit(String pathFrom, Location l) {
+	// List all Chateau visits from a location
+	public static void ListVisitChateau(String pathFrom, entities.chateau.Location l) {
 		File fileFrom = new File(pathFrom);
         File[] list = fileFrom.listFiles();
         if(!Exist(fileFrom)) 
         	CreateDirectory(pathFrom);
         for(File file : list){
             if(file.isDirectory()){ // Visits' folder
-                ListVisitContent(pathFrom + "/" + file.getName(), file.getName(), l);
+            	ListVisitContentChateau(pathFrom + "/" + file.getName(), file.getName(), l);
             }
         }
 	}
 	
-	// List a visit folder content
-    public static void ListVisitContent(String pathFrom, String visitName, Location l) {
+	// List a Chateau visit folder content
+    public static void ListVisitContentChateau(String pathFrom, String visitName, entities.chateau.Location l) {
         File fileFrom = new File(pathFrom);
         File[] list = fileFrom.listFiles();
         
         if(!Exist(fileFrom)) 
         	CreateDirectory(pathFrom);
         
-        Visit tmpVisit = new Visit(pathFrom, visitName);
+        entities.chateau.Visit tmpVisit = new entities.chateau.Visit(pathFrom, visitName);
         for(File file : list) {
             if(file.isDirectory()){ // Overview or Info or IP folder
                 if(!file.getName().equals(FileManager.OVERVIEW_FOLDER) && !file.getName().equals(FileManager.INFO_FOLDER)) {
-                	InterestPoint tmpIP = new InterestPoint(pathFrom + "/" + file.getName(), file.getName());
+                	entities.chateau.InterestPoint tmpIP = new entities.chateau.InterestPoint(pathFrom + "/" + file.getName(), file.getName());
+                	tmpVisit.addInterestPoint(tmpIP);
+                }
+            }
+        }
+        l.addVisit(tmpVisit);
+    }
+    
+	// List all Village visits from a location
+	public static void ListVisitVillage(String pathFrom, entities.village.Location l) {
+		File fileFrom = new File(pathFrom);
+        File[] list = fileFrom.listFiles();
+        if(!Exist(fileFrom)) 
+        	CreateDirectory(pathFrom);
+        for(File file : list){
+            if(file.isDirectory()){ // Visits' folder
+            	ListVisitContentVillage(pathFrom + "/" + file.getName(), file.getName(), l);
+            }
+        }
+	}
+	
+	// List a Village visit folder content
+    public static void ListVisitContentVillage(String pathFrom, String visitName, entities.village.Location l) {
+        File fileFrom = new File(pathFrom);
+        File[] list = fileFrom.listFiles();
+        
+        if(!Exist(fileFrom)) 
+        	CreateDirectory(pathFrom);
+        
+        entities.village.Visit tmpVisit = new entities.village.Visit(pathFrom, visitName);
+        for(File file : list) {
+            if(file.isDirectory()){ // Overview or Info or IP folder
+                if(!file.getName().equals(FileManager.OVERVIEW_FOLDER) && !file.getName().equals(FileManager.INFO_FOLDER)) {
+                	entities.village.InterestPoint tmpIP = new entities.village.InterestPoint(pathFrom + "/" + file.getName(), file.getName());
                 	tmpVisit.addInterestPoint(tmpIP);
                 }
             }
