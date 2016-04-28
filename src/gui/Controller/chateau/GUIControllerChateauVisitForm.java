@@ -149,6 +149,7 @@ public class GUIControllerChateauVisitForm {
 
             }
             else {
+
                 Visit selectedVisit = GUIControllerChateau.getInstance().getSelectedVisit();
                 int index = FileManager.getInstance().getChateauWorkspace().getV().indexOf(selectedVisit);
 
@@ -162,6 +163,7 @@ public class GUIControllerChateauVisitForm {
                     // TODO: 17/04/2016 bouger tout le dossier
                 }
 
+                // TODO: 28/04/2016 ça bug ici
 
                 FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().writePresentation_FR(visitPresTextFROv.getText());
                 FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().writeLength_EN(visitPresTextENOv.getText());
@@ -169,18 +171,11 @@ public class GUIControllerChateauVisitForm {
                 FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().writeLength_EN(visitLengthENOv.getText());
 
 
-                System.out.println("fm:" + FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().getImagesContent().size());
-                System.out.println("overview"+ getOverviewImages().size());
+                System.out.println("fm:" + FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().getImagesContent().toString());
+                //System.out.println("overview"+ getOverviewImages().size());
 
                 //FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().removeAll();
 //                System.out.println(FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().getImagesContent().size());
-
-
-                try {
-                    Thread.sleep(1000);                 //1000 milliseconds is one second.
-                } catch(InterruptedException ex) {
-                    Thread.currentThread().interrupt();
-                }
 
                 /*
                 for (int i = 0; i < getOverviewImages().size(); i++) {
@@ -188,6 +183,7 @@ public class GUIControllerChateauVisitForm {
                 }
                 */
 
+                /*
                 FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().removeAll();
                 FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().setImagesContent(getOverviewImages(),visitOverviewPath);
 
@@ -197,7 +193,7 @@ public class GUIControllerChateauVisitForm {
 
                 this.overviewImages =  FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().getImagesContent();
                 System.out.println(FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().getImagesContent().size());
-
+*/
             }
 
             GUIFormsController.getInstance().closeForm();
@@ -212,10 +208,12 @@ public class GUIControllerChateauVisitForm {
 
 
     public void setInfoImages(ArrayList<File> infoImages) {
+        System.out.println(infoImages.toString());
         this.infoImages = infoImages;
     }
 
     public void setOverviewImages(ArrayList<File> overviewImages) {
+        System.out.println(overviewImages.toString());
         this.overviewImages = overviewImages;
     }
 
