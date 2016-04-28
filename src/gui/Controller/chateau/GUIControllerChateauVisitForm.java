@@ -169,33 +169,21 @@ public class GUIControllerChateauVisitForm {
                     // TODO: 17/04/2016 bouger tout le dossier
                 }
 
-                /*
+
                 FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().writePresentation_FR(visitPresTextFROv.getText());
                 FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().writeLength_EN(visitPresTextENOv.getText());
                 FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().writeLength_FR(visitLengthFROv.getText());
                 FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().writeLength_EN(visitLengthENOv.getText());
-*/
 
 
-                System.out.println("fm:" + FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().getImagesContent().toString());
-                System.out.println("fm2:" + getOverviewImages());
-
-
+                //Suppression et ajout des images qui ont été supprimées ou ajoutées pour Overview.
                 for (int i = 0; i < FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().getImagesContent().size(); i++) {
                     if (! (getOverviewImages().contains(FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().getImagesContent().get(i)))) {
                         File imageToDel = FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().getImagesContent().get(i);
                         System.out.println("stuff to be del"+imageToDel.getName());
                         FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().removeImagesContent(imageToDel.getPath(),imageToDel);
                     }
-                    else {
-                        System.out.println("---" + i + "---");
-                        System.out.println("mod_ov: " + getOverviewImages());
-                        System.out.println("ov: " + FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().getImagesContent());
-                        System.out.println("------");
-                    }
                 }
-
-
 
                 for (int i = 0; i < getOverviewImages().size(); i++) {
                     if (!FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().getImagesContent().contains(getOverviewImages().get(i))) {
@@ -205,11 +193,25 @@ public class GUIControllerChateauVisitForm {
                     }
                 }
 
+                //Suppression et ajout des images qui ont été supprimées ou ajoutées pour Info.
+
+                for (int i = 0; i < FileManager.getInstance().getChateauWorkspace().getV().get(index).getInfo().getPhotos().size(); i++) {
+                    if (! (getInfoImages().contains(FileManager.getInstance().getChateauWorkspace().getV().get(index).getInfo().getPhotos().get(i)))) {
+                        File imageToDel = FileManager.getInstance().getChateauWorkspace().getV().get(index).getInfo().getPhotos().get(i);
+                        System.out.println("stuff to be del " + imageToDel.getName());
+                        FileManager.getInstance().getChateauWorkspace().getV().get(index).getInfo().removePhotos(imageToDel.getAbsolutePath(),imageToDel);
+                    }
+                }
+
+                for (int i = 0; i < getInfoImages().size(); i++) {
+                    if (!FileManager.getInstance().getChateauWorkspace().getV().get(index).getInfo().getPhotos().contains(getInfoImages().get(i))) {
+                        System.out.println("stuff to be add" + getInfoImages().get(i).getName());
+                        FileManager.getInstance().getChateauWorkspace().getV().get(index).getInfo().addPhotos(getInfoImages().get(i).getAbsolutePath(), visitInfosPath, getInfoImages().get(i).getName());
+                    }
+                }
 
                 FileManager.getInstance().getChateauWorkspace().getV().get(index).getInfo().writeContent_EN(visitPresTextENInf.getText());
                 FileManager.getInstance().getChateauWorkspace().getV().get(index).getInfo().writeContent_FR(visitPresTextFRInf.getText());
-
-
             }
 
             GUIFormsController.getInstance().closeForm();
