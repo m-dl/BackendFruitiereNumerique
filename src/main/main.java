@@ -21,7 +21,7 @@ public class main {
     //FM.getChateauWorkspace().display();
     
     //FM.uploadToDriveChateau();
-    //FM.uploadToDriveVillage();
+    FM.uploadToDriveVillage();
     //FM.downloadFromDriveChateau();
     //FM.downloadFromDriveVillage();
   }
