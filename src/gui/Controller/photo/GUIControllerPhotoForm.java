@@ -9,6 +9,7 @@ import gui.Controller.village.GUIControllerVillage;
 import gui.GUIUtilities;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -21,6 +22,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,8 +30,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-
-// TODO: 11/04/2016 quand creer visite, form doit etre vide
 public class GUIControllerPhotoForm {
 
     private static GUIControllerPhotoForm INSTANCE = new GUIControllerPhotoForm();
@@ -46,6 +46,7 @@ public class GUIControllerPhotoForm {
 
     private GUIControllerPhotoForm() {
         initializeWindow();
+        workingImageList = new ArrayList<>();
     }
 
     public static GUIControllerPhotoForm getInstance() {
@@ -57,7 +58,12 @@ public class GUIControllerPhotoForm {
             pictureForm = (BorderPane) GUIUtilities.loadLayout("view/photos/photoFormView.fxml", this);
             stage = new Stage();
             stage.setScene(new Scene(pictureForm));
-            stage.setOnCloseRequest(closeEvent -> saveChanges());
+
+
+            stage.setOnCloseRequest(event -> {
+                saveChanges();
+            });
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -101,10 +107,10 @@ public class GUIControllerPhotoForm {
     public void displayForm(VisitType visitType, PictureFormType pictureFormType) {
         this.visitType = visitType;
         this.pictureFormType = pictureFormType;
-        workingImageList = new ArrayList<>();
         pictureForm.setCenter(loadContent());
         stage.show();
     }
+
 
     private ScrollPane loadContent() {
         pictureContentContainer.clear();
@@ -122,16 +128,33 @@ public class GUIControllerPhotoForm {
         return sc;
     }
 
+
+    private ScrollPane reloadContent() {
+        pictureContentContainer.clear();
+        picturesCheckBoxList.clear();
+
+        verticalContentDisplay = new VBox();
+        verticalContentDisplay.setPadding(new Insets(1, 1, 1, 1));
+
+
+        pictureContentContainer.addAll(workingImageList.stream().map(this::createAnchorPane).collect(Collectors.toList()));
+
+        verticalContentDisplay.getChildren().addAll(pictureContentContainer);
+        ScrollPane sc = new ScrollPane();
+        sc.setContent(verticalContentDisplay);
+        return sc;
+    }
+
     private ArrayList<File> getArrayList() {
         ArrayList<File> pictureList = new ArrayList<>();
 
         if (visitType == VisitType.CHATEAU) {
             switch (pictureFormType) {
                 case OVERVIEW:
-                    workingImageList = GUIControllerChateauVisitForm.getInstance().getOverviewImages();
+                    workingImageList = (ArrayList<File>) GUIControllerChateauVisitForm.getInstance().getOverviewImages().clone();
                     break;
                 case INFO:
-                    workingImageList = GUIControllerChateauVisitForm.getInstance().getInfoImages();
+                    workingImageList = (ArrayList<File>) GUIControllerChateauVisitForm.getInstance().getInfoImages().clone();
                     break;
                 case DESCRIPTIVE_PICTURE:
                     if (GUIControllerChateau.getInstance().getSelectedPoint().getPicture() != null)
@@ -252,7 +275,6 @@ public class GUIControllerPhotoForm {
                 case OVERVIEW:
 
                     workingImageList.addAll(FileTools.MultipleFileChooser(FileTools.IMAGES_FILE_FILTER));
-                    System.out.println(workingImageList.size());
 
                     break;
                 case INFO:
@@ -291,7 +313,7 @@ public class GUIControllerPhotoForm {
                     workingImageList.addAll(FileTools.MultipleFileChooser(FileTools.IMAGES_FILE_FILTER));
                     break;
             }
-        pictureForm.setCenter(loadContent());
+        pictureForm.setCenter(reloadContent());
     }
 
 }

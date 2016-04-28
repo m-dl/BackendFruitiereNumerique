@@ -34,6 +34,7 @@
             <Label layoutX="196.0" layoutY="1269.0" text="Texte de présentation en anglais:" />
             <Button layoutX="238.0" layoutY="877.0" mnemonicParsing="false" onAction="#addOverviewPictures" text="Ajouter des images" />
             <Separator layoutX="6.0" layoutY="1640.0" prefHeight="13.0" prefWidth="589.0" />
+            <Button layoutX="131.0" layoutY="14.0" mnemonicParsing="false" onAction="#displayShit" text="Button" />
          </children>
       </Pane>
    </content>

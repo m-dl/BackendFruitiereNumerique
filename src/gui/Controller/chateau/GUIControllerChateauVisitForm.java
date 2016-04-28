@@ -35,9 +35,13 @@ public class GUIControllerChateauVisitForm {
     private Stage stage;
     private boolean isNewVisit;
 
-    private ArrayList<File> overviewImages = new ArrayList<>();
-    private ArrayList<File> infoImages = new ArrayList<>();
+    public ArrayList<File> overviewImages;
+    public ArrayList<File> infoImages;
 
+    private GUIControllerChateauVisitForm() {
+        overviewImages = new ArrayList<>();
+        infoImages = new ArrayList<>();
+    }
 
     public static GUIControllerChateauVisitForm getInstance() {
         return INSTANCE;
@@ -59,8 +63,9 @@ public class GUIControllerChateauVisitForm {
 
             if (!isNewVisit) {
                 if (selectedVisit != null) {
-                    overviewImages = selectedVisit.getOverview().getImagesContent();
-                    infoImages = selectedVisit.getInfo().getPhotos();
+                    int index = FileManager.getInstance().getChateauWorkspace().getV().indexOf(GUIControllerChateau.getInstance().getSelectedVisit());
+                    overviewImages = FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().getImagesContent();
+                    infoImages = FileManager.getInstance().getChateauWorkspace().getV().get(index).getInfo().getPhotos();
                     this.fillInputs(selectedVisit);
                     stage.setTitle("Modification de la visite: " + selectedVisit.getName());
                     GUIFormsController.getInstance().displayForm(stage);
@@ -101,6 +106,11 @@ public class GUIControllerChateauVisitForm {
         GUIFormsController.getInstance().displayPhotoForm(CHATEAU, INFO, this.isNewVisit);
     }
 
+    @FXML void displayShit() {
+        System.out.println("overview: " + getOverviewImages());
+        System.out.println("infos: " + getInfoImages());
+
+    }
     @FXML
     public void saveChanges() {
 
@@ -126,12 +136,9 @@ public class GUIControllerChateauVisitForm {
                 visitOverview.writeLength_FR(visitLengthFROv.getText());
                 visitOverview.writeLength_EN(visitLengthENOv.getText());
 
-                System.out.println(this.overviewImages.size());
-
                 for (int i = 0; i < this.overviewImages.size(); i++) {
                     visitOverview.addImagesContent(this.overviewImages.get(i).getAbsolutePath(), visitOverviewPath, this.overviewImages.get(i).getName());
                 }
-
 
                 visitInfos = new Info(visitInfosPath);
 
@@ -139,7 +146,7 @@ public class GUIControllerChateauVisitForm {
                 visitInfos.writeContent_FR(visitPresTextFRInf.getText());
 
                 for (int i = 0; i < this.infoImages.size(); i++) {
-                    visitOverview.addImagesContent(this.infoImages.get(i).getAbsolutePath(), visitInfosPath, this.infoImages.get(i).getName());
+                    visitInfos.addPhotos(this.infoImages.get(i).getAbsolutePath(), visitInfosPath, this.infoImages.get(i).getName());
                 }
 
                 v.setInfo(visitInfos);
@@ -163,58 +170,73 @@ public class GUIControllerChateauVisitForm {
                     // TODO: 17/04/2016 bouger tout le dossier
                 }
 
-                // TODO: 28/04/2016 ça bug ici
-
+                /*
                 FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().writePresentation_FR(visitPresTextFROv.getText());
                 FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().writeLength_EN(visitPresTextENOv.getText());
                 FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().writeLength_FR(visitLengthFROv.getText());
                 FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().writeLength_EN(visitLengthENOv.getText());
+*/
 
 
                 System.out.println("fm:" + FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().getImagesContent().toString());
-                //System.out.println("overview"+ getOverviewImages().size());
+                System.out.println("fm2:" + getOverviewImages());
 
-                //FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().removeAll();
-//                System.out.println(FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().getImagesContent().size());
 
-                /*
-                for (int i = 0; i < getOverviewImages().size(); i++) {
-                    FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().addImagesContent(getOverviewImages().get(i).getAbsolutePath(), visitOverviewPath, getOverviewImages().get(i).getName());
+                for (int i = 0; i < FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().getImagesContent().size(); i++) {
+                    if (! (getOverviewImages().contains(FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().getImagesContent().get(i)))) {
+                        File imageToDel = FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().getImagesContent().get(i);
+                        System.out.println("stuff to be del"+imageToDel.getName());
+                        FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().removeImagesContent(imageToDel.getPath(),imageToDel);
+                    }
+                    else {
+                        System.out.println("---" + i + "---");
+                        System.out.println("mod_ov: " + getOverviewImages());
+                        System.out.println("ov: " + FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().getImagesContent());
+                        System.out.println("------");
+                    }
                 }
-                */
 
-                /*
-                FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().removeAll();
-                FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().setImagesContent(getOverviewImages(),visitOverviewPath);
+
+
+                for (int i = 0; i < getOverviewImages().size(); i++) {
+                    if (!FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().getImagesContent().contains(getOverviewImages().get(i))) {
+                        System.out.println("stuff to be add"+getOverviewImages().get(i).getName());
+
+                        FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().addImagesContent(getOverviewImages().get(i).getAbsolutePath(), visitOverviewPath, getOverviewImages().get(i).getName());
+                    }
+                }
 
 
                 FileManager.getInstance().getChateauWorkspace().getV().get(index).getInfo().writeContent_EN(visitPresTextENInf.getText());
                 FileManager.getInstance().getChateauWorkspace().getV().get(index).getInfo().writeContent_FR(visitPresTextFRInf.getText());
 
-                this.overviewImages =  FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().getImagesContent();
-                System.out.println(FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().getImagesContent().size());
-*/
+
             }
 
             GUIFormsController.getInstance().closeForm();
             stage.close();
         }
+
+        //overviewImages.clear();
+        //infoImages.clear();
     }
 
-    //pour véfirier les entrées
     private boolean validForm() {
+        // TODO: 28/04/2016 vérif de form
+        // TODO: 28/04/2016 afficher sous popup les champs qui ne respectent pas les conditions
         return true;
     }
 
 
-    public void setInfoImages(ArrayList<File> infoImages) {
-        System.out.println(infoImages.toString());
-        this.infoImages = infoImages;
+    public void setInfoImages(ArrayList<File> selectedImages) {
+        System.out.print("info: " + selectedImages.toString());
+        this.infoImages = selectedImages;
+
     }
 
-    public void setOverviewImages(ArrayList<File> overviewImages) {
-        System.out.println(overviewImages.toString());
-        this.overviewImages = overviewImages;
+    public void setOverviewImages(ArrayList<File> selectedImages) {
+        System.out.print("overview:" + selectedImages.size());
+        this.overviewImages = selectedImages;
     }
 
     public ArrayList<File> getOverviewImages() {
