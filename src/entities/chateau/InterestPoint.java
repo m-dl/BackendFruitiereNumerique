@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * @author Maxime
  */
 public class InterestPoint {    
-	private File presentation_FR, presentation_EN, marker, road, picture;
+	private File presentation_FR, presentation_EN, marker, picture, name_EN;
 	private ArrayList<File> photos, interieur, _360, videos;
 	private String name;
 	
@@ -23,8 +23,8 @@ public class InterestPoint {
 		
 		this.presentation_FR = new File(pathFrom + "/" + FileManager.PRESENTATION_FR);
 		this.presentation_EN = new File(pathFrom + "/" + FileManager.PRESENTATION_EN);
+		this.name_EN = new File(pathFrom + "/" + FileManager.NAME_EN);
 		this.marker = new File(pathFrom + "/" + FileManager.MARKER);
-		this.road = new File(pathFrom + "/" + FileManager.ROAD);
 
 		initInterestPoint(pathFrom);
 
@@ -43,10 +43,10 @@ public class InterestPoint {
 			FileTools.CreateFile(pathFrom + "/" + FileManager.PRESENTATION_FR);
 		if(!FileTools.Exist(this.presentation_EN))
 			FileTools.CreateFile(pathFrom + "/" + FileManager.PRESENTATION_EN);
+		if(!FileTools.Exist(this.name_EN))
+			FileTools.CreateFile(pathFrom + "/" + FileManager.NAME_EN);
 		if(!FileTools.Exist(this.marker))
 			FileTools.CreateFile(pathFrom + "/" + FileManager.MARKER);
-		if(!FileTools.Exist(this.road))
-			FileTools.CreateFile(pathFrom + "/" + FileManager.ROAD);	
 	}
 	
 	public String readPresentation_FR() {
@@ -63,6 +63,14 @@ public class InterestPoint {
 	
 	public void writePresentation_EN(String input) {
 		FileTools.Write(this.presentation_EN, input);
+	}
+	
+	public String readName_EN() {
+		return FileTools.Read(this.name_EN);
+	}
+	
+	public void writeName_EN(String input) {
+		FileTools.Write(this.name_EN, input);
 	}
 	
 	public String readMarker() {
@@ -208,14 +216,6 @@ public class InterestPoint {
 		this.name = name;
 	}
 
-	public File getRoad() {
-		return road;
-	}
-
-	public void setRoad(File road) {
-		this.road = road;
-	}
-
 	public ArrayList<File> getInterieur() {
 		return interieur;
 	}
@@ -238,5 +238,13 @@ public class InterestPoint {
 
 	public void set_360(ArrayList<File> _360) {
 		this._360 = _360;
+	}
+
+	public File getName_EN() {
+		return name_EN;
+	}
+
+	public void setName_EN(File name_EN) {
+		this.name_EN = name_EN;
 	}
 }

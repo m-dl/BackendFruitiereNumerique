@@ -285,6 +285,22 @@ public class FileTools {
 		return picturesList;
 	}
 	
+	// List all 360 from a folder
+	public static ArrayList<File> ListFolder360(String p) {
+		ArrayList<File> _360List = new ArrayList<File>();
+		File pathFrom = new File(p);
+		if(!Exist(pathFrom)) 
+			CreateDirectory(p);
+		File[] list = pathFrom.listFiles(IMAGE_FILTER);
+		for(File f : list) {
+			if(f.getName().contains(FileManager._360_)) {
+	        	// add 360 to arraylist
+				_360List.add(f);
+			}
+        }
+		return _360List;
+	}
+	
 	// List all videos from a folder
 	public static ArrayList<File> ListFolderVideos(String p) {
 		ArrayList<File> videosList = new ArrayList<File>();
@@ -399,7 +415,6 @@ public class FileTools {
 		Scanner scanner = new Scanner(Read(road));
 		while (scanner.hasNextLine()) {
 		  String line = scanner.nextLine();
-		  System.out.println(line);
 		  if(!ParseCoordinates(line).equals(""))
 			  coord.add(line);
 		  else if(line.contains(Road.ROAD_WIDTH))
@@ -409,5 +424,20 @@ public class FileTools {
 		}
 		scanner.close();
 		return new Road(coord, width, color);
+    }
+    
+    // Read village marker file
+    public static String ReadMarkerVillage(File marker) {
+		String coord = "";
+		Scanner scanner = new Scanner(Read(marker));
+		while (scanner.hasNextLine()) {
+		  String line = scanner.nextLine();
+		  if(!ParseCoordinates(line).equals("")) {
+			  coord = line;
+			  break;
+		  }
+		}
+		scanner.close();
+		return coord;
     }
 }

@@ -14,11 +14,13 @@ public class Visit {
     private ArrayList<InterestPoint> IP;
     private Overview overview;
     private Info info;
+    private File name_EN;
     private String name;
 
     public Visit(String pathFrom, String name) {
     	if(!FileTools.Exist(new File(pathFrom)))
             FileTools.CreateDirectory(pathFrom);
+		this.name_EN = new File(pathFrom + "/" + FileManager.NAME_EN);
     	
         initVisit(pathFrom);
 
@@ -33,6 +35,8 @@ public class Visit {
             FileTools.CreateDirectory(pathFrom + "/" + FileManager.OVERVIEW_FOLDER);
         if (!FileTools.Exist(new File(pathFrom + "/" + FileManager.INFO_FOLDER)))
             FileTools.CreateDirectory(pathFrom + "/" + FileManager.INFO_FOLDER);
+		if(!FileTools.Exist(this.name_EN))
+			FileTools.CreateFile(pathFrom + "/" + FileManager.NAME_EN);
     }
 
     /**
@@ -88,4 +92,13 @@ public class Visit {
     public void addInterestPoint(InterestPoint IP) {
         this.IP.add(IP);
     }
+    
+	public String readName_EN() {
+		return FileTools.Read(this.name_EN);
+	}
+	
+	public void writeName_EN(String input) {
+		FileTools.Write(this.name_EN, input);
+	}
+	
 }
