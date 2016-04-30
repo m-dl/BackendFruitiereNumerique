@@ -30,7 +30,7 @@ public class InterestPoint {
 		initInterestPoint(pathFrom);
 
 		this.photos = FileTools.ListFolderPictures(pathFrom + "/" + FileManager.PHOTOS);
-		this._360 = FileTools.ListFolderPictures(pathFrom + "/" + FileManager._360);
+		this._360 = FileTools.ListFolder360(pathFrom + "/" + FileManager.PHOTOS);
 		this.interieur = FileTools.ListFolderPictures(pathFrom + "/" + FileManager.INTERIEUR);
 		this.videos = FileTools.ListFolderVideos(pathFrom + "/" + FileManager.VIDEOS);
 		ArrayList<File> tmpPicture = FileTools.ListFolderPictures(pathFrom);
@@ -67,11 +67,11 @@ public class InterestPoint {
 	}
 	
 	public String readMarker() {
-		return FileTools.Read(this.marker);
+		return FileTools.ReadMarkerVillage(this.marker);
 	}
 	
 	public void writeMarker(String input) {
-		FileTools.Write(this.marker, input);
+		FileTools.Write(this.marker, name + "\n" + input);
 	}
 	
 	public Road readRoad() {
@@ -83,7 +83,7 @@ public class InterestPoint {
 		for(String s : coordArr) {
 			coord += s + "\n";
 		}
-		String input = coord + "\n" + Road.ROAD_WIDTH + width + "\n" + Road.ROAD_COLOR + color;
+		String input = "Coordonnées\n" + coord + "\n" + Road.ROAD_WIDTH + width + "\n" + Road.ROAD_COLOR + color;
 		FileTools.Write(this.road, input);
 	}
 
@@ -106,7 +106,7 @@ public class InterestPoint {
 	
 	public void add360(String pathFrom, String pathTo, String f) {
 		f = FileTools.StringToLower(f);
-		String newPath = pathTo + "/" + FileManager._360 + "/" + f;
+		String newPath = pathTo + "/" + FileManager.PHOTOS + "/" + FileManager._360_ + f;
 		FileTools.CopyFile(pathFrom, newPath);
 		File file = new File(newPath);
 		this._360.add(file);

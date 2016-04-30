@@ -23,8 +23,10 @@ public class FileManager {
 	final public static String INTERIEUR = "interieur";
 	final public static String VIDEOS = "video";
 	final public static String _360 = "360";
+	final public static String _360_ = "360_";
     final public static String OVERVIEW_FOLDER = "visite-overview";
     final public static String INFO_FOLDER = "visite-info";
+	final public static String NAME_EN = "name_en.txt";
 	final public static String PRESENTATION_FR = "content_fr.txt";
     final public static String PRESENTATION_EN = "content_en.txt";
     final public static String LENGTH_FR = "duree_fr.txt";
