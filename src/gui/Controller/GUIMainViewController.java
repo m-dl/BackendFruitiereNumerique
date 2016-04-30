@@ -3,10 +3,22 @@ package gui.Controller;
 import files.FileManager;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
-public class GUIMainViewController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class GUIMainViewController implements Initializable {
+
+    @FXML
+    public ImageView logoL;
+    @FXML
+    public Label test;
 
     private static GUIMainViewController INSTANCE = new GUIMainViewController();
     //threads
@@ -38,8 +50,10 @@ public class GUIMainViewController {
             return null;
         }
     };
+
     @FXML
     private TabPane tabPane;
+
     @FXML
     private ProgressIndicator progressIndicator; // TODO: 09/04/2016 trouver un moyen de set progress pendant dl
 
@@ -75,5 +89,10 @@ public class GUIMainViewController {
 
     public TabPane getTabPane() {
         return tabPane;
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        logoL.setImage(new Image("logo.png"));
     }
 }

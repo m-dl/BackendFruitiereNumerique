@@ -8,9 +8,13 @@ import gui.Controller.chateau.GUIControllerChateauVisitForm;
 import gui.Controller.photo.GUIControllerPhotos;
 import gui.Controller.village.GUIControllerVillage;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -25,7 +29,6 @@ public class GUIWindow extends Application {
 
     private Pane rootLayout;
     private Stage primaryStage;
-
 
 
     public static void main(String[] args) {

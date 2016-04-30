@@ -5,7 +5,6 @@ import entities.village.Overview;
 import entities.village.Visit;
 import files.FileManager;
 import gui.Controller.GUIFormsController;
-import gui.Controller.chateau.GUIControllerChateau;
 import gui.GUIUtilities;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -14,44 +13,59 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import static gui.Controller.enums.PictureFormType.INFO;
+import static gui.Controller.enums.PictureFormType.OVERVIEW;
+import static gui.Controller.enums.VisitType.VILLAGE;
 
 public class GUIControllerVillageVisitForm {
 
     private static GUIControllerVillageVisitForm INSTANCE = new GUIControllerVillageVisitForm();
 
-    public TextField visitNameVillage;
-    public TextArea visitPresTextFrOverviewVillage;
-    public TextArea visitPresTextEnOverviewVillage;
-    public TextArea visitLengthFrOverviewVillage;
-    public TextArea visitLengthEnOverviewVillage;
-    public TextArea visitPresTextFfInfoVillage;
-    public TextArea visitPresTextEnInfoVillage;
+    public TextField visitName;
+    public TextArea visitPresTextFROv;
+    public TextArea visitPresTextENOv;
+    public TextArea visitLengthFROv;
+    public TextArea visitLengthENOv;
+    public TextArea visitPresTextFRInf;
+    public TextArea visitPresTextENInf;
 
-    Info visitInfos;
-    Overview visitOverview;
+    public ArrayList<File> overviewImages;
+    public ArrayList<File> infoImages;
 
-    boolean isNew = true;
     private Stage stage;
+    private boolean isNewVisit;
+    private String errorList;
 
     public GUIControllerVillageVisitForm() {
+        overviewImages = new ArrayList<>();
+        infoImages = new ArrayList<>();
+        errorList = "";
     }
 
     public static GUIControllerVillageVisitForm getInstance() {
         return INSTANCE;
     }
 
-    @FXML
-    public void addPicturesOverview() {
+    @FXML public void addOverviewPictures() {
+        GUIFormsController.getInstance().displayPhotoForm(VILLAGE, OVERVIEW, this.isNewVisit);
+    }
 
+    @FXML public void addInfoPictures() {
+        GUIFormsController.getInstance().displayPhotoForm(VILLAGE, INFO, this.isNewVisit);
     }
 
     public void displayForm(boolean isNewVisit, Visit selectedVisit) {
 
+        this.isNewVisit = isNewVisit;
+
         try {
 
             ScrollPane root = (ScrollPane) GUIUtilities.loadLayout("view/village/visitForm.fxml", this);
+            root.getStylesheets().add("errorStyle.css");
 
             stage = new Stage();
             stage.setScene(new Scene(root));
@@ -60,86 +74,251 @@ public class GUIControllerVillageVisitForm {
 
             if (!isNewVisit) {
                 if (selectedVisit != null) {
+
+                    int index = FileManager.getInstance().getVillageWorkspace().getV().indexOf(GUIControllerVillage.getInstance().getSelectedVisit());
+                    overviewImages = FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().getImagesContent();
+                    infoImages = FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().getPhotos();
+
                     this.fillInputs(selectedVisit);
-                    GUIFormsController.getInstance().displayForm(stage);
                     stage.setTitle("Modification de la visite: " + selectedVisit.getName());
+                    GUIFormsController.getInstance().displayForm(stage);
                     stage.show();
                 }
             } else {
+                overviewImages = new ArrayList<>();
+                infoImages = new ArrayList<>();
                 GUIFormsController.getInstance().displayForm(stage);
                 stage.setTitle("Ajout d'une nouvelle visite");
                 stage.show();
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
+    @FXML public void saveChanges() {
 
-    public void fillInputs(Visit v) {
+        if( validForm() ) {
 
-        this.visitNameVillage.setText(v.getName());
-        this.visitPresTextFrOverviewVillage.setText(v.getOverview().readPresentation_FR());
-        this.visitPresTextEnOverviewVillage.setText(v.getOverview().readPresentation_EN());
-        this.visitLengthFrOverviewVillage.setText(v.getOverview().readLength_FR());
-        this.visitLengthEnOverviewVillage.setText(v.getOverview().readLength_EN());
-        this.visitPresTextFfInfoVillage.setText(v.getInfo().readContent_FR());
-        this.visitPresTextEnInfoVillage.setText(v.getInfo().readContent_EN());
-    }
+            Overview visitOverview;
+            Info visitInfos;
 
+            if (isNewVisit) {
 
-    /*
-    @FXML
-    public void saveChanges() {
-
-        if (validForm()) {
-            if (isNew) {
-
-                System.out.println("added");
-
-                String vName = this.visitNameVillage.getText();
-                String visitPath = FileManager.WORKSPACE + "/" + FileManager.CHATEAU + "/" + vName;
+                String vName = this.visitName.getText();
+                String visitPath = FileManager.WORKSPACE + "/" + FileManager.VILLAGE + "/" + vName;
+                String visitOverviewPath = visitPath + "/" + "visite-overview";
+                String visitInfosPath = visitPath + "/" + "visite-info";
 
                 Visit v = new Visit(visitPath, vName);
                 v.setIP(new ArrayList<>());
 
-                visitOverview = new Overview(visitPath + "/" + "visite-overview");
+                visitOverview = new Overview(visitOverviewPath);
 
-                visitOverview.writePresentation_FR(visitPresTextFrOverviewVillage.getText());
-                visitOverview.writePresentation_EN(visitPresTextEnOverviewVillage.getText());
-                visitOverview.writeLength_EN(visitPresTextEnOverviewVillage.getText());
-                visitOverview.writeLength_FR(visitLengthFrOverviewVillage.getText());
-                visitOverview.writeLength_EN(visitLengthEnOverviewVillage.getText());
+                visitOverview.writePresentation_FR(visitPresTextFROv.getText());
+                visitOverview.writePresentation_EN(visitPresTextENOv.getText());
+                visitOverview.writeLength_EN(visitPresTextENOv.getText());
+                visitOverview.writeLength_FR(visitLengthFROv.getText());
+                visitOverview.writeLength_EN(visitLengthENOv.getText());
 
-                visitInfos = new Info(visitPath + "/" + "visite-info");
+                for (int i = 0; i < this.overviewImages.size(); i++) {
+                    visitOverview.addImagesContent(this.overviewImages.get(i).getAbsolutePath(), visitOverviewPath, this.overviewImages.get(i).getName());
+                }
 
-                visitInfos.writeContent_EN(visitPresTextFfInfoVillage.getText());
-                visitInfos.writeContent_FR(visitPresTextEnInfoVillage.getText());
+                visitInfos = new Info(visitInfosPath);
 
+                visitInfos.writeContent_EN(visitPresTextENInf.getText());
+                visitInfos.writeContent_FR(visitPresTextFRInf.getText());
+
+                for (int i = 0; i < this.infoImages.size(); i++) {
+                    visitInfos.addPhotos(this.infoImages.get(i).getAbsolutePath(), visitInfosPath, this.infoImages.get(i).getName());
+                }
 
                 v.setInfo(visitInfos);
                 v.setOverview(visitOverview);
-                FileManager.getInstance().getChateauWorkspace().addVisit(v);
+                FileManager.getInstance().getVillageWorkspace().addVisit(v);
+                GUIControllerVillage.getInstance().visitListV.add(v);
 
-                GUIControllerChateau.getInstance().visitListC.add(v);
+            }
+            else {
 
-            } else {
-                //si visite est modifiée
+                Visit selectedVisit = GUIControllerVillage.getInstance().getSelectedVisit();
+                int index = FileManager.getInstance().getVillageWorkspace().getV().indexOf(selectedVisit);
+
+                String vName = this.visitName.getText();
+
+                String visitPath = FileManager.WORKSPACE + "/" + FileManager.VILLAGE + "/" + vName;
+                String visitOverviewPath = visitPath + "/" + "visite-overview";
+                String visitInfosPath = visitPath + "/" + "visite-info";
+
+                if (vName != selectedVisit.getName()) {
+                    // TODO: 17/04/2016 bouger tout le dossier
+                }
+
+
+                FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().writePresentation_FR(visitPresTextFROv.getText());
+                FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().writePresentation_EN(visitPresTextENOv.getText());
+                FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().writeLength_EN(visitPresTextENOv.getText());
+                FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().writeLength_FR(visitLengthFROv.getText());
+                FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().writeLength_EN(visitLengthENOv.getText());
+
+
+                //Suppression et ajout des images qui ont été supprimées ou ajoutées pour Overview.
+                for (int i = 0; i < FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().getImagesContent().size(); i++) {
+                    if (! (getOverviewImages().contains(FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().getImagesContent().get(i)))) {
+                        File imageToDel = FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().getImagesContent().get(i);
+                        System.out.println("stuff to be del"+imageToDel.getName());
+                        FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().removeImagesContent(imageToDel.getPath(),imageToDel);
+                    }
+                }
+
+                for (int i = 0; i < getOverviewImages().size(); i++) {
+                    if (!FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().getImagesContent().contains(getOverviewImages().get(i))) {
+                        System.out.println("stuff to be add"+getOverviewImages().get(i).getName());
+
+                        FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().addImagesContent(getOverviewImages().get(i).getAbsolutePath(), visitOverviewPath, getOverviewImages().get(i).getName());
+
+                    }
+                }
+
+                //Suppression et ajout des images qui ont été supprimées ou ajoutées pour Info.
+
+                for (int i = 0; i < FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().getPhotos().size(); i++) {
+                    if (! (getInfoImages().contains(FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().getPhotos().get(i)))) {
+                        File imageToDel = FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().getPhotos().get(i);
+                        System.out.println("stuff to be del " + imageToDel.getName());
+                        FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().removePhotos(imageToDel.getAbsolutePath(),imageToDel);
+                    }
+                }
+
+                for (int i = 0; i < getInfoImages().size(); i++) {
+                    if (!FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().getPhotos().contains(getInfoImages().get(i))) {
+                        System.out.println("stuff to be add" + getInfoImages().get(i).getName());
+                        FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().addPhotos(getInfoImages().get(i).getAbsolutePath(), visitInfosPath, getInfoImages().get(i).getName());
+                    }
+                }
+
+                FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().writeContent_EN(visitPresTextENInf.getText());
+                FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().writeContent_FR(visitPresTextFRInf.getText());
             }
 
             GUIFormsController.getInstance().closeForm();
             stage.close();
         }
+        else {
+            GUIFormsController.getInstance().displayErrorAlert("Un ou plusieurs champs sont vides",
+                    "Les champs manquants sont:",errorList).showAndWait();
+            errorList = "";
 
-
+        }
     }
-    */
 
-    //pour véfirier les entrées
     private boolean validForm() {
-        return true;
+        boolean isValid = true;
+
+        System.out.println(visitPresTextENInf.getStyleClass());
+
+        if (this.visitName.getText().equals("")) {
+            errorList += "• Le case du nom est vide\n";
+            visitName.getStyleClass().add("errorStyle");
+            isValid = false;
+        }
+        else {
+            visitName.getStyleClass().clear();
+            visitName.getStyleClass().addAll("text-field", "text-input");
+        }
+
+        if (this.visitPresTextFROv.getText().equals("")) {
+            errorList += "• Le case de présentation de la visite Overview en français est vide\n";
+            visitPresTextFROv.getStyleClass().add("errorStyle");
+            isValid = false;
+        }
+        else {
+            visitPresTextFROv.getStyleClass().clear();
+            visitPresTextFROv.getStyleClass().addAll("text-input","text-area");
+        }
+
+        if (this.visitPresTextENOv.getText().equals("")) {
+            errorList += "• Le case de présentation de la visite Overview en anglais est vide\n";
+            visitPresTextENOv.getStyleClass().add("errorStyle");
+            isValid = false;
+        }
+        else {
+            visitPresTextENOv.getStyleClass().clear();
+            visitPresTextENOv.getStyleClass().addAll("text-input","text-area");
+        }
+
+        if (this.visitLengthFROv.getText().equals("")) {
+            errorList += "• Le case de la durée de la visite en français est vide\n";
+            visitLengthFROv.getStyleClass().add("errorStyle");
+            isValid = false;
+        }
+        else {
+            visitLengthFROv.getStyleClass().clear();
+            visitLengthFROv.getStyleClass().addAll("text-input","text-area");
+        }
+
+        if (this.visitLengthENOv.getText().equals("")) {
+            errorList += "• Le case de la durée de la visite en anglais est vide\n";
+            visitLengthENOv.getStyleClass().add("errorStyle");
+            isValid = false;
+        }
+        else {
+            visitLengthENOv.getStyleClass().clear();
+            visitLengthENOv.getStyleClass().addAll("text-input","text-area");
+        }
+
+        if (this.visitPresTextFRInf.getText().equals("")) {
+            errorList += "• Le case de présentation de la visite Infos en français est vide\n";
+            visitPresTextFRInf.getStyleClass().add("errorStyle");
+            isValid = false;
+        }
+        else {
+            visitPresTextFRInf.getStyleClass().clear();
+            visitPresTextFRInf.getStyleClass().addAll("text-input","text-area");
+        }
+
+        if (this.visitPresTextENInf.getText().equals("")) {
+            errorList += "• Le case de présentation de la visite Infos en anglais est vide\n";
+            visitPresTextENInf.getStyleClass().add("errorStyle");
+            isValid = false;
+        }
+        else {
+            visitPresTextENInf.getStyleClass().clear();
+            visitPresTextENInf.getStyleClass().addAll("text-input","text-area");
+        }
+
+        return isValid;
     }
 
+    public void fillInputs(Visit v) {
+        visitName.setText(v.getName());
+        visitPresTextFROv.setText(v.getOverview().readPresentation_FR());
+        visitPresTextENOv.setText(v.getOverview().readPresentation_EN());
+        visitLengthFROv.setText(v.getOverview().readLength_FR());
+        visitLengthENOv.setText(v.getOverview().readLength_EN());
+        visitPresTextFRInf.setText(v.getInfo().readContent_FR());
+        visitPresTextENInf.setText(v.getInfo().readContent_EN());
+    }
 
+    public ArrayList<File> getOverviewImages() {
+        return overviewImages;
+    }
+
+    public void setOverviewImages(ArrayList<File> selectedImages) {
+        System.out.print("overview:" + selectedImages.size());
+        this.overviewImages = selectedImages;
+    }
+
+    public ArrayList<File> getInfoImages() {
+        return infoImages;
+    }
+
+    public void setInfoImages(ArrayList<File> selectedImages) {
+        System.out.print("info: " + selectedImages.toString());
+        this.infoImages = selectedImages;
+
+    }
 }

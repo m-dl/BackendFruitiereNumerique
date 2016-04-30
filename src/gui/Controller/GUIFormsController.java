@@ -7,6 +7,11 @@ import gui.Controller.enums.VisitType;
 import gui.Controller.photo.GUIControllerPhotoForm;
 import gui.Controller.village.GUIControllerVillageIPForm;
 import gui.Controller.village.GUIControllerVillageVisitForm;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 
 public class GUIFormsController {
@@ -89,6 +94,31 @@ public class GUIFormsController {
             GUIControllerPhotoForm.getInstance().displayForm(visitType, pictureFormType);
         else
             pictureFormToFront();
+    }
+
+    public Alert displayErrorAlert(String content, String labelText, String error) {
+
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText(content);
+
+        Label label = new Label(labelText);
+        TextArea textArea = new TextArea(error);
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+        textArea.setMaxWidth(Double.MAX_VALUE);
+        textArea.setMaxHeight(Double.MAX_VALUE);
+        GridPane.setVgrow(textArea, Priority.ALWAYS);
+        GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+        GridPane expContent = new GridPane();
+        expContent.setMaxWidth(Double.MAX_VALUE);
+        expContent.add(label, 0, 0);
+        expContent.add(textArea, 0, 1);
+
+        alert.getDialogPane().setExpandableContent(expContent);
+
+        return alert;
+
     }
 
 }

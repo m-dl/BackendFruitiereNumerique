@@ -2,10 +2,13 @@ package gui.Controller.photo;
 
 import files.FileTools;
 import gui.Controller.chateau.GUIControllerChateau;
+import gui.Controller.chateau.GUIControllerChateauIPForm;
 import gui.Controller.chateau.GUIControllerChateauVisitForm;
 import gui.Controller.enums.PictureFormType;
 import gui.Controller.enums.VisitType;
 import gui.Controller.village.GUIControllerVillage;
+import gui.Controller.village.GUIControllerVillageIPForm;
+import gui.Controller.village.GUIControllerVillageVisitForm;
 import gui.GUIUtilities;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -72,41 +75,86 @@ public class GUIControllerPhotoForm {
     @FXML
     public void saveChanges() {
 
-        switch (pictureFormType) {
-            case OVERVIEW:
+        if (visitType == VisitType.CHATEAU) {
+            switch (pictureFormType) {
+                case OVERVIEW:
 
-                GUIControllerChateauVisitForm.getInstance().setOverviewImages(workingImageList);
-                break;
-            case INFO:
+                    GUIControllerChateauVisitForm.getInstance().setOverviewImages(workingImageList);
+                    break;
+                case INFO:
 
-                GUIControllerChateauVisitForm.getInstance().setInfoImages(workingImageList);
-                break;
+                    GUIControllerChateauVisitForm.getInstance().setInfoImages(workingImageList);
+                    break;
 
-            case DESCRIPTIVE_PICTURE:
+                case DESCRIPTIVE_PICTURE:
 
-                break;
+                    break;
 
-            case INDOORS_PICTURES:
+                case INDOORS_PICTURES:
 
-                break;
+                    GUIControllerChateauIPForm.getInstance().setInterieur(workingImageList);
 
-            case PANORAMIC_PICTURES:
+                    break;
 
-                break;
+                case PANORAMIC_PICTURES:
 
-            case PICTURES:
+                    GUIControllerChateauIPForm.getInstance().set_360(workingImageList);
 
-                break;
+                    break;
 
-            case VIDEOS:
+                case PICTURES:
+                    GUIControllerChateauIPForm.getInstance().setPhotos(workingImageList);
 
-                break;
+
+                    break;
+
+                case VIDEOS:
+                    GUIControllerChateauIPForm.getInstance().setVideos(workingImageList);
+                    break;
+            }
+        }
+        else if (visitType == VisitType.VILLAGE) {
+            switch (pictureFormType) {
+                case OVERVIEW:
+
+                    GUIControllerVillageVisitForm.getInstance().setOverviewImages(workingImageList);
+                    break;
+                case INFO:
+
+                    GUIControllerVillageVisitForm.getInstance().setInfoImages(workingImageList);
+                    break;
+
+                case DESCRIPTIVE_PICTURE:
+
+                    break;
+
+                case INDOORS_PICTURES:
+
+                    GUIControllerVillageIPForm.getInstance().setInterieur(workingImageList);
+
+                    break;
+
+                case PANORAMIC_PICTURES:
+
+                    GUIControllerVillageIPForm.getInstance().set_360(workingImageList);
+
+                    break;
+
+                case PICTURES:
+                    GUIControllerVillageIPForm.getInstance().setPhotos(workingImageList);
+                    break;
+
+                case VIDEOS:
+                    GUIControllerVillageIPForm.getInstance().setVideos(workingImageList);
+                    break;
+            }
         }
     }
 
     public void displayForm(VisitType visitType, PictureFormType pictureFormType) {
         this.visitType = visitType;
         this.pictureFormType = pictureFormType;
+        workingImageList.clear();
         pictureForm.setCenter(loadContent());
         stage.show();
     }
@@ -136,7 +184,6 @@ public class GUIControllerPhotoForm {
         verticalContentDisplay = new VBox();
         verticalContentDisplay.setPadding(new Insets(1, 1, 1, 1));
 
-
         pictureContentContainer.addAll(workingImageList.stream().map(this::createAnchorPane).collect(Collectors.toList()));
 
         verticalContentDisplay.getChildren().addAll(pictureContentContainer);
@@ -161,41 +208,41 @@ public class GUIControllerPhotoForm {
                         pictureList.add(GUIControllerChateau.getInstance().getSelectedPoint().getPicture());
                     break;
                 case INDOORS_PICTURES:
-                    pictureList = GUIControllerChateau.getInstance().getSelectedPoint().getInterieur();
+                    workingImageList = (ArrayList<File>) GUIControllerChateauIPForm.getInstance().getInterieur().clone();
                     break;
                 case PANORAMIC_PICTURES:
-                    pictureList = GUIControllerChateau.getInstance().getSelectedPoint().get_360();
+                    workingImageList = (ArrayList<File>) GUIControllerChateauIPForm.getInstance().get_360().clone();
                     break;
                 case PICTURES:
-                    pictureList = GUIControllerChateau.getInstance().getSelectedPoint().getPhotos();
+                    workingImageList = (ArrayList<File>) GUIControllerChateauIPForm.getInstance().getPhotos().clone();
                     break;
                 case VIDEOS:
-                    pictureList = GUIControllerChateau.getInstance().getSelectedPoint().getVideos();
+                    workingImageList = (ArrayList<File>) GUIControllerChateauIPForm.getInstance().getVideos().clone();
                     break;
             }
         } else if (visitType == VisitType.VILLAGE) {
             switch (pictureFormType) {
                 case OVERVIEW:
-                    pictureList = GUIControllerVillage.getInstance().getSelectedVisit().getOverview().getImagesContent();
+                    workingImageList = (ArrayList<File>) GUIControllerVillageVisitForm.getInstance().getOverviewImages().clone();
                     break;
                 case INFO:
-                    pictureList = GUIControllerVillage.getInstance().getSelectedVisit().getInfo().getPhotos();
+                    workingImageList = (ArrayList<File>) GUIControllerVillageVisitForm.getInstance().getInfoImages().clone();
                     break;
                 case DESCRIPTIVE_PICTURE:
-                    if (GUIControllerVillage.getInstance().getSelectedPoint().getPicture() != null)
-                        pictureList.add(GUIControllerVillage.getInstance().getSelectedPoint().getPicture());
+                    if (GUIControllerChateau.getInstance().getSelectedPoint().getPicture() != null)
+                        pictureList.add(GUIControllerChateau.getInstance().getSelectedPoint().getPicture());
                     break;
                 case INDOORS_PICTURES:
-                    pictureList = GUIControllerVillage.getInstance().getSelectedPoint().getInterieur();
+                    workingImageList = (ArrayList<File>) GUIControllerVillageIPForm.getInstance().getInterieur().clone();
                     break;
                 case PANORAMIC_PICTURES:
-                    pictureList = GUIControllerVillage.getInstance().getSelectedPoint().get_360();
+                    workingImageList = (ArrayList<File>) GUIControllerVillageIPForm.getInstance().get_360().clone();
                     break;
                 case PICTURES:
-                    pictureList = GUIControllerVillage.getInstance().getSelectedPoint().getPhotos();
+                    workingImageList = (ArrayList<File>) GUIControllerVillageIPForm.getInstance().getPhotos().clone();
                     break;
                 case VIDEOS:
-                    pictureList = GUIControllerVillage.getInstance().getSelectedPoint().getVideos();
+                    workingImageList = (ArrayList<File>) GUIControllerVillageIPForm.getInstance().getVideos().clone();
                     break;
             }
         }
@@ -255,8 +302,8 @@ public class GUIControllerPhotoForm {
             }
         }
 
-        for (int i = indexToDel.size(); i > 0; i--) {
-            int index = indexToDel.get(i - 1);
+        for (int i = indexToDel.size() - 1; i >= 0; i--) {
+            int index = indexToDel.get(i);
             pictureContentContainer.remove(index);
             verticalContentDisplay.getChildren().remove(index);
             workingImageList.remove(i);
@@ -274,6 +321,18 @@ public class GUIControllerPhotoForm {
             switch (pictureFormType) {
                 case OVERVIEW:
 
+                    // TODO: 30/04/2016 verif si bon nombre image etc..
+
+                    /*
+                    ArrayList<File> selectedImages = FileTools.MultipleFileChooser(FileTools.IMAGES_FILE_FILTER);
+
+                    for (int i = 0; i < selectedImages.size(); i++) {
+                        if (!workingImageList.contains(selectedImages.get(i))) {
+                            workingImageList.add(selectedImages.get(i));
+                        }
+                    }
+
+                    */
                     workingImageList.addAll(FileTools.MultipleFileChooser(FileTools.IMAGES_FILE_FILTER));
 
                     break;
@@ -310,7 +369,7 @@ public class GUIControllerPhotoForm {
 
                 case VIDEOS:
 
-                    workingImageList.addAll(FileTools.MultipleFileChooser(FileTools.IMAGES_FILE_FILTER));
+                    workingImageList.addAll(FileTools.MultipleFileChooser(FileTools.VIDEOS_FILE_FILTER));
                     break;
             }
         pictureForm.setCenter(reloadContent());

@@ -46,8 +46,6 @@ public class GUIControllerChateau implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-
         visitListViewC.setItems(visitListC);
         iPListViewC.setItems(iPListC);
 
@@ -123,11 +121,11 @@ public class GUIControllerChateau implements Initializable{
     @FXML
     void addPIC() {
         if(getSelectedVisit() != null) {
-            System.out.println("edit visit : " + iPListViewC.getSelectionModel().getSelectedItem());
+            System.out.println("add poi : " + iPListViewC.getSelectionModel().getSelectedItem());
             guiForms.displayChateauIPForm(true, this.getSelectedPoint());
         }
         else {
-            System.out.println("choisissez une visite");
+            System.out.println("choisissez un poi");
         }
     }
 
@@ -138,7 +136,7 @@ public class GUIControllerChateau implements Initializable{
             guiForms.displayChateauIPForm(false, this.getSelectedPoint());
         }
         else {
-            System.out.println("choisissez une visite");
+            System.out.println("choisissez un poi");
         }
     }
 
@@ -147,6 +145,8 @@ public class GUIControllerChateau implements Initializable{
         String path = FileManager.getInstance().WORKSPACE + "/" + FileManager.getInstance().CHATEAU + "/" + visitListViewC.getSelectionModel().getSelectedItem().getName();
         guiWindow.FM.getChateauWorkspace().deleteVisit(visitListViewC.getSelectionModel().getSelectedItem(),path);
         visitListC.remove(visitListViewC.getSelectionModel().getSelectedItem());
+        visitListViewC.getParent().requestFocus();
+
     }
 
     @FXML
@@ -156,6 +156,7 @@ public class GUIControllerChateau implements Initializable{
         ArrayList<Visit> visits = FileManager.getInstance().getChateauWorkspace().getV();
         visits.get(visits.indexOf(visitListViewC.getSelectionModel().getSelectedItem())).deleteInterestPoint(iPListViewC.getSelectionModel().getSelectedItem(),path);
         iPListC.remove(iPListViewC.getSelectionModel().getSelectedItem());
+        iPListViewC.getParent().requestFocus();
     }
 
     public Visit getSelectedVisit() {

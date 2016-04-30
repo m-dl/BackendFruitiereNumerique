@@ -2,7 +2,9 @@ package gui.Controller.village;
 
 import entities.village.InterestPoint;
 import entities.village.Visit;
+import files.FileManager;
 import gui.Controller.GUIFormsController;
+import gui.GUIWindow;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -20,16 +22,22 @@ import java.util.ResourceBundle;
 
 public class GUIControllerVillage implements Initializable{
 
+    private GUIWindow guiWindow;
+    private GUIFormsController guiForms;
+
     private static GUIControllerVillage INSTANCE = new GUIControllerVillage();
     public ListView<Visit> visitListViewV;
     public ListView<InterestPoint> iPListViewV;
     public ObservableList<Visit> visitListV;
     public ObservableList<InterestPoint> iPListV;
-    private GUIFormsController guiForms;
 
 
-    private GUIControllerVillage()
-    {}
+    private GUIControllerVillage() {
+        this.guiWindow = GUIWindow.getInstance();
+        this.guiForms = GUIFormsController.getInstance();
+        visitListV = FXCollections.observableArrayList();
+        iPListV = FXCollections.observableArrayList();
+    }
 
     public static GUIControllerVillage getInstance() {
         return INSTANCE;
@@ -37,11 +45,6 @@ public class GUIControllerVillage implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        this.guiForms = GUIFormsController.getInstance();
-        visitListV = FXCollections.observableArrayList();
-        iPListV = FXCollections.observableArrayList();
-
         visitListViewV.setItems(visitListV);
         iPListViewV.setItems(iPListV);
 
@@ -107,23 +110,25 @@ public class GUIControllerVillage implements Initializable{
     @FXML
     void addVisitV() {
         System.out.println("add visit");
-        guiForms.displayVillageVisitForm(true,this.getSelectedVisit());
+        guiForms.displayVillageVisitForm(true, this.getSelectedVisit());
     }
 
     @FXML
     void editVisitV() {
         System.out.println("edit visit : "+ visitListViewV.getSelectionModel().getSelectedItem());
-        guiForms.displayVillageVisitForm(false,this.getSelectedVisit());
+        if(this.getSelectedVisit() != null ) {
+            guiForms.displayVillageVisitForm(false, this.getSelectedVisit());
+        }
     }
 
     @FXML
     void addPIV() {
         if(getSelectedVisit() != null) {
-            System.out.println("edit visit : " + iPListViewV.getSelectionModel().getSelectedItem());
+            System.out.println("add poi : " + iPListViewV.getSelectionModel().getSelectedItem());
             guiForms.displayVillageIPForm(true, this.getSelectedPoint());
         }
         else {
-            System.out.println("choisissez une visite");
+            System.out.println("choisissez un poi");
         }
     }
 
@@ -134,20 +139,27 @@ public class GUIControllerVillage implements Initializable{
             guiForms.displayVillageIPForm(false, this.getSelectedPoint());
         }
         else {
-            System.out.println("choisissez une visite");
+            System.out.println("choisissez un poi");
         }
     }
 
     @FXML
     void deleteVisitV() {
         System.out.println("del visit : "+ visitListViewV.getSelectionModel().getSelectedItem());
-        //guiWindow.displayChateauForm(false);
+        String path = FileManager.getInstance().WORKSPACE + "/" + FileManager.getInstance().VILLAGE + "/" + visitListViewV.getSelectionModel().getSelectedItem().getName();
+        guiWindow.FM.getVillageWorkspace().deleteVisit(visitListViewV.getSelectionModel().getSelectedItem(),path);
+        visitListV.remove(visitListViewV.getSelectionModel().getSelectedItem());
+        visitListViewV.getParent().requestFocus();
     }
 
     @FXML
     void deleteIPV() {
         System.out.println("del point : "+ iPListViewV.getSelectionModel().getSelectedItem());
-       // guiWindow.displayChateauForm(false);
+        String path = FileManager.getInstance().WORKSPACE + "/" + FileManager.getInstance().VILLAGE + "/" + visitListViewV.getSelectionModel().getSelectedItem().getName() + "/" + iPListViewV.getSelectionModel().getSelectedItem().getName();
+        ArrayList<Visit> visits = FileManager.getInstance().getVillageWorkspace().getV();
+        visits.get(visits.indexOf(visitListViewV.getSelectionModel().getSelectedItem())).deleteInterestPoint(iPListViewV.getSelectionModel().getSelectedItem(),path);
+        iPListV.remove(iPListViewV.getSelectionModel().getSelectedItem());
+        iPListViewV.getParent().requestFocus();
     }
 
     public Visit getSelectedVisit() {

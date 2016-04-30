@@ -8,9 +8,7 @@ import gui.Controller.GUIFormsController;
 import gui.GUIUtilities;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -24,22 +22,28 @@ import static gui.Controller.enums.VisitType.CHATEAU;
 public class GUIControllerChateauVisitForm {
 
     private static GUIControllerChateauVisitForm INSTANCE = new GUIControllerChateauVisitForm();
+
     public TextField visitName;
+    //public TextField visitNameEN;
     public TextArea visitPresTextFROv;
     public TextArea visitPresTextENOv;
     public TextArea visitLengthFROv;
     public TextArea visitLengthENOv;
     public TextArea visitPresTextFRInf;
     public TextArea visitPresTextENInf;
-    private Stage stage;
-    private boolean isNewVisit;
 
     public ArrayList<File> overviewImages;
     public ArrayList<File> infoImages;
 
+    private Stage stage;
+    private boolean isNewVisit;
+    private String errorList;
+
+
     private GUIControllerChateauVisitForm() {
         overviewImages = new ArrayList<>();
         infoImages = new ArrayList<>();
+        errorList = "";
     }
 
     public static GUIControllerChateauVisitForm getInstance() {
@@ -54,6 +58,7 @@ public class GUIControllerChateauVisitForm {
         try {
 
             ScrollPane root = (ScrollPane) GUIUtilities.loadLayout("view/chateau/visitForm.fxml", this);
+            root.getStylesheets().add("errorStyle.css");
 
             stage = new Stage();
             stage.setScene(new Scene(root));
@@ -62,9 +67,9 @@ public class GUIControllerChateauVisitForm {
 
             if (!isNewVisit) {
                 if (selectedVisit != null) {
-                    //int index = FileManager.getInstance().getChateauWorkspace().getV().indexOf(GUIControllerChateau.getInstance().getSelectedVisit());
-                   // overviewImages = FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().getImagesContent();
-                   // infoImages = FileManager.getInstance().getChateauWorkspace().getV().get(index).getInfo().getPhotos();
+                    int index = FileManager.getInstance().getChateauWorkspace().getV().indexOf(GUIControllerChateau.getInstance().getSelectedVisit());
+                    overviewImages = FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().getImagesContent();
+                    infoImages = FileManager.getInstance().getChateauWorkspace().getV().get(index).getInfo().getPhotos();
                     this.fillInputs(selectedVisit);
                     stage.setTitle("Modification de la visite: " + selectedVisit.getName());
                     GUIFormsController.getInstance().displayForm(stage);
@@ -85,33 +90,25 @@ public class GUIControllerChateauVisitForm {
 
 
     public void fillInputs(Visit v) {
-            visitName.setText(v.getName());
-            visitPresTextFROv.setText(v.getOverview().readPresentation_FR());
-            visitPresTextENOv.setText(v.getOverview().readPresentation_EN());
-            visitLengthFROv.setText(v.getOverview().readLength_FR());
-            visitLengthENOv.setText(v.getOverview().readLength_EN());
-            visitPresTextFRInf.setText(v.getInfo().readContent_FR());
-            visitPresTextENInf.setText(v.getInfo().readContent_EN());
+        visitName.setText(v.getName());
+        visitPresTextFROv.setText(v.getOverview().readPresentation_FR());
+        visitPresTextENOv.setText(v.getOverview().readPresentation_EN());
+        visitLengthFROv.setText(v.getOverview().readLength_FR());
+        visitLengthENOv.setText(v.getOverview().readLength_EN());
+        visitPresTextFRInf.setText(v.getInfo().readContent_FR());
+        visitPresTextENInf.setText(v.getInfo().readContent_EN());
     }
 
 
-    @FXML
-    public void addOverviewPictures() {
+    @FXML public void addOverviewPictures() {
         GUIFormsController.getInstance().displayPhotoForm(CHATEAU, OVERVIEW, this.isNewVisit);
     }
 
-    @FXML
-    public void addInfoPictures() {
+    @FXML public void addInfoPictures() {
         GUIFormsController.getInstance().displayPhotoForm(CHATEAU, INFO, this.isNewVisit);
     }
 
-    @FXML void displayShit() {
-        System.out.println("overview: " + getOverviewImages());
-        System.out.println("infos: " + getInfoImages());
-
-    }
-    @FXML
-    public void saveChanges() {
+    @FXML public void saveChanges() {
 
         if( validForm() ) {
 
@@ -131,6 +128,7 @@ public class GUIControllerChateauVisitForm {
                 visitOverview = new Overview(visitOverviewPath);
 
                 visitOverview.writePresentation_FR(visitPresTextFROv.getText());
+                visitOverview.writePresentation_EN(visitPresTextENOv.getText());
                 visitOverview.writeLength_EN(visitPresTextENOv.getText());
                 visitOverview.writeLength_FR(visitLengthFROv.getText());
                 visitOverview.writeLength_EN(visitLengthENOv.getText());
@@ -171,6 +169,7 @@ public class GUIControllerChateauVisitForm {
 
 
                 FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().writePresentation_FR(visitPresTextFROv.getText());
+                FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().writePresentation_EN(visitPresTextENOv.getText());
                 FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().writeLength_EN(visitPresTextENOv.getText());
                 FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().writeLength_FR(visitLengthFROv.getText());
                 FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().writeLength_EN(visitLengthENOv.getText());
@@ -190,6 +189,7 @@ public class GUIControllerChateauVisitForm {
                         System.out.println("stuff to be add"+getOverviewImages().get(i).getName());
 
                         FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().addImagesContent(getOverviewImages().get(i).getAbsolutePath(), visitOverviewPath, getOverviewImages().get(i).getName());
+
                     }
                 }
 
@@ -217,22 +217,94 @@ public class GUIControllerChateauVisitForm {
             GUIFormsController.getInstance().closeForm();
             stage.close();
         }
+        else {
+            GUIFormsController.getInstance().displayErrorAlert("Un ou plusieurs champs sont vides",
+                    "Les champs manquants sont:",errorList).showAndWait();
+            errorList = "";
 
-        //overviewImages.clear();
-        //infoImages.clear();
+        }
     }
 
     private boolean validForm() {
-        // TODO: 28/04/2016 vérif de form
-        // TODO: 28/04/2016 afficher sous popup les champs qui ne respectent pas les conditions
-        return true;
+        boolean isValid = true;
+
+        System.out.println(visitPresTextENInf.getStyleClass());
+
+        if (this.visitName.getText().equals("")) {
+            errorList += "• Le case du nom est vide\n";
+            visitName.getStyleClass().add("errorStyle");
+            isValid = false;
+        }
+        else {
+            visitName.getStyleClass().clear();
+            visitName.getStyleClass().addAll("text-field", "text-input");
+        }
+
+        if (this.visitPresTextFROv.getText().equals("")) {
+            errorList += "• Le case de présentation de la visite Overview en français est vide\n";
+            visitPresTextFROv.getStyleClass().add("errorStyle");
+            isValid = false;
+        }
+        else {
+            visitPresTextFROv.getStyleClass().clear();
+            visitPresTextFROv.getStyleClass().addAll("text-input","text-area");
+        }
+
+        if (this.visitPresTextENOv.getText().equals("")) {
+            errorList += "• Le case de présentation de la visite Overview en anglais est vide\n";
+            visitPresTextENOv.getStyleClass().add("errorStyle");
+            isValid = false;
+        }
+        else {
+            visitPresTextENOv.getStyleClass().clear();
+            visitPresTextENOv.getStyleClass().addAll("text-input","text-area");
+        }
+
+        if (this.visitLengthFROv.getText().equals("")) {
+            errorList += "• Le case de la durée de la visite en français est vide\n";
+            visitLengthFROv.getStyleClass().add("errorStyle");
+            isValid = false;
+        }
+        else {
+            visitLengthFROv.getStyleClass().clear();
+            visitLengthFROv.getStyleClass().addAll("text-input","text-area");
+        }
+
+        if (this.visitLengthENOv.getText().equals("")) {
+            errorList += "• Le case de la durée de la visite en anglais est vide\n";
+            visitLengthENOv.getStyleClass().add("errorStyle");
+            isValid = false;
+        }
+        else {
+            visitLengthENOv.getStyleClass().clear();
+            visitLengthENOv.getStyleClass().addAll("text-input","text-area");
+        }
+
+        if (this.visitPresTextFRInf.getText().equals("")) {
+            errorList += "• Le case de présentation de la visite Infos en français est vide\n";
+            visitPresTextFRInf.getStyleClass().add("errorStyle");
+            isValid = false;
+        }
+        else {
+            visitPresTextFRInf.getStyleClass().clear();
+            visitPresTextFRInf.getStyleClass().addAll("text-input","text-area");
+        }
+
+        if (this.visitPresTextENInf.getText().equals("")) {
+            errorList += "• Le case de présentation de la visite Infos en anglais est vide\n";
+            visitPresTextENInf.getStyleClass().add("errorStyle");
+            isValid = false;
+        }
+        else {
+            visitPresTextENInf.getStyleClass().clear();
+            visitPresTextENInf.getStyleClass().addAll("text-input","text-area");
+        }
+
+        return isValid;
     }
 
-
-    public void setInfoImages(ArrayList<File> selectedImages) {
-        System.out.print("info: " + selectedImages.toString());
-        this.infoImages = selectedImages;
-
+    public ArrayList<File> getOverviewImages() {
+        return overviewImages;
     }
 
     public void setOverviewImages(ArrayList<File> selectedImages) {
@@ -240,11 +312,13 @@ public class GUIControllerChateauVisitForm {
         this.overviewImages = selectedImages;
     }
 
-    public ArrayList<File> getOverviewImages() {
-        return overviewImages;
-    }
-
     public ArrayList<File> getInfoImages() {
         return infoImages;
+    }
+
+    public void setInfoImages(ArrayList<File> selectedImages) {
+        System.out.print("info: " + selectedImages.toString());
+        this.infoImages = selectedImages;
+
     }
 }
