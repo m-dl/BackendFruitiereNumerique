@@ -119,6 +119,11 @@ public class GUIControllerVillage implements Initializable{
         if(this.getSelectedVisit() != null ) {
             guiForms.displayVillageVisitForm(false, this.getSelectedVisit());
         }
+        else {
+            String header = "Aucune visite sélectionnée";
+            String error = "Pour modifier une visite, choisissez-en une dans la liste";
+            guiForms.displayWarningAlert(header,error).showAndWait();
+        }
     }
 
     @FXML
@@ -128,7 +133,9 @@ public class GUIControllerVillage implements Initializable{
             guiForms.displayVillageIPForm(true, this.getSelectedPoint());
         }
         else {
-            System.out.println("choisissez un poi");
+            String header = "Aucune visite sélectionnée";
+            String error = "Pour ajouter un point d'intérêt, choisissez la visite dans laquelle vous voulez l'ajouter d'abord";
+            guiForms.displayWarningAlert(header,error).showAndWait();
         }
     }
 
@@ -139,27 +146,43 @@ public class GUIControllerVillage implements Initializable{
             guiForms.displayVillageIPForm(false, this.getSelectedPoint());
         }
         else {
-            System.out.println("choisissez un poi");
+            String header = "Aucune visite sélectionnée";
+            String error = "Pour ajouter un point d'intérêt, choisissez la visite dans laquelle vous voulez l'ajouter d'abord";
+            guiForms.displayWarningAlert(header,error).showAndWait();
         }
     }
 
     @FXML
     void deleteVisitV() {
-        System.out.println("del visit : "+ visitListViewV.getSelectionModel().getSelectedItem());
-        String path = FileManager.getInstance().WORKSPACE + "/" + FileManager.getInstance().VILLAGE + "/" + visitListViewV.getSelectionModel().getSelectedItem().getName();
-        guiWindow.FM.getVillageWorkspace().deleteVisit(visitListViewV.getSelectionModel().getSelectedItem(),path);
-        visitListV.remove(visitListViewV.getSelectionModel().getSelectedItem());
-        visitListViewV.getParent().requestFocus();
+        if(getSelectedVisit() != null) {
+            System.out.println("del visit : " + visitListViewV.getSelectionModel().getSelectedItem());
+            String path = FileManager.getInstance().WORKSPACE + "/" + FileManager.getInstance().VILLAGE + "/" + visitListViewV.getSelectionModel().getSelectedItem().getName();
+            guiWindow.FM.getVillageWorkspace().deleteVisit(visitListViewV.getSelectionModel().getSelectedItem(), path);
+            visitListV.remove(visitListViewV.getSelectionModel().getSelectedItem());
+            visitListViewV.getParent().requestFocus();
+        }
+        else {
+            String header = "Aucune visite sélectionnée";
+            String error = "Pour supprimer une visite, choisissez-en une dans la liste";
+            guiForms.displayWarningAlert(header,error).showAndWait();
+        }
     }
 
     @FXML
     void deleteIPV() {
-        System.out.println("del point : "+ iPListViewV.getSelectionModel().getSelectedItem());
-        String path = FileManager.getInstance().WORKSPACE + "/" + FileManager.getInstance().VILLAGE + "/" + visitListViewV.getSelectionModel().getSelectedItem().getName() + "/" + iPListViewV.getSelectionModel().getSelectedItem().getName();
-        ArrayList<Visit> visits = FileManager.getInstance().getVillageWorkspace().getV();
-        visits.get(visits.indexOf(visitListViewV.getSelectionModel().getSelectedItem())).deleteInterestPoint(iPListViewV.getSelectionModel().getSelectedItem(),path);
-        iPListV.remove(iPListViewV.getSelectionModel().getSelectedItem());
-        iPListViewV.getParent().requestFocus();
+        if(getSelectedPoint() != null) {
+            System.out.println("del point : " + iPListViewV.getSelectionModel().getSelectedItem());
+            String path = FileManager.getInstance().WORKSPACE + "/" + FileManager.getInstance().VILLAGE + "/" + visitListViewV.getSelectionModel().getSelectedItem().getName() + "/" + iPListViewV.getSelectionModel().getSelectedItem().getName();
+            ArrayList<Visit> visits = FileManager.getInstance().getVillageWorkspace().getV();
+            visits.get(visits.indexOf(visitListViewV.getSelectionModel().getSelectedItem())).deleteInterestPoint(iPListViewV.getSelectionModel().getSelectedItem(), path);
+            iPListV.remove(iPListViewV.getSelectionModel().getSelectedItem());
+            iPListViewV.getParent().requestFocus();
+        }
+        else {
+            String header = "Aucun point sélectionné";
+            String error = "Pour supprimer une point d'intérêt, choisissez-en un dans la liste";
+            guiForms.displayWarningAlert(header,error).showAndWait();
+        }
     }
 
     public Visit getSelectedVisit() {

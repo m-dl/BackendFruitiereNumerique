@@ -108,6 +108,7 @@ public class GUIControllerChateau implements Initializable{
     void addVisitC() {
         System.out.println("add visit");
         guiForms.displayChateauVisitForm(true, this.getSelectedVisit());
+
     }
 
     @FXML
@@ -115,6 +116,11 @@ public class GUIControllerChateau implements Initializable{
         System.out.println("edit visit : "+visitListViewC.getSelectionModel().getSelectedItem());
         if(this.getSelectedVisit() != null ) {
             guiForms.displayChateauVisitForm(false, this.getSelectedVisit());
+        }
+        else {
+            String header = "Aucune visite sélectionnée";
+            String error = "Pour modifier une visite, choisissez-en une dans la liste";
+            guiForms.displayWarningAlert(header,error).showAndWait();
         }
     }
 
@@ -125,7 +131,9 @@ public class GUIControllerChateau implements Initializable{
             guiForms.displayChateauIPForm(true, this.getSelectedPoint());
         }
         else {
-            System.out.println("choisissez un poi");
+            String header = "Aucune visite sélectionnée";
+            String error = "Pour ajouter un point d'intérêt, choisissez la visite dans laquelle vous voulez l'ajouter d'abord";
+            guiForms.displayWarningAlert(header,error).showAndWait();
         }
     }
 
@@ -136,27 +144,43 @@ public class GUIControllerChateau implements Initializable{
             guiForms.displayChateauIPForm(false, this.getSelectedPoint());
         }
         else {
-            System.out.println("choisissez un poi");
+            String header = "Aucune visite sélectionnée";
+            String error = "Pour ajouter un point d'intérêt, choisissez la visite dans laquelle vous voulez l'ajouter d'abord";
+            guiForms.displayWarningAlert(header,error).showAndWait();
         }
     }
 
     @FXML
     void deleteVisitC() {
-        String path = FileManager.getInstance().WORKSPACE + "/" + FileManager.getInstance().CHATEAU + "/" + visitListViewC.getSelectionModel().getSelectedItem().getName();
-        guiWindow.FM.getChateauWorkspace().deleteVisit(visitListViewC.getSelectionModel().getSelectedItem(),path);
-        visitListC.remove(visitListViewC.getSelectionModel().getSelectedItem());
-        visitListViewC.getParent().requestFocus();
+        if(getSelectedVisit() != null) {
+            String path = FileManager.getInstance().WORKSPACE + "/" + FileManager.getInstance().CHATEAU + "/" + visitListViewC.getSelectionModel().getSelectedItem().getName();
+            guiWindow.FM.getChateauWorkspace().deleteVisit(visitListViewC.getSelectionModel().getSelectedItem(), path);
+            visitListC.remove(visitListViewC.getSelectionModel().getSelectedItem());
+            visitListViewC.getParent().requestFocus();
+        }
+        else {
+            String header = "Aucune visite sélectionnée";
+            String error = "Pour supprimer une visite, choisissez-en une dans la liste";
+            guiForms.displayWarningAlert(header,error).showAndWait();
+        }
 
     }
 
     @FXML
     void deleteIPC() {
-        System.out.println("del point : "+iPListViewC.getSelectionModel().getSelectedItem());
-        String path = FileManager.getInstance().WORKSPACE + "/" + FileManager.getInstance().CHATEAU + "/" + visitListViewC.getSelectionModel().getSelectedItem().getName() + "/" + iPListViewC.getSelectionModel().getSelectedItem().getName();
-        ArrayList<Visit> visits = FileManager.getInstance().getChateauWorkspace().getV();
-        visits.get(visits.indexOf(visitListViewC.getSelectionModel().getSelectedItem())).deleteInterestPoint(iPListViewC.getSelectionModel().getSelectedItem(),path);
-        iPListC.remove(iPListViewC.getSelectionModel().getSelectedItem());
-        iPListViewC.getParent().requestFocus();
+        if(getSelectedPoint() != null) {
+            System.out.println("del point : " + iPListViewC.getSelectionModel().getSelectedItem());
+            String path = FileManager.getInstance().WORKSPACE + "/" + FileManager.getInstance().CHATEAU + "/" + visitListViewC.getSelectionModel().getSelectedItem().getName() + "/" + iPListViewC.getSelectionModel().getSelectedItem().getName();
+            ArrayList<Visit> visits = FileManager.getInstance().getChateauWorkspace().getV();
+            visits.get(visits.indexOf(visitListViewC.getSelectionModel().getSelectedItem())).deleteInterestPoint(iPListViewC.getSelectionModel().getSelectedItem(), path);
+            iPListC.remove(iPListViewC.getSelectionModel().getSelectedItem());
+            iPListViewC.getParent().requestFocus();
+        }
+        else {
+            String header = "Aucun point sélectionné";
+            String error = "Pour supprimer une point d'intérêt, choisissez-en un dans la liste";
+            guiForms.displayWarningAlert(header,error).showAndWait();
+        }
     }
 
     public Visit getSelectedVisit() {

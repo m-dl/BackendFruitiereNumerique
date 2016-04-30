@@ -121,4 +121,15 @@ public class GUIFormsController {
 
     }
 
+    public Alert displayWarningAlert(String headerText, String errorText) {
+
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Attention");
+        alert.setHeaderText(headerText);
+        alert.setContentText(errorText);
+
+        return alert;
+
+    }
+
 }
