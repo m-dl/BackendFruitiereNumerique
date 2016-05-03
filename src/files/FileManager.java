@@ -114,7 +114,6 @@ public class FileManager {
 				FileTools.Delete(WORKSPACE + "/" + CHATEAU + ZIP_EXT);
         	}
 		} catch (Exception exception) {
-			// TODO Auto-generated catch block
 			exception.printStackTrace();
 		}
     }
@@ -151,7 +150,6 @@ public class FileManager {
 				FileTools.Delete(WORKSPACE + "/" + VILLAGE + ZIP_EXT);
         	}
 		} catch (Exception exception) {
-			// TODO Auto-generated catch block
 			exception.printStackTrace();
 		}
     }

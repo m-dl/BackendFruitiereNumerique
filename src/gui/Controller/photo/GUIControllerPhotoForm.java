@@ -321,7 +321,7 @@ public class GUIControllerPhotoForm {
             switch (pictureFormType) {
                 case OVERVIEW:
 
-                    // TODO: 30/04/2016 verif si bon nombre image etc..
+                    // uapvTODO: 30/04/2016 verif si bon nombre image etc..
 
                     /*
                     ArrayList<File> selectedImages = FileTools.MultipleFileChooser(FileTools.IMAGES_FILE_FILTER);
