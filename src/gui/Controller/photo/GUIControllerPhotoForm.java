@@ -78,11 +78,13 @@ public class GUIControllerPhotoForm {
         if (visitType == VisitType.CHATEAU) {
             switch (pictureFormType) {
                 case OVERVIEW:
+                    System.out.println("setting over list");
 
                     GUIControllerChateauVisitForm.getInstance().setOverviewImages(workingImageList);
                     break;
                 case INFO:
 
+                    System.out.println("setting info list");
                     GUIControllerChateauVisitForm.getInstance().setInfoImages(workingImageList);
                     break;
 
@@ -154,7 +156,6 @@ public class GUIControllerPhotoForm {
     public void displayForm(VisitType visitType, PictureFormType pictureFormType) {
         this.visitType = visitType;
         this.pictureFormType = pictureFormType;
-        workingImageList.clear();
         pictureForm.setCenter(loadContent());
         stage.show();
     }
@@ -321,7 +322,7 @@ public class GUIControllerPhotoForm {
             switch (pictureFormType) {
                 case OVERVIEW:
 
-                    // uapvTODO: 30/04/2016 verif si bon nombre image etc..
+                    // TODO: 30/04/2016 verif si bon nombre image etc..
 
                     /*
                     ArrayList<File> selectedImages = FileTools.MultipleFileChooser(FileTools.IMAGES_FILE_FILTER);

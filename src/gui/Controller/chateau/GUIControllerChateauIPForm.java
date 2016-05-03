@@ -142,6 +142,7 @@ public class GUIControllerChateauIPForm {
 
                 Visit selectedVisit = GUIControllerChateau.getInstance().getSelectedVisit();
                 InterestPoint selectedPoint = GUIControllerChateau.getInstance().getSelectedPoint();
+
                 int visitIndex = FileManager.getInstance().getChateauWorkspace().getV().indexOf(selectedVisit);
                 int ipIndex = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().indexOf(selectedPoint);
 
@@ -160,14 +161,7 @@ public class GUIControllerChateauIPForm {
 
                     renameIP(selectedPoint, ipPath,ipNewName, false);
 
-
-
-                    // TODO: 17/04/2016 bouger tout le dossier
-                }
-                else {
-
-                    System.out.println("not mod");
-
+                } else {
 
                     FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).writePresentation_FR(ipPresTextFR.getText());
                     FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).writePresentation_EN(ipPresTextEN.getText());
@@ -175,7 +169,6 @@ public class GUIControllerChateauIPForm {
                     for (int i = 0; i < FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).getPhotos().size(); i++) {
                         if (!(photos.contains(FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).getPhotos().get(i)))) {
                             File imageToDel = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).getPhotos().get(i);
-                            System.out.println("stuff to be del" + imageToDel.getName());
                             FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).removePhotos(imageToDel.getPath(), imageToDel);
                         }
                     }
@@ -271,8 +264,8 @@ public class GUIControllerChateauIPForm {
                 ip.addVideo(oldIP.getVideos().get(i).getAbsolutePath(), ipPath, oldIP.getVideos().get(i).getName());
             }
 
-            ip.setPresentation_FR(oldIP.getPresentation_FR());
-            ip.setPresentation_EN(oldIP.getPresentation_EN());
+            ip.writePresentation_FR(oldIP.readPresentation_FR());
+            ip.writePresentation_EN(oldIP.readPresentation_EN());
 
         }
         else {
@@ -305,8 +298,6 @@ public class GUIControllerChateauIPForm {
             GUIControllerChateau.getInstance().iPListC.add(ip);
             GUIControllerChateau.getInstance().iPListC.remove(oldIP);
         }
-
-
 
         return ip;
     }

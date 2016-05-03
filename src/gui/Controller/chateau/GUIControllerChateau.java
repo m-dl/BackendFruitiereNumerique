@@ -51,7 +51,6 @@ public class GUIControllerChateau implements Initializable{
 
         setFactories();
         setListeners();
-
     }
 
     public void setFactories() {
@@ -113,7 +112,8 @@ public class GUIControllerChateau implements Initializable{
 
     @FXML
     void editVisitC() {
-        System.out.println("edit visit : "+visitListViewC.getSelectionModel().getSelectedItem());
+        System.out.println("edit visit : "+visitListViewC.getSelectionModel().getSelectedItem().getName());
+
         if(this.getSelectedVisit() != null ) {
             guiForms.displayChateauVisitForm(false, this.getSelectedVisit());
         }
@@ -203,6 +203,19 @@ public class GUIControllerChateau implements Initializable{
                 this.iPListC.add(visit.getIP().get(i));
             }
         }
+    }
+
+    public void reloadCastleData() {
+
+        visitListC.clear();
+        ArrayList<Visit> visits = FileManager.getInstance().getChateauWorkspace().getV();
+
+        for (int i = 0; i < visits.size(); i++) {
+            this.visitListC.add(visits.get(i));
+        }
+
+        visitListViewC.setItems(visitListC);
+        iPListViewC.setItems(iPListC);
     }
 
 }

@@ -78,8 +78,6 @@ public class GUIControllerChateauVisitForm {
                     stage.show();
                 }
             } else {
-                overviewImages = new ArrayList<>();
-                infoImages = new ArrayList<>();
                 GUIFormsController.getInstance().displayForm(stage);
                 stage.setTitle("Ajout d'une nouvelle visite");
                 stage.show();
@@ -169,49 +167,9 @@ public class GUIControllerChateauVisitForm {
 
                 if (!Objects.equals(vName, originalName)) {
 
-                    visitPath = FileManager.WORKSPACE + "/" + FileManager.CHATEAU + "/" + vName;
-                    visitOverviewPath = visitPath + "/" + "visite-overview";
-                    visitInfosPath = visitPath + "/" + "visite-info";
+                    visitPath = FileManager.WORKSPACE + "/" + FileManager.CHATEAU + "/";
+                    renameVisit(selectedVisit,visitPath,vName);
 
-                    //on crée les dossiers
-                    Visit v = new Visit(visitPath, vName);
-
-                    //on bouge les poi
-
-                    ArrayList<InterestPoint> ip = selectedVisit.getIP();
-
-                    for (int i = 0; i < ip.size(); i++) {
-                        v.addInterestPoint(GUIControllerChateauIPForm.getInstance().renameIP(ip.get(i), visitPath, ip.get(i).getName(), true));
-                    }
-
-                    //on bouge overview
-                    visitOverview = new Overview(visitOverviewPath);
-
-                    visitOverview.writePresentation_FR(visitPresTextFROv.getText());
-                    visitOverview.writePresentation_EN(visitPresTextENOv.getText());
-                    visitOverview.writeLength_FR(visitLengthFROv.getText());
-                    visitOverview.writeLength_EN(visitLengthENOv.getText());
-
-                    for (int i = 0; i < this.overviewImages.size(); i++) {
-                        visitOverview.addImagesContent(this.overviewImages.get(i).getAbsolutePath(), visitOverviewPath, this.overviewImages.get(i).getName());
-                    }
-
-                    //on bouge infos
-                    visitInfos = new Info(visitInfosPath);
-
-                    visitInfos.writeContent_EN(visitPresTextENInf.getText());
-                    visitInfos.writeContent_FR(visitPresTextFRInf.getText());
-
-                    for (int i = 0; i < this.infoImages.size(); i++) {
-                        visitInfos.addPhotos(this.infoImages.get(i).getAbsolutePath(), visitInfosPath, this.infoImages.get(i).getName());
-                    }
-
-                    v.setInfo(visitInfos);
-                    v.setOverview(visitOverview);
-                    FileManager.getInstance().getChateauWorkspace().addVisit(v);
-                    GUIControllerChateau.getInstance().visitListC.add(v);
-
-                    // TODO: 17/04/2016 bouger tout le dossier
                 } else {
 
 
@@ -273,7 +231,54 @@ public class GUIControllerChateauVisitForm {
         }
     }
 
-    private void moveVisitData() {
+    private void renameVisit(Visit oldVisit, String visitPath, String newName) {
+
+
+        String newVisitPath = visitPath + "/" + newName;
+        String visitOverviewPath = newVisitPath + "/" + "visite-overview";
+        String visitInfosPath = newVisitPath + "/" + "visite-info";
+
+        //on crée les dossiers
+        Visit v = new Visit(newVisitPath, newName);
+
+        //on bouge les poi
+
+        ArrayList<InterestPoint> ip = oldVisit.getIP();
+
+        for (int i = 0; i < ip.size(); i++) {
+            v.addInterestPoint(GUIControllerChateauIPForm.getInstance().renameIP(ip.get(i), newVisitPath, ip.get(i).getName(), true));
+        }
+
+        //on bouge overview
+        Overview visitOverview = new Overview(visitOverviewPath);
+
+        visitOverview.writePresentation_FR(oldVisit.getOverview().readLength_FR());
+        visitOverview.writePresentation_EN(oldVisit.getOverview().readLength_EN());
+        visitOverview.writeLength_FR(oldVisit.getOverview().readLength_FR());
+        visitOverview.writeLength_EN(oldVisit.getOverview().readLength_EN());
+
+        for (int i = 0; i < this.overviewImages.size(); i++) {
+            visitOverview.addImagesContent(this.overviewImages.get(i).getAbsolutePath(), visitOverviewPath, this.overviewImages.get(i).getName());
+        }
+
+        //on bouge infos
+        Info visitInfos = new Info(visitInfosPath);
+
+        visitInfos.writeContent_FR(oldVisit.getInfo().readContent_FR());
+        visitInfos.writeContent_EN(oldVisit.getInfo().readContent_EN());
+
+        for (int i = 0; i < this.infoImages.size(); i++) {
+            visitInfos.addPhotos(this.infoImages.get(i).getAbsolutePath(), visitInfosPath, this.infoImages.get(i).getName());
+        }
+
+        v.setInfo(visitInfos);
+        v.setOverview(visitOverview);
+
+        FileManager.getInstance().getChateauWorkspace().deleteVisit(oldVisit,visitPath + "/" + oldVisit.getName());
+        FileManager.getInstance().getChateauWorkspace().addVisit(v);
+
+        GUIControllerChateau.getInstance().visitListC.remove(oldVisit);
+        GUIControllerChateau.getInstance().visitListC.add(v);
 
     }
 
@@ -360,7 +365,7 @@ public class GUIControllerChateauVisitForm {
     }
 
     public void setOverviewImages(ArrayList<File> selectedImages) {
-        System.out.print("overview:" + selectedImages.size());
+        System.out.println("overview:" + selectedImages.toString());
         this.overviewImages = selectedImages;
     }
 
@@ -369,7 +374,7 @@ public class GUIControllerChateauVisitForm {
     }
 
     public void setInfoImages(ArrayList<File> selectedImages) {
-        System.out.print("info: " + selectedImages.toString());
+        System.out.println("info: " + selectedImages.toString());
         this.infoImages = selectedImages;
 
     }
