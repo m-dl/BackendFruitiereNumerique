@@ -26,7 +26,7 @@ public class GUIControllerChateauVisitForm {
     private static GUIControllerChateauVisitForm INSTANCE = new GUIControllerChateauVisitForm();
 
     public TextField visitName;
-    //public TextField visitNameEN;
+    public TextField visitNameEN;
     public TextArea visitPresTextFROv;
     public TextArea visitPresTextENOv;
     public TextArea visitLengthFROv;
@@ -91,6 +91,7 @@ public class GUIControllerChateauVisitForm {
 
     public void fillInputs(Visit v) {
         visitName.setText(v.getName());
+        visitNameEN.setText(v.readName_EN());
         visitPresTextFROv.setText(v.getOverview().readPresentation_FR());
         visitPresTextENOv.setText(v.getOverview().readPresentation_EN());
         visitLengthFROv.setText(v.getOverview().readLength_FR());
@@ -110,20 +111,22 @@ public class GUIControllerChateauVisitForm {
 
     @FXML public void saveChanges() {
 
-        if( validForm() ) {
-
+        if(validForm()) {
             Overview visitOverview;
             Info visitInfos;
 
             if (isNewVisit) {
 
                 String vName = this.visitName.getText();
+                String vNameEN = this.visitNameEN.getText();
+
                 String visitPath = FileManager.WORKSPACE + "/" + FileManager.CHATEAU + "/" + vName;
                 String visitOverviewPath = visitPath + "/" + "visite-overview";
                 String visitInfosPath = visitPath + "/" + "visite-info";
 
                 Visit v = new Visit(visitPath, vName);
                 v.setIP(new ArrayList<>());
+                v.writeName_EN(vNameEN);
 
                 visitOverview = new Overview(visitOverviewPath);
 
@@ -172,7 +175,7 @@ public class GUIControllerChateauVisitForm {
 
                 } else {
 
-
+                    FileManager.getInstance().getChateauWorkspace().getV().get(index).writeName_EN(this.visitNameEN.getText());
                     FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().writePresentation_FR(visitPresTextFROv.getText());
                     FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().writePresentation_EN(visitPresTextENOv.getText());
                     FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().writeLength_EN(visitPresTextENOv.getText());
@@ -240,6 +243,7 @@ public class GUIControllerChateauVisitForm {
 
         //on crée les dossiers
         Visit v = new Visit(newVisitPath, newName);
+        v.writeName_EN(this.visitNameEN.getText());
 
         //on bouge les poi
 
