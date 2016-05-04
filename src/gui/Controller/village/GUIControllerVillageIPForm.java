@@ -23,7 +23,7 @@ public class GUIControllerVillageIPForm {
 
     private static GUIControllerVillageIPForm INSTANCE = new GUIControllerVillageIPForm();
 
-    public TextField ipName;
+    public TextField ipName,coordX,coordY;
     public TextArea ipPresTextFR;
     public TextArea ipPresTextEN;
 
@@ -93,6 +93,8 @@ public class GUIControllerVillageIPForm {
         ipName.setText(p.getName());
         ipPresTextFR.setText(p.readPresentation_FR());
         ipPresTextEN.setText(p.readPresentation_EN());
+        // TODO: 04/05/2016 parse marker pour autoremplissage
+        // p.readMarker();
     }
 
 
@@ -127,6 +129,8 @@ public class GUIControllerVillageIPForm {
 
                 ip.writePresentation_FR(ipPresTextFR.getText());
                 ip.writePresentation_EN(ipPresTextEN.getText());
+
+                ip.writeMarker(coordX.getText()+","+coordY.getText());
 
                 FileManager.getInstance().getVillageWorkspace().getV().get(FileManager.getInstance()
                         .getVillageWorkspace().getV().indexOf(GUIControllerVillage.getInstance().getSelectedVisit())).addInterestPoint(ip);

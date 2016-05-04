@@ -23,8 +23,7 @@
                 <Label layoutX="56.0" layoutY="157.0" text="Texte de présentation en français:" />
                 <Label layoutX="344.0" layoutY="156.0" text="Texte de présentation en anglais:" />
                 <Button fx:id="saveChanges" layoutX="252.0" layoutY="757.0" mnemonicParsing="false" onAction="#saveChanges" text="Enregister" />
-                <Button fx:id="addDescImage" layoutX="94.0" layoutY="474.0" mnemonicParsing="false" onAction="#addDescriptivePicture" text="Ajouter une image descriptive" />
-                <Button fx:id="placePoint" layoutX="312.0" layoutY="474.0" mnemonicParsing="false" text="Placer le point sur la carte" />
+                <Button fx:id="addDescImage" layoutX="201.0" layoutY="517.0" mnemonicParsing="false" onAction="#addDescriptivePicture" text="Ajouter une image descriptive" />
                 <VBox alignment="CENTER" layoutX="160.0" layoutY="595.0" prefHeight="134.0" prefWidth="283.0" spacing="5.0">
                     <children>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="283.0" spacing="5.0">
@@ -41,13 +40,19 @@
                     </padding>
                 </VBox>
                 <Separator layoutX="6.0" layoutY="416.0" prefHeight="13.0" prefWidth="589.0" />
-                <Separator layoutX="6.0" layoutY="570.0" prefHeight="13.0" prefWidth="589.0" />
+                <Separator layoutX="7.0" layoutY="582.0" prefHeight="13.0" prefWidth="589.0" />
                 <Separator layoutX="6.0" layoutY="744.0" prefHeight="13.0" prefWidth="589.0" />
                 <Label layoutX="234.0" layoutY="117.0" text="Présentation du point" underline="true" />
                 <Label layoutX="235.0" layoutY="400.0" text="Description du point:" underline="true" />
-                <Label layoutX="234.0" layoutY="553.0" text="Médias optionnels:" underline="true" />
+                <Label layoutX="243.0" layoutY="565.0" text="Médias optionnels:" underline="true" />
             <Separator layoutX="7.0" layoutY="31.0" prefHeight="13.0" prefWidth="589.0" />
             <Label layoutX="275.0" layoutY="14.0" text="Noms:" underline="true" />
+            <Label layoutX="241.0" layoutY="428.0" text="Coordonnées GPS:" />
+            <TextField fx:id="coordX" layoutX="102.0" layoutY="464.0" />
+            <TextField fx:id="coordY" layoutX="378.0" layoutY="464.0" />
+            <Label layoutX="29.0" layoutY="469.0" text="Latitude:" />
+            <Label layoutX="300.0" layoutY="469.0" text="Longitude:" />
+            <Button disable="true" layoutX="114.0" layoutY="517.0" mnemonicParsing="false" text="GMap" />
             </children>
         </Pane>
     </content>
