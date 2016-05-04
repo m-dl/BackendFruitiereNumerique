@@ -48,8 +48,8 @@
             <Separator layoutX="7.0" layoutY="31.0" prefHeight="13.0" prefWidth="589.0" />
             <Label layoutX="275.0" layoutY="14.0" text="Noms:" underline="true" />
             <Label layoutX="241.0" layoutY="428.0" text="Coordonnées GPS:" />
-            <TextField fx:id="coordX" layoutX="102.0" layoutY="464.0" />
-            <TextField fx:id="coordY" layoutX="378.0" layoutY="464.0" />
+            <TextField fx:id="coordLat" layoutX="102.0" layoutY="464.0" />
+            <TextField fx:id="coordLong" layoutX="378.0" layoutY="464.0" />
             <Label layoutX="29.0" layoutY="469.0" text="Latitude:" />
             <Label layoutX="300.0" layoutY="469.0" text="Longitude:" />
             <Button disable="true" layoutX="114.0" layoutY="517.0" mnemonicParsing="false" text="GMap" />

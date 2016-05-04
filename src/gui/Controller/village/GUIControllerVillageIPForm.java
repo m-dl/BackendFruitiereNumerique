@@ -23,7 +23,7 @@ public class GUIControllerVillageIPForm {
 
     private static GUIControllerVillageIPForm INSTANCE = new GUIControllerVillageIPForm();
 
-    public TextField ipName,coordX,coordY;
+    public TextField ipName, coordLat, coordLong;
     public TextArea ipPresTextFR;
     public TextArea ipPresTextEN;
 
@@ -93,8 +93,8 @@ public class GUIControllerVillageIPForm {
         ipName.setText(p.getName());
         ipPresTextFR.setText(p.readPresentation_FR());
         ipPresTextEN.setText(p.readPresentation_EN());
-        // TODO: 04/05/2016 parse marker pour autoremplissage
-        // p.readMarker();
+        coordLat.setText(p.readMarker().split(",")[0]);
+        coordLong.setText(p.readMarker().split(",")[1]);
     }
 
 
@@ -130,7 +130,7 @@ public class GUIControllerVillageIPForm {
                 ip.writePresentation_FR(ipPresTextFR.getText());
                 ip.writePresentation_EN(ipPresTextEN.getText());
 
-                ip.writeMarker(coordX.getText()+","+coordY.getText());
+                ip.writeMarker(coordLat.getText()+","+ coordLong.getText());
 
                 FileManager.getInstance().getVillageWorkspace().getV().get(FileManager.getInstance()
                         .getVillageWorkspace().getV().indexOf(GUIControllerVillage.getInstance().getSelectedVisit())).addInterestPoint(ip);
@@ -218,18 +218,18 @@ public class GUIControllerVillageIPForm {
                     if (!FileManager.getInstance().getVillageWorkspace().getV().get(visitIndex).getIP().get(ipIndex).getVideos().contains(videos.get(i))) {
                         System.out.println("stuff to be add"+ videos.get(i).getName());
                         FileManager.getInstance().getVillageWorkspace().getV().get(visitIndex).getIP().get(ipIndex).addVideo(videos.get(i).getAbsolutePath(), ipPath, videos.get(i).getName());
-
                     }
                 }
-
             }
-
             GUIFormsController.getInstance().closeForm();
             stage.close();
         }
     }
 
     private boolean validForm() {
+
+        // -90 -> 90 ° pour lat
+        // -180 a 180 pour long
         // TODO: 01/05/2016 valid form
         return true;
     }
