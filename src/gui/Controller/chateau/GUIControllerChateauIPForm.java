@@ -33,6 +33,7 @@ public class GUIControllerChateauIPForm {
     private Stage stage;
     private boolean isNewPoint;
 
+    private File descPic;
     private ArrayList<File> photos, interieur, _360, videos;
     private ArrayList<String> errorList;
 
@@ -72,6 +73,7 @@ public class GUIControllerChateauIPForm {
                         int visitIndex = FileManager.getInstance().getChateauWorkspace().getV().indexOf(GUIControllerChateau.getInstance().getSelectedVisit());
                         int ipIndex = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().indexOf(GUIControllerChateau.getInstance().getSelectedPoint());
 
+                        descPic = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).getPicture();
                         photos = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).getPhotos();
                         interieur = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).getInterieur();
                         videos = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).getVideos();
@@ -112,6 +114,8 @@ public class GUIControllerChateauIPForm {
                         GUIControllerChateau.getInstance().getSelectedVisit().getName() + "/" + ipName;
 
                 InterestPoint ip = new InterestPoint(ipPath, ipName);
+
+                ip.addPicture(this.descPic.getAbsolutePath(), ipPath, this.descPic.getName());
 
                 for (int i = 0; i < this.photos.size(); i++) {
                     ip.addPhotos(this.photos.get(i).getAbsolutePath(), ipPath, this.photos.get(i).getName());
@@ -165,6 +169,9 @@ public class GUIControllerChateauIPForm {
 
                     FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).writePresentation_FR(ipPresTextFR.getText());
                     FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).writePresentation_EN(ipPresTextEN.getText());
+
+                    FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).removePicture(selectedPoint.getPicture().getPath(),selectedPoint.getPicture());
+                    FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).addPicture(this.descPic.getAbsolutePath(), ipPath, this.descPic.getName());
 
                     for (int i = 0; i < FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).getPhotos().size(); i++) {
                         if (!(photos.contains(FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).getPhotos().get(i)))) {
@@ -248,6 +255,9 @@ public class GUIControllerChateauIPForm {
 
         if(isFromVisit) {
 
+            if (oldIP.getPicture() != null)
+                ip.addPicture(oldIP.getPicture().getAbsolutePath(), ipPath, oldIP.getPicture().getName());
+
             for (int i = 0; i < oldIP.getPhotos().size(); i++) {
                 ip.addPhotos(oldIP.getPhotos().get(i).getAbsolutePath(), ipPath, oldIP.getPhotos().get(i).getName());
             }
@@ -269,6 +279,8 @@ public class GUIControllerChateauIPForm {
 
         }
         else {
+
+            ip.addPicture(this.descPic.getAbsolutePath(), ipPath, this.descPic.getName());
 
             for (int i = 0; i < this.photos.size(); i++) {
                 ip.addPhotos(this.photos.get(i).getAbsolutePath(), ipPath, this.photos.get(i).getName());
@@ -363,6 +375,14 @@ public class GUIControllerChateauIPForm {
 
     public void setVideos(ArrayList<File> videos) {
         this.videos = videos;
+    }
+
+    public File getDescPic() {
+        return descPic;
+    }
+
+    public void setDescPic(File descPic) {
+        this.descPic = descPic;
     }
 
 }

@@ -45,10 +45,11 @@ public class GUIControllerPhotoForm {
     private VisitType visitType;
     private PictureFormType pictureFormType;
     private ArrayList<File> workingImageList;
-
+    private File selectedDescImage;
 
     private GUIControllerPhotoForm() {
         initializeWindow();
+        selectedDescImage = null;
         workingImageList = new ArrayList<>();
     }
 
@@ -61,7 +62,6 @@ public class GUIControllerPhotoForm {
             pictureForm = (BorderPane) GUIUtilities.loadLayout("view/photos/photoFormView.fxml", this);
             stage = new Stage();
             stage.setScene(new Scene(pictureForm));
-
 
             stage.setOnCloseRequest(event -> {
                 saveChanges();
@@ -79,7 +79,6 @@ public class GUIControllerPhotoForm {
             switch (pictureFormType) {
                 case OVERVIEW:
                     System.out.println("setting over list");
-
                     GUIControllerChateauVisitForm.getInstance().setOverviewImages(workingImageList);
                     break;
                 case INFO:
@@ -89,6 +88,7 @@ public class GUIControllerPhotoForm {
                     break;
 
                 case DESCRIPTIVE_PICTURE:
+                    GUIControllerChateauIPForm.getInstance().setDescPic(selectedDescImage);
 
                     break;
 
@@ -127,19 +127,15 @@ public class GUIControllerPhotoForm {
                     break;
 
                 case DESCRIPTIVE_PICTURE:
-
+                    //GUIControllerVillageIPForm.getInstance().setDescPic(selectedDescImage);
                     break;
 
                 case INDOORS_PICTURES:
-
                     GUIControllerVillageIPForm.getInstance().setInterieur(workingImageList);
-
                     break;
 
                 case PANORAMIC_PICTURES:
-
                     GUIControllerVillageIPForm.getInstance().set_360(workingImageList);
-
                     break;
 
                 case PICTURES:
@@ -164,12 +160,16 @@ public class GUIControllerPhotoForm {
     private ScrollPane loadContent() {
         pictureContentContainer.clear();
         picturesCheckBoxList.clear();
-
         verticalContentDisplay = new VBox();
         verticalContentDisplay.setPadding(new Insets(1, 1, 1, 1));
-
         getArrayList();
-        pictureContentContainer.addAll(workingImageList.stream().map(this::createAnchorPane).collect(Collectors.toList()));
+
+        if (pictureFormType == PictureFormType.DESCRIPTIVE_PICTURE) {
+            pictureContentContainer.add(createAnchorPane(selectedDescImage));
+        }
+        else {
+            pictureContentContainer.addAll(workingImageList.stream().map(this::createAnchorPane).collect(Collectors.toList()));
+        }
 
         verticalContentDisplay.getChildren().addAll(pictureContentContainer);
         ScrollPane sc = new ScrollPane();
@@ -185,7 +185,13 @@ public class GUIControllerPhotoForm {
         verticalContentDisplay = new VBox();
         verticalContentDisplay.setPadding(new Insets(1, 1, 1, 1));
 
-        pictureContentContainer.addAll(workingImageList.stream().map(this::createAnchorPane).collect(Collectors.toList()));
+        if (pictureFormType == PictureFormType.DESCRIPTIVE_PICTURE) {
+            //getArrayList();
+            pictureContentContainer.addAll(createAnchorPane(selectedDescImage));
+        }
+        else {
+            pictureContentContainer.addAll(workingImageList.stream().map(this::createAnchorPane).collect(Collectors.toList()));
+        }
 
         verticalContentDisplay.getChildren().addAll(pictureContentContainer);
         ScrollPane sc = new ScrollPane();
@@ -205,8 +211,7 @@ public class GUIControllerPhotoForm {
                     workingImageList = (ArrayList<File>) GUIControllerChateauVisitForm.getInstance().getInfoImages().clone();
                     break;
                 case DESCRIPTIVE_PICTURE:
-                    if (GUIControllerChateau.getInstance().getSelectedPoint().getPicture() != null)
-                        pictureList.add(GUIControllerChateau.getInstance().getSelectedPoint().getPicture());
+                    selectedDescImage = GUIControllerChateauIPForm.getInstance().getDescPic();
                     break;
                 case INDOORS_PICTURES:
                     workingImageList = (ArrayList<File>) GUIControllerChateauIPForm.getInstance().getInterieur().clone();
@@ -230,8 +235,7 @@ public class GUIControllerPhotoForm {
                     workingImageList = (ArrayList<File>) GUIControllerVillageVisitForm.getInstance().getInfoImages().clone();
                     break;
                 case DESCRIPTIVE_PICTURE:
-                    if (GUIControllerChateau.getInstance().getSelectedPoint().getPicture() != null)
-                        pictureList.add(GUIControllerChateau.getInstance().getSelectedPoint().getPicture());
+                    //selectedDescImage = GUIControllerVillageIPForm.getInstance().getDescPic();
                     break;
                 case INDOORS_PICTURES:
                     workingImageList = (ArrayList<File>) GUIControllerVillageIPForm.getInstance().getInterieur().clone();
@@ -268,26 +272,33 @@ public class GUIControllerPhotoForm {
         AnchorPane ap = new AnchorPane();
         ap.prefWidth(400.0);
         ap.prefHeight(150.0);
-        ap.setId(file.getName());
 
-        ImageView i = new ImageView(createImage(file));
-        i.setFitHeight(100.0);
-        i.setFitWidth(100.0);
-        i.setLayoutX(132.0);
-        i.setLayoutY(29.0);
+        ImageView i;
+        CheckBox cb;
+        Label l;
 
-        CheckBox cb = new CheckBox();
-        cb.setLayoutX(42.0);
-        cb.setLayoutY(70.0);
-        cb.setId(file.getName());
-        picturesCheckBoxList.add(cb);
+        if (file != null) {
+            ap.setId(file.getName());
 
-        Label l = new Label(file.getName());
-        l.setLayoutX(249.0);
-        l.setLayoutY(71.0);
+            i = new ImageView(createImage(file));
+            i.setFitHeight(100.0);
+            i.setFitWidth(100.0);
+            i.setLayoutX(132.0);
+            i.setLayoutY(29.0);
 
-        ap.getChildren().addAll(i, cb, l);
+            cb = new CheckBox();
+            cb.setLayoutX(42.0);
+            cb.setLayoutY(70.0);
+            cb.setId(file.getName());
+            picturesCheckBoxList.add(cb);
 
+            l = new Label(file.getName());
+            l.setLayoutX(249.0);
+            l.setLayoutY(71.0);
+
+            ap.getChildren().addAll(i, cb, l);
+
+        }
         return ap;
     }
 
@@ -307,12 +318,11 @@ public class GUIControllerPhotoForm {
             int index = indexToDel.get(i);
             pictureContentContainer.remove(index);
             verticalContentDisplay.getChildren().remove(index);
-            workingImageList.remove(i);
+            if (pictureFormType != PictureFormType.DESCRIPTIVE_PICTURE) {
+                workingImageList.remove(i);
+            }
             picturesCheckBoxList.remove(index);
         }
-
-        GUIControllerChateauVisitForm.getInstance().setOverviewImages(workingImageList);
-
     }
 
 
@@ -344,11 +354,7 @@ public class GUIControllerPhotoForm {
                     break;
 
                 case DESCRIPTIVE_PICTURE:
-
-                    workingImageList.clear();
-                    File f = FileTools.FileChooser(FileTools.IMAGES_FILE_FILTER);
-                    workingImageList.add(f);
-
+                    selectedDescImage = FileTools.FileChooser(FileTools.IMAGES_FILE_FILTER);
                     break;
 
                 case INDOORS_PICTURES:
