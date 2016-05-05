@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -13,39 +14,80 @@
 
 <ScrollPane hbarPolicy="NEVER" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
     <content>
-        <Pane prefHeight="800.0" prefWidth="600.0">
+        <Pane prefHeight="754.0" prefWidth="600.0">
             <children>
-                <Label layoutX="183.0" layoutY="51.0" text="Nom du point:" />
-            <Separator layoutX="6.0" layoutY="118.0" prefHeight="13.0" prefWidth="589.0" />
-                <TextField fx:id="ipName" layoutX="315.0" layoutY="46.0" />
-                <TextArea fx:id="ipPresTextFR" layoutX="62.0" layoutY="168.0" prefHeight="200.0" prefWidth="200.0" />
-                <TextArea fx:id="ipPresTextEN" layoutX="345.0" layoutY="167.0" prefHeight="203.0" prefWidth="200.0" />
-                <Label layoutX="56.0" layoutY="148.0" text="Texte de présentation en français:" />
-                <Label layoutX="344.0" layoutY="147.0" text="Texte de présentation en anglais:" />
-                <Button fx:id="saveChanges" layoutX="252.0" layoutY="757.0" mnemonicParsing="false" onAction="#saveChanges" text="Enregister" />
-                <Button fx:id="addDescImage" layoutX="91.0" layoutY="444.0" mnemonicParsing="false" onAction="#addDescriptivePicture" text="Ajouter une image descriptive" />
-            <Button fx:id="placePoint" layoutX="309.0" layoutY="444.0" mnemonicParsing="false" text="Placer le point sur la carte" />
-                <VBox alignment="CENTER" layoutX="160.0" layoutY="595.0" prefHeight="134.0" prefWidth="283.0" spacing="5.0">
-                    <children>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="283.0" spacing="5.0">
-                            <children>
-                                <Button fx:id="addImages" mnemonicParsing="false" onAction="#addPictures" prefHeight="27.0" prefWidth="159.0" text="Ajouter des images" />
-                                <Button fx:id="addVids" mnemonicParsing="false" onAction="#addVideos" prefHeight="27.0" prefWidth="162.0" text="Ajouter des vidéos" />
-                            </children>
-                        </HBox>
-                        <Button fx:id="addInteriorImages" mnemonicParsing="false" onAction="#addIndoors" text="Ajouter des images d'interieur" />
-                        <Button fx:id="addPanoImages" mnemonicParsing="false" onAction="#addPanoramic" text="Ajouter des images panoramiques" />
-                    </children>
-                    <padding>
-                        <Insets bottom="5.0" top="5.0" />
-                    </padding>
-                </VBox>
-            <Separator layoutX="6.0" layoutY="406.0" prefHeight="13.0" prefWidth="589.0" />
-            <Separator layoutX="6.0" layoutY="570.0" prefHeight="13.0" prefWidth="589.0" />
-            <Separator layoutX="6.0" layoutY="744.0" prefHeight="13.0" prefWidth="589.0" />
-            <Label layoutX="234.0" layoutY="101.0" text="Présentation du point" underline="true" />
-            <Label layoutX="235.0" layoutY="392.0" text="Description du point:" underline="true" />
-                  <Label layoutX="234.0" layoutY="553.0" text="Médias optionnels:" underline="true" />
+            <Group layoutX="183.0" layoutY="46.0">
+               <children>
+                      <Label layoutY="5.0" text="Nom du point:" />
+                      <TextField fx:id="ipName" layoutX="132.0" />
+               </children>
+            </Group>
+            <Group layoutX="6.0" layoutY="101.0">
+               <children>
+                  <Label layoutX="228.0" text="Présentation du point" underline="true" />
+                  <Separator layoutY="17.0" prefHeight="13.0" prefWidth="589.0" />
+                      <Label layoutX="50.0" layoutY="47.0" text="Texte de présentation en français:" />
+                      <TextArea fx:id="ipPresTextFR" layoutX="56.0" layoutY="67.0" prefHeight="200.0" prefWidth="200.0" />
+                      <Label layoutX="338.0" layoutY="46.0" text="Texte de présentation en anglais:" />
+                      <TextArea fx:id="ipPresTextEN" layoutX="339.0" layoutY="66.0" prefHeight="203.0" prefWidth="200.0" />
+               </children>
+            </Group>
+            <Group layoutX="6.0" layoutY="392.0">
+               <children>
+                  <Label layoutX="229.0" text="Description du point:" underline="true" />
+                  <Separator layoutY="14.0" prefHeight="13.0" prefWidth="589.0" />
+               </children>
+            </Group>
+            <Group layoutX="6.0" layoutY="524.0">
+               <children>
+                        <Label layoutX="228.0" text="Médias optionnels:" underline="true" />
+                  <Separator layoutY="17.0" prefHeight="13.0" prefWidth="589.0" />
+                  <HBox layoutX="100.0" layoutY="39.0">
+                     <children>
+                        <VBox spacing="5.0">
+                           <children>
+                                      <Button fx:id="addImages" mnemonicParsing="false" onAction="#addPictures" prefWidth="230.0" text="Ajouter des images" />
+                                      <Button fx:id="addVids" mnemonicParsing="false" onAction="#addVideos" prefWidth="230.0" text="Ajouter des vidéos" />
+                                    <Button fx:id="addInteriorImages" mnemonicParsing="false" onAction="#addIndoors" prefWidth="230.0" text="Ajouter des images d'interieur" />
+                                    <Button fx:id="addPanoImages" mnemonicParsing="false" onAction="#addPanoramic" prefWidth="230.0" text="Ajouter des images panoramiques" />
+                           </children>
+                        </VBox>
+                            <VBox alignment="CENTER" spacing="15.0">
+                                <children>
+                              <Label fx:id="imageLabel" text="0 images sélectionnées" />
+                              <Label fx:id="videoLabel" text="0 vidéos sélectionnées" />
+                              <Label fx:id="indoorLabel" text="0 images sélectionnées" />
+                              <Label fx:id="panoLabel" text="0 images sélectionnées" />
+                                </children>
+                           <HBox.margin>
+                              <Insets left="15.0" />
+                           </HBox.margin>
+                            </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </Group>
+            <Separator layoutX="6.0" layoutY="701.0" prefHeight="13.0" prefWidth="589.0" />
+                <Button fx:id="saveChanges" layoutX="260.0" layoutY="714.0" mnemonicParsing="false" onAction="#saveChanges" text="Enregister" />
+            <HBox layoutX="98.0" layoutY="435.0">
+               <children>
+                  <VBox spacing="5.0">
+                     <children>
+                            <Button fx:id="addDescImage" mnemonicParsing="false" onAction="#addDescriptivePicture" prefWidth="230.0" text="Ajouter une image descriptive" />
+                        <Button fx:id="placePoint" mnemonicParsing="false" prefWidth="230.0" text="Placer le point sur la carte" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" spacing="10.0">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                     <children>
+                        <Label fx:id="descLabel" text="Aucune image sélectionnée" />
+                        <Label fx:id="mapPointLabel" text="Aucun point ajouté" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
             </children>
         </Pane>
     </content>
