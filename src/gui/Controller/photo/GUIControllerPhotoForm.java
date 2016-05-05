@@ -1,18 +1,15 @@
 package gui.Controller.photo;
 
 import files.FileTools;
-import gui.Controller.chateau.GUIControllerChateau;
 import gui.Controller.chateau.GUIControllerChateauIPForm;
 import gui.Controller.chateau.GUIControllerChateauVisitForm;
 import gui.Controller.enums.PictureFormType;
 import gui.Controller.enums.VisitType;
-import gui.Controller.village.GUIControllerVillage;
 import gui.Controller.village.GUIControllerVillageIPForm;
 import gui.Controller.village.GUIControllerVillageVisitForm;
 import gui.GUIUtilities;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -25,7 +22,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -162,7 +158,7 @@ public class GUIControllerPhotoForm {
         picturesCheckBoxList.clear();
         verticalContentDisplay = new VBox();
         verticalContentDisplay.setPadding(new Insets(1, 1, 1, 1));
-        getArrayList();
+        initWorkingList();
 
         if (pictureFormType == PictureFormType.DESCRIPTIVE_PICTURE) {
             pictureContentContainer.add(createAnchorPane(selectedDescImage));
@@ -186,7 +182,6 @@ public class GUIControllerPhotoForm {
         verticalContentDisplay.setPadding(new Insets(1, 1, 1, 1));
 
         if (pictureFormType == PictureFormType.DESCRIPTIVE_PICTURE) {
-            //getArrayList();
             pictureContentContainer.addAll(createAnchorPane(selectedDescImage));
         }
         else {
@@ -199,8 +194,7 @@ public class GUIControllerPhotoForm {
         return sc;
     }
 
-    private ArrayList<File> getArrayList() {
-        ArrayList<File> pictureList = new ArrayList<>();
+    private void initWorkingList() {
 
         if (visitType == VisitType.CHATEAU) {
             switch (pictureFormType) {
@@ -251,7 +245,6 @@ public class GUIControllerPhotoForm {
                     break;
             }
         }
-        return pictureList;
     }
 
     private Image createImage(final File imageFile) {
@@ -320,6 +313,9 @@ public class GUIControllerPhotoForm {
             verticalContentDisplay.getChildren().remove(index);
             if (pictureFormType != PictureFormType.DESCRIPTIVE_PICTURE) {
                 workingImageList.remove(i);
+            }
+            else {
+                selectedDescImage = null;
             }
             picturesCheckBoxList.remove(index);
         }
