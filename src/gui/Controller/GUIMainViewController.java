@@ -1,6 +1,7 @@
 package gui.Controller;
 
 import files.FileManager;
+import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,76 +16,124 @@ import java.util.ResourceBundle;
 
 public class GUIMainViewController implements Initializable {
 
-    @FXML
+
+    boolean operationInprogress = false;
+
+    public TabPane tabPane;
+
     public ImageView logoL;
-    @FXML
-    public Label test;
+    public Label operationIP;
+    public ProgressIndicator progressIndicator;
 
-    private static GUIMainViewController INSTANCE = new GUIMainViewController();
-    //threads
-    Task<Void> uploadChateauMedia = new Task<Void>() {
-        @Override
-        protected Void call() throws Exception {
-            FileManager.getInstance().uploadToDriveChateau();
-            return null;
-        }
-    };
-    Task<Void> uploadVillageMedia = new Task<Void>() {
-        @Override
-        protected Void call() throws Exception {
-            FileManager.getInstance().uploadToDriveVillage();
-            return null;
-        }
-    };
-    Task<Void> downloadChateauMedia = new Task<Void>() {
-        @Override
-        protected Void call() throws Exception {
-            FileManager.getInstance().downloadFromDriveChateau();
-            return null;
-        }
-    };
-    Task<Void> downloadVillageMedia = new Task<Void>() {
-        @Override
-        protected Void call() throws Exception {
-            FileManager.getInstance().downloadFromDriveVillage();
-            return null;
-        }
-    };
-
-    @FXML
-    private TabPane tabPane;
-
-    @FXML
-    private ProgressIndicator progressIndicator; // TODO: 09/04/2016 trouver un moyen de set progress pendant dl
-
-    private GUIMainViewController()
-    {}
+    public String operation = "";
+    private GUIMainViewController() {}
 
     public static GUIMainViewController getInstance() {
         return INSTANCE;
     }
 
-    @FXML
-    void uploadMedia() {
-        if (getTabPane().getSelectionModel().getSelectedIndex() == 0) {
-            System.out.println("uploadMedia chateau");
-            new Thread(uploadChateauMedia).start();
-        } else if (getTabPane().getSelectionModel().getSelectedIndex() == 1) {
-            System.out.println("uploadMedia village");
-            FileManager.getInstance().uploadToDriveVillage();
-            new Thread(uploadVillageMedia).start();
+    private static GUIMainViewController INSTANCE = new GUIMainViewController();
+
+    Service<Void> fileSaveService = new Service<Void>(){
+        @Override
+        protected Task<Void> createTask() {
+            return new Task<Void>(){
+
+                @Override
+                protected Void call() throws Exception {
+                        operationInprogress = true;
+
+                        if (operation.equals("upC")) {
+
+                            updateMessage("Téléversement des médias du château en cours");
+                            progressIndicator.setVisible(true);
+
+                            FileManager.getInstance().uploadToDriveChateau();
+
+                            updateMessage("Téléversement terminé");
+                            progressIndicator.setVisible(false);
+
+                        } else if (operation.equals("upV")) {
+
+                            updateMessage("Téléversement des médias du village en cours");
+                            progressIndicator.setVisible(true);
+
+                            FileManager.getInstance().uploadToDriveVillage();
+
+                            updateMessage("Téléversement terminé");
+                            progressIndicator.setVisible(false);
+
+                        } else if (operation.equals("downC")) {
+
+                            updateMessage("Téléchargement des médias du château en cours");
+                            progressIndicator.setVisible(true);
+
+                            FileManager.getInstance().downloadFromDriveChateau();
+
+                            updateMessage("Téléchargement terminé");
+                            progressIndicator.setVisible(false);
+
+                        } else if (operation.equals("downV")) {
+
+                            updateMessage("Téléchargement des médias du village en cours");
+                            progressIndicator.setVisible(true);
+
+                            FileManager.getInstance().downloadFromDriveVillage();
+
+                            updateMessage("Téléchargement terminé");
+                            progressIndicator.setVisible(false);
+
+                        }
+                        operationInprogress = false;
+
+
+                    return null;
+                }
+            };
+        }
+    };
+
+
+    public void updateMessage(String message) {
+        operationIP.setText(message);
+    }
+
+    protected void displayError() {
+        String error = "Une opération est déjà en cours, veuillez attendre al finalisation de celle-ci";
+        GUIFormsController.getInstance().displayWarningAlert("Opération en cours",error).showAndWait();
+    }
+
+    private void runThread() {
+        if (!operationInprogress) {
+            fileSaveService.restart();
+        }
+        else {
+            displayError();
         }
     }
 
     @FXML
-    void downloadMedia() {
+    void uploadMedia() {
+        operationIP.textProperty().bind(fileSaveService.messageProperty());
+
         if (getTabPane().getSelectionModel().getSelectedIndex() == 0) {
-            System.out.println("downloadMedia chateau");
-            new Thread(downloadChateauMedia).start();
+            operation = "upC";
         } else if (getTabPane().getSelectionModel().getSelectedIndex() == 1) {
-            System.out.println("downloadMedia village");
-            new Thread(downloadVillageMedia).start();
+            operation = "upV";
         }
+        runThread();
+    }
+
+    @FXML
+    void downloadMedia() {
+        operationIP.textProperty().bind(fileSaveService.messageProperty());
+
+        if (getTabPane().getSelectionModel().getSelectedIndex() == 0) {
+            operation = "downC";
+        } else if (getTabPane().getSelectionModel().getSelectedIndex() == 1) {
+            operation = "downV";
+        }
+        runThread();
     }
 
     public TabPane getTabPane() {
@@ -94,5 +143,7 @@ public class GUIMainViewController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         logoL.setImage(new Image("logo.png"));
+        progressIndicator.setVisible(false);
+        updateMessage("En attente");
     }
 }
