@@ -293,9 +293,6 @@ public class GUIControllerChateauVisitForm {
     private boolean validForm() {
         boolean isValid = true;
 
-        // TODO: 05/05/2016 taille image selecinnée
-        System.out.println(visitPresTextENInf.getStyleClass());
-
         if (this.overviewImages.size() == 0) {
             errorList += "• Au moins une image 'Overview' doit être sélectionnée\n";
             isValid = false;
