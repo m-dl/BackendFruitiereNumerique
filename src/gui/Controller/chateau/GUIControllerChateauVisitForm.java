@@ -94,12 +94,15 @@ public class GUIControllerChateauVisitForm {
     public void fillInputs(Visit v) {
         visitName.setText(v.getName());
         visitNameEN.setText(v.readName_EN());
+
         visitPresTextFROv.setText(v.getOverview().readPresentation_FR());
         visitPresTextENOv.setText(v.getOverview().readPresentation_EN());
         visitLengthFROv.setText(v.getOverview().readLength_FR());
         visitLengthENOv.setText(v.getOverview().readLength_EN());
+
         visitPresTextFRInf.setText(v.getInfo().readContent_FR());
         visitPresTextENInf.setText(v.getInfo().readContent_EN());
+
         overviewSizeText.setText(v.getOverview().getImagesContent().size() +" images sélectionnées");
         infoSizeText.setText(v.getInfo().getPhotos().size()+" images sélectionnées");
     }
@@ -293,15 +296,6 @@ public class GUIControllerChateauVisitForm {
     private boolean validForm() {
         boolean isValid = true;
 
-        if (this.overviewImages.size() == 0) {
-            errorList += "• Au moins une image 'Overview' doit être sélectionnée\n";
-            isValid = false;
-        }
-
-        if (this.infoImages.size() == 0) {
-            errorList += "• Au moins une image 'Info' doit être sélectionnée\n";
-            isValid = false;
-        }
 
         if (this.visitName.getText().equals("")) {
             errorList += "• Le case du nom est vide\n";
@@ -311,6 +305,16 @@ public class GUIControllerChateauVisitForm {
         else {
             visitName.getStyleClass().clear();
             visitName.getStyleClass().addAll("text-field", "text-input");
+        }
+
+        if (this.visitNameEN.getText().equals("")) {
+            errorList += "• Le case du nom en anglais est vide\n";
+            visitNameEN.getStyleClass().add("errorStyle");
+            isValid = false;
+        }
+        else {
+            visitNameEN.getStyleClass().clear();
+            visitNameEN.getStyleClass().addAll("text-field", "text-input");
         }
 
         if (this.visitPresTextFROv.getText().equals("")) {
@@ -371,6 +375,16 @@ public class GUIControllerChateauVisitForm {
         else {
             visitPresTextENInf.getStyleClass().clear();
             visitPresTextENInf.getStyleClass().addAll("text-input","text-area");
+        }
+
+        if (this.overviewImages.size() == 0) {
+            errorList += "• Au moins une image 'Overview' doit être sélectionnée\n";
+            isValid = false;
+        }
+
+        if (this.infoImages.size() == 0) {
+            errorList += "• Au moins une image 'Info' doit être sélectionnée\n";
+            isValid = false;
         }
 
         return isValid;
