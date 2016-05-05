@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <ScrollPane hbarPolicy="NEVER" prefHeight="400.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
     <content>
@@ -24,7 +25,10 @@
             </Group>
             <Group layoutX="6.0" layoutY="101.0">
                <children>
-                  <Label layoutX="228.0" text="Présentation du point" underline="true" />
+                  <Label layoutX="228.0" text="Présentation du point" underline="true">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
                   <Separator layoutY="17.0" prefHeight="13.0" prefWidth="589.0" />
                       <Label layoutX="50.0" layoutY="47.0" text="Texte de présentation en français:" />
                       <TextArea fx:id="ipPresTextFR" layoutX="56.0" layoutY="67.0" prefHeight="200.0" prefWidth="200.0" />
@@ -34,7 +38,10 @@
             </Group>
             <Group layoutX="6.0" layoutY="392.0">
                <children>
-                  <Label layoutX="229.0" text="Description du point:" underline="true" />
+                  <Label layoutX="229.0" text="Description du point:" underline="true">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
                   <Separator layoutY="14.0" prefHeight="13.0" prefWidth="589.0" />
                   <HBox layoutX="88.0" layoutY="48.0">
                      <children>
@@ -59,7 +66,10 @@
             </Group>
             <Group layoutX="6.0" layoutY="524.0">
                <children>
-                        <Label layoutX="237.0" layoutY="-2.0" text="Médias optionnels:" underline="true" />
+                        <Label layoutX="237.0" layoutY="-2.0" text="Médias optionnels:" underline="true">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
                   <Separator layoutY="17.0" prefHeight="13.0" prefWidth="589.0" />
                   <HBox layoutX="88.0" layoutY="41.0">
                      <children>

@@ -19,7 +19,10 @@
             <Group layoutX="3.0" layoutY="22.0">
                <children>
                   <Separator layoutY="17.0" prefHeight="13.0" prefWidth="589.0" />
-                  <Label layoutX="272.0" text="Noms:" underline="true" />
+                  <Label layoutX="272.0" text="Noms:" underline="true">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
                   <Label layoutX="155.0" layoutY="50.0" text="Nom de la visite:" />
                   <TextField fx:id="visitName" layoutX="287.0" layoutY="45.0" />
                   <Label layoutX="86.0" layoutY="97.0" prefHeight="17.0" prefWidth="174.0" text="Nom de la visite en anglais:" wrapText="true" />
@@ -28,7 +31,10 @@
             </Group>
             <Group layoutX="5.0" layoutY="170.0">
                <children>
-                  <Label layoutX="264.0" text="Overview:" underline="true" />
+                  <Label layoutX="264.0" text="Overview:" underline="true">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
                   <Separator layoutY="17.0" prefHeight="13.0" prefWidth="589.0" />
                   <Label layoutX="190.0" layoutY="42.0" text="Texte de présentation en français:" />
                   <TextArea fx:id="visitPresTextFROv" layoutX="26.0" layoutY="67.0" prefHeight="200.0" prefWidth="517.0" />
@@ -55,7 +61,10 @@
             </Group>
             <Group layoutX="5.0" layoutY="931.0">
                <children>
-                  <Label layoutX="264.0" text="Visite Infos:" underline="true" />
+                  <Label layoutX="264.0" text="Visite Infos:" underline="true">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
                   <Separator layoutY="17.0" prefHeight="13.0" prefWidth="589.0" />
                   <Label layoutX="197.0" layoutY="43.0" text="Texte de présentation en français:" />
                   <TextArea fx:id="visitPresTextFRInf" layoutX="31.0" layoutY="60.0" />

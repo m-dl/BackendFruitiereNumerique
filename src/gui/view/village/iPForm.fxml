@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -10,49 +11,104 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <ScrollPane hbarPolicy="NEVER" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
     <content>
-        <Pane prefHeight="800.0" prefWidth="600.0">
+        <Pane prefHeight="772.0" prefWidth="600.0">
             <children>
-                <Label layoutX="185.0" layoutY="62.0" text="Nom du point:" />
-                <Separator layoutX="6.0" layoutY="134.0" prefHeight="13.0" prefWidth="589.0" />
-                <TextField fx:id="ipName" layoutX="317.0" layoutY="57.0" />
-                <TextArea fx:id="ipPresTextFR" layoutX="62.0" layoutY="177.0" prefHeight="200.0" prefWidth="200.0" />
-                <TextArea fx:id="ipPresTextEN" layoutX="345.0" layoutY="176.0" prefHeight="203.0" prefWidth="200.0" />
-                <Label layoutX="56.0" layoutY="157.0" text="Texte de présentation en français:" />
-                <Label layoutX="344.0" layoutY="156.0" text="Texte de présentation en anglais:" />
-                <Button fx:id="saveChanges" layoutX="252.0" layoutY="757.0" mnemonicParsing="false" onAction="#saveChanges" text="Enregister" />
-                <Button fx:id="addDescImage" layoutX="201.0" layoutY="517.0" mnemonicParsing="false" onAction="#addDescriptivePicture" text="Ajouter une image descriptive" />
-                <VBox alignment="CENTER" layoutX="160.0" layoutY="595.0" prefHeight="134.0" prefWidth="283.0" spacing="5.0">
+                <Group layoutX="183.0" layoutY="46.0">
                     <children>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="283.0" spacing="5.0">
+                        <Label layoutY="5.0" text="Nom du point:" />
+                        <TextField fx:id="ipName" layoutX="132.0" />
+                    </children>
+                </Group>
+                <Group layoutX="6.0" layoutY="101.0">
+                    <children>
+                        <Label layoutX="228.0" text="Présentation du point" underline="true">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
+                        <Separator layoutY="17.0" prefHeight="13.0" prefWidth="589.0" />
+                        <Label layoutX="50.0" layoutY="47.0" text="Texte de présentation en français:" />
+                        <TextArea fx:id="ipPresTextFR" layoutX="56.0" layoutY="67.0" prefHeight="200.0" prefWidth="200.0" />
+                        <Label layoutX="338.0" layoutY="46.0" text="Texte de présentation en anglais:" />
+                        <TextArea fx:id="ipPresTextEN" layoutX="339.0" layoutY="66.0" prefHeight="203.0" prefWidth="200.0" />
+                    </children>
+                </Group>
+            <Group layoutX="6.0" layoutY="392.0">
+               <children>
+                        <Label layoutX="229.0" text="Description du point:" underline="true">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
+                        <Separator layoutY="14.0" prefHeight="13.0" prefWidth="589.0" />
+                  <Group layoutX="28.0" layoutY="34.0">
+                     <children>
+                        <Label layoutX="212.0" text="Coordonnées GPS:" />
+                        <Label layoutY="28.0" text="Latitude:" />
+                        <TextField fx:id="coordLat" layoutX="73.0" layoutY="23.0" />
+                        <Label layoutX="271.0" layoutY="28.0" text="Longitude:" />
+                        <TextField fx:id="coordLong" layoutX="349.0" layoutY="23.0" />
+                     </children>
+                  </Group>
+                        <HBox layoutX="86.0" layoutY="112.0">
                             <children>
-                                <Button fx:id="addImages" mnemonicParsing="false" onAction="#addPictures" prefHeight="27.0" prefWidth="159.0" text="Ajouter des images" />
-                                <Button fx:id="addVids" mnemonicParsing="false" onAction="#addVideos" prefHeight="27.0" prefWidth="162.0" text="Ajouter des vidéos" />
+                                <VBox spacing="5.0">
+                                    <children>
+                                        <Button fx:id="addDescImage" mnemonicParsing="false" onAction="#addDescriptivePicture" prefWidth="230.0" text="Modifier l'image descriptive" />
+                                    </children>
+                                </VBox>
+                                <VBox alignment="CENTER" spacing="10.0">
+                                    <HBox.margin>
+                                        <Insets left="15.0" />
+                                    </HBox.margin>
+                                    <children>
+                                        <Label fx:id="descLabel" text="Aucune image sélectionnée" />
+                                    </children>
+                                </VBox>
                             </children>
                         </HBox>
-                        <Button fx:id="addInteriorImages" mnemonicParsing="false" onAction="#addIndoors" text="Ajouter des images d'interieur" />
-                        <Button fx:id="addPanoImages" mnemonicParsing="false" onAction="#addPanoramic" text="Ajouter des images panoramiques" />
+               </children>
+            </Group>
+                <Group layoutX="6.0" layoutY="546.0">
+                    <children>
+                        <Label layoutX="233.0" layoutY="-2.0" text="Médias optionnels:" underline="true">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
+                        <Separator layoutY="17.0" prefHeight="13.0" prefWidth="589.0" />
+                        <HBox layoutX="88.0" layoutY="41.0">
+                            <children>
+                                <VBox spacing="5.0">
+                                    <children>
+                                        <Button fx:id="addImages" mnemonicParsing="false" onAction="#addPictures" prefWidth="230.0" text="Modifier les images" />
+                                        <Button fx:id="addVids" mnemonicParsing="false" onAction="#addVideos" prefWidth="230.0" text="Modifier les vidéos" />
+                                        <Button fx:id="addInteriorImages" mnemonicParsing="false" onAction="#addIndoors" prefWidth="230.0" text="Modifier les images d'interieur" />
+                                        <Button fx:id="addPanoImages" mnemonicParsing="false" onAction="#addPanoramic" prefWidth="230.0" text="Modifier les images panoramiques" />
+                                    </children>
+                                </VBox>
+                                <VBox alignment="CENTER" spacing="15.0">
+                                    <children>
+                                        <Label fx:id="imageLabel" text="Aucune image sélectionnée" />
+                                        <Label fx:id="videoLabel" text="Aucune vidéo sélectionnée" />
+                                        <Label fx:id="indoorLabel" text="Aucune image sélectionnée" />
+                                        <Label fx:id="panoLabel" text="Aucune image sélectionnée" />
+                                    </children>
+                                    <HBox.margin>
+                                        <Insets left="15.0" />
+                                    </HBox.margin>
+                                </VBox>
+                            </children>
+                        </HBox>
                     </children>
-                    <padding>
-                        <Insets bottom="5.0" top="5.0" />
-                    </padding>
-                </VBox>
-                <Separator layoutX="6.0" layoutY="416.0" prefHeight="13.0" prefWidth="589.0" />
-                <Separator layoutX="7.0" layoutY="582.0" prefHeight="13.0" prefWidth="589.0" />
-                <Separator layoutX="6.0" layoutY="744.0" prefHeight="13.0" prefWidth="589.0" />
-                <Label layoutX="234.0" layoutY="117.0" text="Présentation du point" underline="true" />
-                <Label layoutX="235.0" layoutY="400.0" text="Description du point:" underline="true" />
-                <Label layoutX="243.0" layoutY="565.0" text="Médias optionnels:" underline="true" />
-            <Separator layoutX="7.0" layoutY="31.0" prefHeight="13.0" prefWidth="589.0" />
-            <Label layoutX="275.0" layoutY="14.0" text="Noms:" underline="true" />
-            <Label layoutX="241.0" layoutY="428.0" text="Coordonnées GPS:" />
-            <TextField fx:id="coordLat" layoutX="102.0" layoutY="464.0" />
-            <TextField fx:id="coordLong" layoutX="378.0" layoutY="464.0" />
-            <Label layoutX="29.0" layoutY="469.0" text="Latitude:" />
-            <Label layoutX="300.0" layoutY="469.0" text="Longitude:" />
-            <Button disable="true" layoutX="114.0" layoutY="517.0" mnemonicParsing="false" text="GMap" />
+                </Group>
+                <Group layoutX="6.0" layoutY="723.0">
+                    <children>
+                        <Separator prefHeight="13.0" prefWidth="589.0" />
+                        <Button fx:id="saveChanges" layoutX="254.0" layoutY="13.0" mnemonicParsing="false" onAction="#saveChanges" text="Enregister" />
+                    </children>
+                </Group>
             </children>
         </Pane>
     </content>
