@@ -2,3 +2,8 @@
     -fx-background-color: #ffbbbb;
     -fx-border-color: #f00;
 }
+
+.buttonErrorStyle {
+    -fx-background-color: #ffbbbb;
+    -fx-border-color : #808080
+}
