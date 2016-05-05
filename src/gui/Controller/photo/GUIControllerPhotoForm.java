@@ -73,37 +73,28 @@ public class GUIControllerPhotoForm {
 
         if (visitType == VisitType.CHATEAU) {
             switch (pictureFormType) {
+
                 case OVERVIEW:
-                    System.out.println("setting over list");
                     GUIControllerChateauVisitForm.getInstance().setOverviewImages(workingImageList);
                     break;
                 case INFO:
-
-                    System.out.println("setting info list");
                     GUIControllerChateauVisitForm.getInstance().setInfoImages(workingImageList);
                     break;
 
                 case DESCRIPTIVE_PICTURE:
                     GUIControllerChateauIPForm.getInstance().setDescPic(selectedDescImage);
-
                     break;
 
                 case INDOORS_PICTURES:
-
                     GUIControllerChateauIPForm.getInstance().setInterieur(workingImageList);
-
                     break;
 
                 case PANORAMIC_PICTURES:
-
                     GUIControllerChateauIPForm.getInstance().set_360(workingImageList);
-
                     break;
 
                 case PICTURES:
                     GUIControllerChateauIPForm.getInstance().setPhotos(workingImageList);
-
-
                     break;
 
                 case VIDEOS:
@@ -113,17 +104,17 @@ public class GUIControllerPhotoForm {
         }
         else if (visitType == VisitType.VILLAGE) {
             switch (pictureFormType) {
-                case OVERVIEW:
 
+                case OVERVIEW:
                     GUIControllerVillageVisitForm.getInstance().setOverviewImages(workingImageList);
                     break;
-                case INFO:
 
+                case INFO:
                     GUIControllerVillageVisitForm.getInstance().setInfoImages(workingImageList);
                     break;
 
                 case DESCRIPTIVE_PICTURE:
-                    //GUIControllerVillageIPForm.getInstance().setDescPic(selectedDescImage);
+                    GUIControllerVillageIPForm.getInstance().setDescPic(selectedDescImage);
                     break;
 
                 case INDOORS_PICTURES:
@@ -229,7 +220,7 @@ public class GUIControllerPhotoForm {
                     workingImageList = (ArrayList<File>) GUIControllerVillageVisitForm.getInstance().getInfoImages().clone();
                     break;
                 case DESCRIPTIVE_PICTURE:
-                    //selectedDescImage = GUIControllerVillageIPForm.getInstance().getDescPic();
+                    selectedDescImage = GUIControllerVillageIPForm.getInstance().getDescPic();
                     break;
                 case INDOORS_PICTURES:
                     workingImageList = (ArrayList<File>) GUIControllerVillageIPForm.getInstance().getInterieur().clone();
@@ -328,12 +319,10 @@ public class GUIControllerPhotoForm {
             switch (pictureFormType) {
                 case OVERVIEW:
                     workingImageList.addAll(FileTools.MultipleFileChooser(FileTools.IMAGES_FILE_FILTER));
-
                     break;
+
                 case INFO:
-
                     workingImageList.addAll(FileTools.MultipleFileChooser(FileTools.IMAGES_FILE_FILTER));
-
                     break;
 
                 case DESCRIPTIVE_PICTURE:
@@ -341,24 +330,18 @@ public class GUIControllerPhotoForm {
                     break;
 
                 case INDOORS_PICTURES:
-
                     workingImageList.addAll(FileTools.MultipleFileChooser(FileTools.IMAGES_FILE_FILTER));
-
                     break;
 
                 case PANORAMIC_PICTURES:
-
                     workingImageList.addAll(FileTools.MultipleFileChooser(FileTools.IMAGES_FILE_FILTER));
-
                     break;
 
                 case PICTURES:
-
                     workingImageList.addAll(FileTools.MultipleFileChooser(FileTools.IMAGES_FILE_FILTER));
                     break;
 
                 case VIDEOS:
-
                     workingImageList.addAll(FileTools.MultipleFileChooser(FileTools.VIDEOS_FILE_FILTER));
                     break;
             }
