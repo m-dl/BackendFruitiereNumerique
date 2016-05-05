@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<ScrollPane hbarPolicy="NEVER" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<ScrollPane hbarPolicy="NEVER" prefHeight="400.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
     <content>
         <Pane prefHeight="754.0" prefWidth="600.0">
             <children>
@@ -36,13 +36,32 @@
                <children>
                   <Label layoutX="229.0" text="Description du point:" underline="true" />
                   <Separator layoutY="14.0" prefHeight="13.0" prefWidth="589.0" />
+                  <HBox layoutX="88.0" layoutY="48.0">
+                     <children>
+                        <VBox spacing="5.0">
+                           <children>
+                                  <Button fx:id="addDescImage" mnemonicParsing="false" onAction="#addDescriptivePicture" prefWidth="230.0" text="Modifier l'image descriptive" />
+                              <Button fx:id="placePoint" mnemonicParsing="false" prefWidth="230.0" text="Placer le point sur la carte" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" spacing="10.0">
+                           <HBox.margin>
+                              <Insets left="15.0" />
+                           </HBox.margin>
+                           <children>
+                              <Label fx:id="descLabel" text="Aucune image sélectionnée" />
+                              <Label fx:id="mapPointLabel" text="Aucun point ajouté" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
                </children>
             </Group>
             <Group layoutX="6.0" layoutY="524.0">
                <children>
-                        <Label layoutX="228.0" text="Médias optionnels:" underline="true" />
+                        <Label layoutX="237.0" layoutY="-2.0" text="Médias optionnels:" underline="true" />
                   <Separator layoutY="17.0" prefHeight="13.0" prefWidth="589.0" />
-                  <HBox layoutX="100.0" layoutY="39.0">
+                  <HBox layoutX="88.0" layoutY="41.0">
                      <children>
                         <VBox spacing="5.0">
                            <children>
@@ -67,27 +86,12 @@
                   </HBox>
                </children>
             </Group>
-            <Separator layoutX="6.0" layoutY="701.0" prefHeight="13.0" prefWidth="589.0" />
-                <Button fx:id="saveChanges" layoutX="260.0" layoutY="714.0" mnemonicParsing="false" onAction="#saveChanges" text="Enregister" />
-            <HBox layoutX="98.0" layoutY="435.0">
+            <Group layoutX="6.0" layoutY="701.0">
                <children>
-                  <VBox spacing="5.0">
-                     <children>
-                            <Button fx:id="addDescImage" mnemonicParsing="false" onAction="#addDescriptivePicture" prefWidth="230.0" text="Modifier l'image descriptive" />
-                        <Button fx:id="placePoint" mnemonicParsing="false" prefWidth="230.0" text="Placer le point sur la carte" />
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER" spacing="10.0">
-                     <HBox.margin>
-                        <Insets left="15.0" />
-                     </HBox.margin>
-                     <children>
-                        <Label fx:id="descLabel" text="Aucune image sélectionnée" />
-                        <Label fx:id="mapPointLabel" text="Aucun point ajouté" />
-                     </children>
-                  </VBox>
+                  <Separator prefHeight="13.0" prefWidth="589.0" />
+                      <Button fx:id="saveChanges" layoutX="254.0" layoutY="13.0" mnemonicParsing="false" onAction="#saveChanges" text="Enregister" />
                </children>
-            </HBox>
+            </Group>
             </children>
         </Pane>
     </content>
