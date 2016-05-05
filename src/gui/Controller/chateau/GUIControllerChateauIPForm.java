@@ -9,9 +9,7 @@ import gui.Controller.GUIFormsController;
 import gui.GUIUtilities;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -30,12 +28,21 @@ public class GUIControllerChateauIPForm {
     public TextArea ipPresTextFR;
     public TextArea ipPresTextEN;
 
+    public Button addDescImage;
+
+    public Label descLabel;
+    public Label mapPointLabel;
+    public Label imageLabel;
+    public Label videoLabel;
+    public Label indoorLabel;
+    public Label panoLabel;
+
     private Stage stage;
     private boolean isNewPoint;
 
     private File descPic;
     private ArrayList<File> photos, interieur, _360, videos;
-    private ArrayList<String> errorList;
+    private String errorList;
 
     private GUIControllerChateauIPForm()
     {
@@ -43,9 +50,8 @@ public class GUIControllerChateauIPForm {
         interieur = new ArrayList<>();
         _360 = new ArrayList<>();
         videos = new ArrayList<>();
-        errorList = new ArrayList<>();
+        errorList = "";
     }
-
 
     public static GUIControllerChateauIPForm getInstance() {
         return INSTANCE;
@@ -62,6 +68,7 @@ public class GUIControllerChateauIPForm {
         try {
 
             ScrollPane root = (ScrollPane) GUIUtilities.loadLayout("view/chateau/iPForm.fxml", this);
+            root.getStylesheets().add("errorStyle.css");
 
             stage = new Stage();
             stage.setScene(new Scene(root));
@@ -97,9 +104,17 @@ public class GUIControllerChateauIPForm {
 
 
     public void fillInputs(InterestPoint p) {
-            ipName.setText(p.getName());
-            ipPresTextFR.setText(p.readPresentation_FR());
-            ipPresTextEN.setText(p.readPresentation_EN());
+        ipName.setText(p.getName());
+        ipPresTextFR.setText(p.readPresentation_FR());
+        ipPresTextEN.setText(p.readPresentation_EN());
+
+        //opérateurs ternaires pour savoir si mettre le texte au singulier ou au pluriel
+
+        descLabel.setText((p.getPicture() == null) ? "Aucune image sélectionnée" : "Une image sélectionnée");
+        imageLabel.setText((p.getPhotos().size() == 1) ? "1 image sélectionnée" : p.getPhotos().size() + " images sélectionnées");
+        videoLabel.setText((p.getVideos().size() == 1) ? "1 vidéo sélectionnée" : p.getPhotos().size() + " vidéos sélectionnées");
+        indoorLabel.setText((p.getInterieur().size() == 1) ? "1 image sélectionnée" : p.getPhotos().size() + " images sélectionnées");
+        panoLabel.setText((p.get_360().size() == 1) ? "1 image sélectionnée" : p.getPhotos().size() + " images sélectionnées");
     }
 
     @FXML
@@ -242,6 +257,11 @@ public class GUIControllerChateauIPForm {
             GUIFormsController.getInstance().closeForm();
             stage.close();
         }
+        else {
+            GUIFormsController.getInstance().displayErrorAlert("Un ou plusieurs champs sont vides",
+                    "Les champs manquants sont:",errorList).showAndWait();
+            errorList = "";
+        }
     }
 
     public InterestPoint renameIP(InterestPoint oldIP, String newPath, String newName, boolean isFromVisit) {
@@ -315,8 +335,52 @@ public class GUIControllerChateauIPForm {
     }
 
     private boolean validForm() {
-        // TODO: 01/05/2016 valid form
-        return true;
+        boolean isValid = true;
+
+        System.out.println(addDescImage.getStyleClass());
+
+
+        if (this.ipName.getText().equals("")) {
+            errorList += "• Le case du nom est vide\n";
+            ipName.getStyleClass().add("errorStyle");
+            isValid = false;
+        }
+        else {
+            ipName.getStyleClass().clear();
+            ipName.getStyleClass().addAll("text-field", "text-input");
+        }
+
+        if (this.ipPresTextFR.getText().equals("")) {
+            errorList += "• Le case de présentation du point en français est vide\n";
+            ipPresTextFR.getStyleClass().add("errorStyle");
+            isValid = false;
+        }
+        else {
+            ipPresTextFR.getStyleClass().clear();
+            ipPresTextFR.getStyleClass().addAll("text-input","text-area");
+        }
+
+        if (this.ipPresTextEN.getText().equals("")) {
+            errorList += "• Le case de présentation du point en anglais est vide\n";
+            ipPresTextEN.getStyleClass().add("errorStyle");
+            isValid = false;
+        }
+        else {
+            ipPresTextEN.getStyleClass().clear();
+            ipPresTextEN.getStyleClass().addAll("text-input","text-area");
+        }
+
+        if (this.descPic == null) {
+            errorList += "• Au moins une image descriptive doit être sélectionnée\n";
+            addDescImage.getStyleClass().addAll("buttonErrorStyle");
+            isValid = false;
+        }
+        else {
+            addDescImage.getStyleClass().clear();
+            addDescImage.getStyleClass().addAll("button");
+        }
+
+        return isValid;
     }
 
     @FXML
@@ -350,6 +414,7 @@ public class GUIControllerChateauIPForm {
     }
 
     public void setPhotos(ArrayList<File> photos) {
+        imageLabel.setText((photos.size() == 1) ? "1 image sélectionnée" : photos.size() + " images sélectionnées");
         this.photos = photos;
     }
 
@@ -358,6 +423,7 @@ public class GUIControllerChateauIPForm {
     }
 
     public void setInterieur(ArrayList<File> interieur) {
+        indoorLabel.setText((interieur.size() == 1) ? "1 image sélectionnée" : interieur.size() + " images sélectionnées");
         this.interieur = interieur;
     }
 
@@ -366,6 +432,7 @@ public class GUIControllerChateauIPForm {
     }
 
     public void set_360(ArrayList<File> _360) {
+        panoLabel.setText((_360.size() == 1) ? "1 image sélectionnée" : _360.size() + " images sélectionnées");
         this._360 = _360;
     }
 
@@ -374,6 +441,7 @@ public class GUIControllerChateauIPForm {
     }
 
     public void setVideos(ArrayList<File> videos) {
+        videoLabel.setText((videos.size() == 1) ? "1 vidéo sélectionnée" : videos.size() + " vidéos sélectionnées");
         this.videos = videos;
     }
 
@@ -383,6 +451,13 @@ public class GUIControllerChateauIPForm {
 
     public void setDescPic(File descPic) {
         this.descPic = descPic;
+
+        if (descPic == null) {
+            descLabel.setText("Aucune image sélectionnée");
+        }
+        else {
+            descLabel.setText("Une image sélectionnée");
+        }
     }
 
 }
