@@ -46,18 +46,18 @@
                      <children>
                         <VBox spacing="5.0">
                            <children>
-                                      <Button fx:id="addImages" mnemonicParsing="false" onAction="#addPictures" prefWidth="230.0" text="Ajouter des images" />
-                                      <Button fx:id="addVids" mnemonicParsing="false" onAction="#addVideos" prefWidth="230.0" text="Ajouter des vidéos" />
-                                    <Button fx:id="addInteriorImages" mnemonicParsing="false" onAction="#addIndoors" prefWidth="230.0" text="Ajouter des images d'interieur" />
-                                    <Button fx:id="addPanoImages" mnemonicParsing="false" onAction="#addPanoramic" prefWidth="230.0" text="Ajouter des images panoramiques" />
+                                      <Button fx:id="addImages" mnemonicParsing="false" onAction="#addPictures" prefWidth="230.0" text="Modifier les images" />
+                                      <Button fx:id="addVids" mnemonicParsing="false" onAction="#addVideos" prefWidth="230.0" text="Modifier les vidéos" />
+                                    <Button fx:id="addInteriorImages" mnemonicParsing="false" onAction="#addIndoors" prefWidth="230.0" text="Modifier les images d'interieur" />
+                                    <Button fx:id="addPanoImages" mnemonicParsing="false" onAction="#addPanoramic" prefWidth="230.0" text="Modifier les images panoramiques" />
                            </children>
                         </VBox>
                             <VBox alignment="CENTER" spacing="15.0">
                                 <children>
-                              <Label fx:id="imageLabel" text="0 images sélectionnées" />
-                              <Label fx:id="videoLabel" text="0 vidéos sélectionnées" />
-                              <Label fx:id="indoorLabel" text="0 images sélectionnées" />
-                              <Label fx:id="panoLabel" text="0 images sélectionnées" />
+                              <Label fx:id="imageLabel" text="Aucune image sélectionnée" />
+                              <Label fx:id="videoLabel" text="Aucune vidéo sélectionnée" />
+                              <Label fx:id="indoorLabel" text="Aucune image sélectionnée" />
+                              <Label fx:id="panoLabel" text="Aucune image sélectionnée" />
                                 </children>
                            <HBox.margin>
                               <Insets left="15.0" />
@@ -73,7 +73,7 @@
                <children>
                   <VBox spacing="5.0">
                      <children>
-                            <Button fx:id="addDescImage" mnemonicParsing="false" onAction="#addDescriptivePicture" prefWidth="230.0" text="Ajouter une image descriptive" />
+                            <Button fx:id="addDescImage" mnemonicParsing="false" onAction="#addDescriptivePicture" prefWidth="230.0" text="Modifier l'image descriptive" />
                         <Button fx:id="placePoint" mnemonicParsing="false" prefWidth="230.0" text="Placer le point sur la carte" />
                      </children>
                   </VBox>
