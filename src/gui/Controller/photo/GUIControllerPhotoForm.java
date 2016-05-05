@@ -327,19 +327,6 @@ public class GUIControllerPhotoForm {
 
             switch (pictureFormType) {
                 case OVERVIEW:
-
-                    // TODO: 30/04/2016 verif si bon nombre image etc..
-
-                    /*
-                    ArrayList<File> selectedImages = FileTools.MultipleFileChooser(FileTools.IMAGES_FILE_FILTER);
-
-                    for (int i = 0; i < selectedImages.size(); i++) {
-                        if (!workingImageList.contains(selectedImages.get(i))) {
-                            workingImageList.add(selectedImages.get(i));
-                        }
-                    }
-
-                    */
                     workingImageList.addAll(FileTools.MultipleFileChooser(FileTools.IMAGES_FILE_FILTER));
 
                     break;
