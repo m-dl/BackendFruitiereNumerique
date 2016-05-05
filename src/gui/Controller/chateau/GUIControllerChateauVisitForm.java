@@ -103,8 +103,15 @@ public class GUIControllerChateauVisitForm {
         visitPresTextFRInf.setText(v.getInfo().readContent_FR());
         visitPresTextENInf.setText(v.getInfo().readContent_EN());
 
-        overviewSizeText.setText(v.getOverview().getImagesContent().size() +" images sélectionnées");
-        infoSizeText.setText(v.getInfo().getPhotos().size()+" images sélectionnées");
+        //opérateurs ternaires pour savoir si mettre le texte au singulier ou au pluriel
+        overviewSizeText.setText((v.getOverview().getImagesContent().size() <= 1)
+                ? v.getOverview().getImagesContent().size() + " image sélectionnée"
+                : v.getOverview().getImagesContent().size() + " images sélectionnées");
+
+        infoSizeText.setText((v.getInfo().getPhotos().size() <= 1)
+                ? v.getInfo().getPhotos().size() + " image sélectionnée"
+                : v.getInfo().getPhotos().size() + " images sélectionnées");
+
     }
 
 
@@ -296,7 +303,6 @@ public class GUIControllerChateauVisitForm {
     private boolean validForm() {
         boolean isValid = true;
 
-
         if (this.visitName.getText().equals("")) {
             errorList += "• Le case du nom est vide\n";
             visitName.getStyleClass().add("errorStyle");
@@ -395,9 +401,11 @@ public class GUIControllerChateauVisitForm {
     }
 
     public void setOverviewImages(ArrayList<File> selectedImages) {
-        overviewSizeText.setText(selectedImages.size()+" images sélectionnés");
-        System.out.println("overview:" + selectedImages.toString());
+
         this.overviewImages = selectedImages;
+        overviewSizeText.setText((selectedImages.size() <= 1)
+                ? selectedImages + " image sélectionnée"
+                : selectedImages + " images sélectionnées");
     }
 
     public ArrayList<File> getInfoImages() {
@@ -405,9 +413,10 @@ public class GUIControllerChateauVisitForm {
     }
 
     public void setInfoImages(ArrayList<File> selectedImages) {
-        infoSizeText.setText(selectedImages.size()+" images sélectionnées");
-        System.out.println("info: " + selectedImages.toString());
-        this.infoImages = selectedImages;
 
+        this.infoImages = selectedImages;
+        infoSizeText.setText((selectedImages.size() <= 1)
+                ? selectedImages + " image sélectionnée"
+                : selectedImages + " images sélectionnées");
     }
 }
