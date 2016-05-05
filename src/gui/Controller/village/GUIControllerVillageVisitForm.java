@@ -1,6 +1,7 @@
 package gui.Controller.village;
 
 import entities.village.Info;
+import entities.village.InterestPoint;
 import entities.village.Overview;
 import entities.village.Visit;
 import files.FileManager;
@@ -8,14 +9,13 @@ import gui.Controller.GUIFormsController;
 import gui.GUIUtilities;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static gui.Controller.enums.PictureFormType.INFO;
 import static gui.Controller.enums.PictureFormType.OVERVIEW;
@@ -32,6 +32,9 @@ public class GUIControllerVillageVisitForm {
     public TextArea visitLengthENOv;
     public TextArea visitPresTextFRInf;
     public TextArea visitPresTextENInf;
+
+    public Label overviewSizeText, infoSizeText;
+    public Button addPicOverview,addPicInf;
 
     public ArrayList<File> overviewImages;
     public ArrayList<File> infoImages;
@@ -74,7 +77,6 @@ public class GUIControllerVillageVisitForm {
 
             if (!isNewVisit) {
                 if (selectedVisit != null) {
-
                     int index = FileManager.getInstance().getVillageWorkspace().getV().indexOf(GUIControllerVillage.getInstance().getSelectedVisit());
                     overviewImages = FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().getImagesContent();
                     infoImages = FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().getPhotos();
@@ -85,8 +87,6 @@ public class GUIControllerVillageVisitForm {
                     stage.show();
                 }
             } else {
-                overviewImages = new ArrayList<>();
-                infoImages = new ArrayList<>();
                 GUIFormsController.getInstance().displayForm(stage);
                 stage.setTitle("Ajout d'une nouvelle visite");
                 stage.show();
@@ -95,9 +95,30 @@ public class GUIControllerVillageVisitForm {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
+
+    public void fillInputs(Visit v) {
+        visitName.setText(v.getName());
+
+        visitPresTextFROv.setText(v.getOverview().readPresentation_FR());
+        visitPresTextENOv.setText(v.getOverview().readPresentation_EN());
+        visitLengthFROv.setText(v.getOverview().readLength_FR());
+        visitLengthENOv.setText(v.getOverview().readLength_EN());
+
+        visitPresTextFRInf.setText(v.getInfo().readContent_FR());
+        visitPresTextENInf.setText(v.getInfo().readContent_EN());
+
+        //opérateurs ternaires pour savoir si mettre le texte au singulier ou au pluriel
+        overviewSizeText.setText((v.getOverview().getImagesContent().size() <= 1)
+                ? v.getOverview().getImagesContent().size() + " image sélectionnée"
+                : v.getOverview().getImagesContent().size() + " images sélectionnées");
+
+        infoSizeText.setText((v.getInfo().getPhotos().size() <= 1)
+                ? v.getInfo().getPhotos().size() + " image sélectionnée"
+                : v.getInfo().getPhotos().size() + " images sélectionnées");
+
+    }
     @FXML public void saveChanges() {
 
         if( validForm() ) {
@@ -119,7 +140,6 @@ public class GUIControllerVillageVisitForm {
 
                 visitOverview.writePresentation_FR(visitPresTextFROv.getText());
                 visitOverview.writePresentation_EN(visitPresTextENOv.getText());
-                visitOverview.writeLength_EN(visitPresTextENOv.getText());
                 visitOverview.writeLength_FR(visitLengthFROv.getText());
                 visitOverview.writeLength_EN(visitLengthENOv.getText());
 
@@ -148,60 +168,62 @@ public class GUIControllerVillageVisitForm {
                 int index = FileManager.getInstance().getVillageWorkspace().getV().indexOf(selectedVisit);
 
                 String vName = this.visitName.getText();
+                String originalName = selectedVisit.getName();
 
-                String visitPath = FileManager.WORKSPACE + "/" + FileManager.VILLAGE + "/" + vName;
+                String visitPath = FileManager.WORKSPACE + "/" + FileManager.VILLAGE + "/" + originalName;
                 String visitOverviewPath = visitPath + "/" + "visite-overview";
                 String visitInfosPath = visitPath + "/" + "visite-info";
 
-                if (vName != selectedVisit.getName()) {
-                    // TODO: 17/04/2016 bouger tout le dossier
-                }
+                if (!Objects.equals(vName, originalName)) {
+
+                    visitPath = FileManager.WORKSPACE + "/" + FileManager.VILLAGE + "/";
+                    renameVisit(selectedVisit, visitPath, vName);
+                } else {
+
+                    FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().writePresentation_FR(visitPresTextFROv.getText());
+                    FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().writePresentation_EN(visitPresTextENOv.getText());
+                    FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().writeLength_FR(visitLengthFROv.getText());
+                    FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().writeLength_EN(visitLengthENOv.getText());
 
 
-                FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().writePresentation_FR(visitPresTextFROv.getText());
-                FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().writePresentation_EN(visitPresTextENOv.getText());
-                FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().writeLength_EN(visitPresTextENOv.getText());
-                FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().writeLength_FR(visitLengthFROv.getText());
-                FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().writeLength_EN(visitLengthENOv.getText());
-
-
-                //Suppression et ajout des images qui ont été supprimées ou ajoutées pour Overview.
-                for (int i = 0; i < FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().getImagesContent().size(); i++) {
-                    if (! (getOverviewImages().contains(FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().getImagesContent().get(i)))) {
-                        File imageToDel = FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().getImagesContent().get(i);
-                        System.out.println("stuff to be del"+imageToDel.getName());
-                        FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().removeImagesContent(imageToDel.getPath(),imageToDel);
+                    //Suppression et ajout des images qui ont été supprimées ou ajoutées pour Overview.
+                    for (int i = 0; i < FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().getImagesContent().size(); i++) {
+                        if (!(getOverviewImages().contains(FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().getImagesContent().get(i)))) {
+                            File imageToDel = FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().getImagesContent().get(i);
+                            System.out.println("stuff to be del" + imageToDel.getName());
+                            FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().removeImagesContent(imageToDel.getPath(), imageToDel);
+                        }
                     }
-                }
 
-                for (int i = 0; i < getOverviewImages().size(); i++) {
-                    if (!FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().getImagesContent().contains(getOverviewImages().get(i))) {
-                        System.out.println("stuff to be add"+getOverviewImages().get(i).getName());
+                    for (int i = 0; i < getOverviewImages().size(); i++) {
+                        if (!FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().getImagesContent().contains(getOverviewImages().get(i))) {
+                            System.out.println("stuff to be add" + getOverviewImages().get(i).getName());
 
-                        FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().addImagesContent(getOverviewImages().get(i).getAbsolutePath(), visitOverviewPath, getOverviewImages().get(i).getName());
+                            FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().addImagesContent(getOverviewImages().get(i).getAbsolutePath(), visitOverviewPath, getOverviewImages().get(i).getName());
 
+                        }
                     }
-                }
 
-                //Suppression et ajout des images qui ont été supprimées ou ajoutées pour Info.
+                    //Suppression et ajout des images qui ont été supprimées ou ajoutées pour Info.
 
-                for (int i = 0; i < FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().getPhotos().size(); i++) {
-                    if (! (getInfoImages().contains(FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().getPhotos().get(i)))) {
-                        File imageToDel = FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().getPhotos().get(i);
-                        System.out.println("stuff to be del " + imageToDel.getName());
-                        FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().removePhotos(imageToDel.getAbsolutePath(),imageToDel);
+                    for (int i = 0; i < FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().getPhotos().size(); i++) {
+                        if (!(getInfoImages().contains(FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().getPhotos().get(i)))) {
+                            File imageToDel = FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().getPhotos().get(i);
+                            System.out.println("stuff to be del " + imageToDel.getName());
+                            FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().removePhotos(imageToDel.getAbsolutePath(), imageToDel);
+                        }
                     }
-                }
 
-                for (int i = 0; i < getInfoImages().size(); i++) {
-                    if (!FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().getPhotos().contains(getInfoImages().get(i))) {
-                        System.out.println("stuff to be add" + getInfoImages().get(i).getName());
-                        FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().addPhotos(getInfoImages().get(i).getAbsolutePath(), visitInfosPath, getInfoImages().get(i).getName());
+                    for (int i = 0; i < getInfoImages().size(); i++) {
+                        if (!FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().getPhotos().contains(getInfoImages().get(i))) {
+                            System.out.println("stuff to be add" + getInfoImages().get(i).getName());
+                            FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().addPhotos(getInfoImages().get(i).getAbsolutePath(), visitInfosPath, getInfoImages().get(i).getName());
+                        }
                     }
-                }
 
-                FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().writeContent_EN(visitPresTextENInf.getText());
-                FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().writeContent_FR(visitPresTextFRInf.getText());
+                    FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().writeContent_EN(visitPresTextENInf.getText());
+                    FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().writeContent_FR(visitPresTextFRInf.getText());
+                }
             }
 
             GUIFormsController.getInstance().closeForm();
@@ -215,10 +237,59 @@ public class GUIControllerVillageVisitForm {
         }
     }
 
+    private void renameVisit(Visit oldVisit, String visitPath, String newName) {
+
+
+        String newVisitPath = visitPath + "/" + newName;
+        String visitOverviewPath = newVisitPath + "/" + "visite-overview";
+        String visitInfosPath = newVisitPath + "/" + "visite-info";
+
+        //on crée les dossiers
+        Visit v = new Visit(newVisitPath, newName);
+
+        //on bouge les poi
+
+        ArrayList<InterestPoint> ip = oldVisit.getIP();
+
+        for (int i = 0; i < ip.size(); i++) {
+            v.addInterestPoint(GUIControllerVillageIPForm.getInstance().renameIP(ip.get(i), newVisitPath, ip.get(i).getName(), true));
+        }
+
+        //on bouge overview
+        Overview visitOverview = new Overview(visitOverviewPath);
+
+        visitOverview.writePresentation_FR(oldVisit.getOverview().readLength_FR());
+        visitOverview.writePresentation_EN(oldVisit.getOverview().readLength_EN());
+        visitOverview.writeLength_FR(oldVisit.getOverview().readLength_FR());
+        visitOverview.writeLength_EN(oldVisit.getOverview().readLength_EN());
+
+        for (int i = 0; i < this.overviewImages.size(); i++) {
+            visitOverview.addImagesContent(this.overviewImages.get(i).getAbsolutePath(), visitOverviewPath, this.overviewImages.get(i).getName());
+        }
+
+        //on bouge infos
+        Info visitInfos = new Info(visitInfosPath);
+
+        visitInfos.writeContent_FR(oldVisit.getInfo().readContent_FR());
+        visitInfos.writeContent_EN(oldVisit.getInfo().readContent_EN());
+
+        for (int i = 0; i < this.infoImages.size(); i++) {
+            visitInfos.addPhotos(this.infoImages.get(i).getAbsolutePath(), visitInfosPath, this.infoImages.get(i).getName());
+        }
+
+        v.setInfo(visitInfos);
+        v.setOverview(visitOverview);
+
+        FileManager.getInstance().getVillageWorkspace().deleteVisit(oldVisit,visitPath + "/" + oldVisit.getName());
+        FileManager.getInstance().getVillageWorkspace().addVisit(v);
+
+        GUIControllerVillage.getInstance().visitListV.remove(oldVisit);
+        GUIControllerVillage.getInstance().visitListV.add(v);
+
+    }
+
     private boolean validForm() {
         boolean isValid = true;
-
-        System.out.println(visitPresTextENInf.getStyleClass());
 
         if (this.visitName.getText().equals("")) {
             errorList += "• Le case du nom est vide\n";
@@ -290,17 +361,26 @@ public class GUIControllerVillageVisitForm {
             visitPresTextENInf.getStyleClass().addAll("text-input","text-area");
         }
 
-        return isValid;
-    }
+        if (this.overviewImages.size() == 0) {
+            errorList += "• Au moins une image 'Overview' doit être sélectionnée\n";
+            addPicOverview.getStyleClass().addAll("buttonErrorStyle");
+            isValid = false;
+        }
+        else {
+            addPicOverview.getStyleClass().clear();
+            addPicOverview.getStyleClass().addAll("button");
+        }
 
-    public void fillInputs(Visit v) {
-        visitName.setText(v.getName());
-        visitPresTextFROv.setText(v.getOverview().readPresentation_FR());
-        visitPresTextENOv.setText(v.getOverview().readPresentation_EN());
-        visitLengthFROv.setText(v.getOverview().readLength_FR());
-        visitLengthENOv.setText(v.getOverview().readLength_EN());
-        visitPresTextFRInf.setText(v.getInfo().readContent_FR());
-        visitPresTextENInf.setText(v.getInfo().readContent_EN());
+        if (this.infoImages.size() == 0) {
+            errorList += "• Au moins une image 'Info' doit être sélectionnée\n";
+            addPicInf.getStyleClass().addAll("buttonErrorStyle");
+            isValid = false;
+        }
+        else {
+            addPicInf.getStyleClass().clear();
+            addPicInf.getStyleClass().addAll("button");
+        }
+        return isValid;
     }
 
     public ArrayList<File> getOverviewImages() {
@@ -308,8 +388,11 @@ public class GUIControllerVillageVisitForm {
     }
 
     public void setOverviewImages(ArrayList<File> selectedImages) {
-        System.out.print("overview:" + selectedImages.size());
+
         this.overviewImages = selectedImages;
+        overviewSizeText.setText((selectedImages.size() <= 1)
+                ? selectedImages + " image sélectionnée"
+                : selectedImages + " images sélectionnées");
     }
 
     public ArrayList<File> getInfoImages() {
@@ -317,8 +400,10 @@ public class GUIControllerVillageVisitForm {
     }
 
     public void setInfoImages(ArrayList<File> selectedImages) {
-        System.out.print("info: " + selectedImages.toString());
-        this.infoImages = selectedImages;
 
+        this.infoImages = selectedImages;
+        infoSizeText.setText((selectedImages.size() <= 1)
+                ? selectedImages + " image sélectionnée"
+                : selectedImages + " images sélectionnées");
     }
 }
