@@ -36,6 +36,8 @@ public class GUIControllerChateauVisitForm {
     public TextArea visitPresTextFRInf;
     public TextArea visitPresTextENInf;
 
+    public Button addPicOverview,addPicInf;
+
     public ArrayList<File> overviewImages;
     public ArrayList<File> infoImages;
 
@@ -385,12 +387,22 @@ public class GUIControllerChateauVisitForm {
 
         if (this.overviewImages.size() == 0) {
             errorList += "• Au moins une image 'Overview' doit être sélectionnée\n";
+            addPicOverview.getStyleClass().addAll("buttonErrorStyle");
             isValid = false;
+        }
+        else {
+            addPicOverview.getStyleClass().clear();
+            addPicOverview.getStyleClass().addAll("button");
         }
 
         if (this.infoImages.size() == 0) {
             errorList += "• Au moins une image 'Info' doit être sélectionnée\n";
+            addPicInf.getStyleClass().addAll("buttonErrorStyle");
             isValid = false;
+        }
+        else {
+            addPicInf.getStyleClass().clear();
+            addPicInf.getStyleClass().addAll("button");
         }
 
         return isValid;

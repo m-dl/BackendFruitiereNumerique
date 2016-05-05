@@ -40,7 +40,7 @@
                   <TextArea fx:id="visitLengthENOv" layoutX="340.0" layoutY="583.0" prefHeight="82.0" prefWidth="200.0" />
                   <HBox layoutX="111.0" layoutY="698.0" spacing="5.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#addOverviewPictures" text="Modifier les images &quot;Overview&quot;" />
+                        <Button fx:id="addPicOverview" mnemonicParsing="false" onAction="#addOverviewPictures" text="Modifier les images &quot;Overview&quot;" />
                         <Label fx:id="overviewSizeText" text="Aucune image sélectionée">
                            <font>
                               <Font name="Arial Italic" size="13.0" />
@@ -63,7 +63,7 @@
                   <TextArea fx:id="visitPresTextENInf" layoutX="33.0" layoutY="291.0" />
                   <HBox layoutX="135.0" layoutY="516.0" spacing="5.0">
                      <children>
-                        <Button fx:id="addImagesInf" mnemonicParsing="false" onAction="#addInfoPictures" text="Modifier les images &quot;Info&quot;" />
+                        <Button fx:id="addPicInf" mnemonicParsing="false" onAction="#addInfoPictures" text="Modifier les images &quot;Info&quot;" />
                         <Label fx:id="infoSizeText" text="Aucune image sélectionée">
                            <font>
                               <Font name="Arial Italic" size="13.0" />
