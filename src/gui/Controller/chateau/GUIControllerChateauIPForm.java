@@ -111,10 +111,10 @@ public class GUIControllerChateauIPForm {
         //opérateurs ternaires pour savoir si mettre le texte au singulier ou au pluriel
 
         descLabel.setText((p.getPicture() == null) ? "Aucune image sélectionnée" : "Une image sélectionnée");
-        imageLabel.setText((p.getPhotos().size() == 1) ? "1 image sélectionnée" : p.getPhotos().size() + " images sélectionnées");
-        videoLabel.setText((p.getVideos().size() == 1) ? "1 vidéo sélectionnée" : p.getPhotos().size() + " vidéos sélectionnées");
-        indoorLabel.setText((p.getInterieur().size() == 1) ? "1 image sélectionnée" : p.getPhotos().size() + " images sélectionnées");
-        panoLabel.setText((p.get_360().size() == 1) ? "1 image sélectionnée" : p.getPhotos().size() + " images sélectionnées");
+        imageLabel.setText((p.getPhotos().size() <= 1) ? p.getPhotos().size() + " image sélectionnée" : p.getPhotos().size() + " images sélectionnées");
+        videoLabel.setText((p.getVideos().size() <= 1) ? p.getPhotos().size() + " vidéo sélectionnée" : p.getPhotos().size() + " vidéos sélectionnées");
+        indoorLabel.setText((p.getInterieur().size() <= 1) ? p.getPhotos().size() + " image sélectionnée" : p.getPhotos().size() + " images sélectionnées");
+        panoLabel.setText((p.get_360().size() <= 1) ? p.getPhotos().size() + " image sélectionnée" : p.getPhotos().size() + " images sélectionnées");
     }
 
     @FXML
@@ -183,8 +183,10 @@ public class GUIControllerChateauIPForm {
                     FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).writePresentation_FR(ipPresTextFR.getText());
                     FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).writePresentation_EN(ipPresTextEN.getText());
 
-                    FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).removePicture(selectedPoint.getPicture().getPath(),selectedPoint.getPicture());
-                    FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).addPicture(this.descPic.getAbsolutePath(), ipPath, this.descPic.getName());
+                    if (descPic != null) {
+                        FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).removePicture(selectedPoint.getPicture().getPath(), selectedPoint.getPicture());
+                        FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).addPicture(this.descPic.getAbsolutePath(), ipPath, this.descPic.getName());
+                    }
 
                     for (int i = 0; i < FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).getPhotos().size(); i++) {
                         if (!(photos.contains(FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).getPhotos().get(i)))) {
@@ -402,7 +404,7 @@ public class GUIControllerChateauIPForm {
     }
 
     public void setPhotos(ArrayList<File> photos) {
-        imageLabel.setText((photos.size() == 1) ? "1 image sélectionnée" : photos.size() + " images sélectionnées");
+        imageLabel.setText((photos.size() <= 1) ? photos.size() + " image sélectionnée" : photos.size() + " images sélectionnées");
         this.photos = photos;
     }
 
@@ -411,7 +413,7 @@ public class GUIControllerChateauIPForm {
     }
 
     public void setInterieur(ArrayList<File> interieur) {
-        indoorLabel.setText((interieur.size() == 1) ? "1 image sélectionnée" : interieur.size() + " images sélectionnées");
+        indoorLabel.setText((interieur.size() <= 1) ? interieur + " image sélectionnée" : interieur.size() + " images sélectionnées");
         this.interieur = interieur;
     }
 
@@ -420,7 +422,7 @@ public class GUIControllerChateauIPForm {
     }
 
     public void set_360(ArrayList<File> _360) {
-        panoLabel.setText((_360.size() == 1) ? "1 image sélectionnée" : _360.size() + " images sélectionnées");
+        panoLabel.setText((_360.size() <= 1) ? _360.size() + " image sélectionnée" : _360.size() + " images sélectionnées");
         this._360 = _360;
     }
 
@@ -429,7 +431,7 @@ public class GUIControllerChateauIPForm {
     }
 
     public void setVideos(ArrayList<File> videos) {
-        videoLabel.setText((videos.size() == 1) ? "1 vidéo sélectionnée" : videos.size() + " vidéos sélectionnées");
+        videoLabel.setText((videos.size() <= 1) ? videos.size() + " vidéo sélectionnée" : videos.size() + " vidéos sélectionnées");
         this.videos = videos;
     }
 
