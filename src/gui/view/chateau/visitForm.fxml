@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <ScrollPane hbarPolicy="NEVER" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
    <content>
@@ -22,7 +23,7 @@
             <Label layoutX="84.0" layoutY="721.0" text="Durée de la visite en français:" />
             <TextArea fx:id="visitLengthENOv" layoutX="345.0" layoutY="753.0" prefHeight="82.0" prefWidth="200.0" />
             <Label layoutX="357.0" layoutY="721.0" text="Durée de la visite en anglais:" />
-            <Button fx:id="addImagesInf" layoutX="232.0" layoutY="1518.0" mnemonicParsing="false" onAction="#addInfoPictures" text="Ajouter des images" />
+            <Button fx:id="addImagesInf" layoutX="226.0" layoutY="1510.0" mnemonicParsing="false" onAction="#addInfoPictures" text="Modifier les images &quot;Info&quot;" />
             <Button fx:id="saveChanges" layoutX="260.0" layoutY="1590.0" mnemonicParsing="false" onAction="#saveChanges" text="Enregister" />
             <Separator layoutX="5.0" layoutY="187.0" prefHeight="13.0" prefWidth="589.0" />
             <Label layoutX="269.0" layoutY="170.0" text="Overview:" underline="true" />
@@ -32,12 +33,22 @@
             <TextArea fx:id="visitPresTextENInf" layoutX="38.0" layoutY="1303.0" />
             <Label layoutX="168.0" layoutY="974.0" text="Texte de présentation en français:" />
             <Label layoutX="196.0" layoutY="1269.0" text="Texte de présentation en anglais:" />
-            <Button layoutX="238.0" layoutY="877.0" mnemonicParsing="false" onAction="#addOverviewPictures" text="Ajouter des images" />
+            <Button layoutX="209.0" layoutY="867.0" mnemonicParsing="false" onAction="#addOverviewPictures" text="Modifier les images &quot;Overview&quot;" />
             <Separator layoutX="6.0" layoutY="1570.0" prefHeight="13.0" prefWidth="589.0" />
             <Label layoutX="89.0" layoutY="119.0" prefHeight="17.0" prefWidth="174.0" text="Nom de la visite en anglais:" wrapText="true" />
             <TextField fx:id="visitNameEN" layoutX="290.0" layoutY="114.0" />
             <Separator layoutX="3.0" layoutY="39.0" prefHeight="13.0" prefWidth="589.0" />
             <Label layoutX="275.0" layoutY="22.0" text="Noms:" underline="true" />
+            <Label fx:id="overviewSizeText" layoutX="238.0" layoutY="904.0" text="Aucune image sélectionée">
+               <font>
+                  <Font name="Arial Italic" size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="infoSizeText" layoutX="237.0" layoutY="1554.0" text="Aucune image sélectionée">
+               <font>
+                  <Font name="Arial Italic" size="13.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </content>

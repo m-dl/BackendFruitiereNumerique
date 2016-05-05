@@ -25,6 +25,8 @@ public class GUIControllerChateauVisitForm {
 
     private static GUIControllerChateauVisitForm INSTANCE = new GUIControllerChateauVisitForm();
 
+    public Label overviewSizeText, infoSizeText;
+
     public TextField visitName;
     public TextField visitNameEN;
     public TextArea visitPresTextFROv;
@@ -98,6 +100,8 @@ public class GUIControllerChateauVisitForm {
         visitLengthENOv.setText(v.getOverview().readLength_EN());
         visitPresTextFRInf.setText(v.getInfo().readContent_FR());
         visitPresTextENInf.setText(v.getInfo().readContent_EN());
+        overviewSizeText.setText(v.getOverview().getImagesContent().size() +" images sélectionnées");
+        infoSizeText.setText(v.getInfo().getPhotos().size()+" images sélectionnées");
     }
 
 
@@ -289,7 +293,18 @@ public class GUIControllerChateauVisitForm {
     private boolean validForm() {
         boolean isValid = true;
 
+        // TODO: 05/05/2016 taille image selecinnée
         System.out.println(visitPresTextENInf.getStyleClass());
+
+        if (this.overviewImages.size() == 0) {
+            errorList += "• Au moins une image 'Overview' doit être sélectionnée\n";
+            isValid = false;
+        }
+
+        if (this.infoImages.size() == 0) {
+            errorList += "• Au moins une image 'Info' doit être sélectionnée\n";
+            isValid = false;
+        }
 
         if (this.visitName.getText().equals("")) {
             errorList += "• Le case du nom est vide\n";
@@ -369,6 +384,7 @@ public class GUIControllerChateauVisitForm {
     }
 
     public void setOverviewImages(ArrayList<File> selectedImages) {
+        overviewSizeText.setText(selectedImages.size()+" images sélectionnés");
         System.out.println("overview:" + selectedImages.toString());
         this.overviewImages = selectedImages;
     }
@@ -378,6 +394,7 @@ public class GUIControllerChateauVisitForm {
     }
 
     public void setInfoImages(ArrayList<File> selectedImages) {
+        infoSizeText.setText(selectedImages.size()+" images sélectionnées");
         System.out.println("info: " + selectedImages.toString());
         this.infoImages = selectedImages;
 
