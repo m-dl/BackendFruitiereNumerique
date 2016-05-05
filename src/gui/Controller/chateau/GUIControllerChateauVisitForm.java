@@ -25,8 +25,6 @@ public class GUIControllerChateauVisitForm {
 
     private static GUIControllerChateauVisitForm INSTANCE = new GUIControllerChateauVisitForm();
 
-    public Label overviewSizeText, infoSizeText;
-
     public TextField visitName;
     public TextField visitNameEN;
     public TextArea visitPresTextFROv;
@@ -36,6 +34,7 @@ public class GUIControllerChateauVisitForm {
     public TextArea visitPresTextFRInf;
     public TextArea visitPresTextENInf;
 
+    public Label overviewSizeText, infoSizeText;
     public Button addPicOverview,addPicInf;
 
     public ArrayList<File> overviewImages;
@@ -194,7 +193,6 @@ public class GUIControllerChateauVisitForm {
                     FileManager.getInstance().getChateauWorkspace().getV().get(index).writeName_EN(this.visitNameEN.getText());
                     FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().writePresentation_FR(visitPresTextFROv.getText());
                     FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().writePresentation_EN(visitPresTextENOv.getText());
-                    FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().writeLength_EN(visitPresTextENOv.getText());
                     FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().writeLength_FR(visitLengthFROv.getText());
                     FileManager.getInstance().getChateauWorkspace().getV().get(index).getOverview().writeLength_EN(visitLengthENOv.getText());
 
