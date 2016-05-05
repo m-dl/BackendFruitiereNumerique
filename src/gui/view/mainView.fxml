@@ -2,55 +2,87 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <Pane prefHeight="660.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TabPane fx:id="tabPane" blendMode="MULTIPLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="800.0" style="-fx-border-color: #F49400;" tabClosingPolicy="UNAVAILABLE">
          <padding>
             <Insets top="50.0" />
          </padding>
       </TabPane>
-      <GridPane blendMode="MULTIPLY" prefHeight="50.0" prefWidth="800.0" style="-fx-background-color: rgb(212,212,212);">
+      <GridPane prefHeight="55.0" prefWidth="800.0" style="-fx-background-color: #3399FF;">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints fillWidth="false" halignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" />
+            <ColumnConstraints fillWidth="false" halignment="CENTER" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints fillWidth="false" halignment="CENTER" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Pane prefWidth="400.0">
+            <HBox GridPane.columnIndex="3">
                <children>
-                  <ImageView fx:id="logoL" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
-               </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <GridPane.margin>
-                  <Insets left="10.0" />
-               </GridPane.margin>
-            </Pane>
-            <ButtonBar prefHeight="221.0" prefWidth="800.0">
-              <buttons>
-                  <Button mnemonicParsing="false" onAction="#uploadMedia" text="Uploader médias" />
-                <Button mnemonicParsing="false" onAction="#downloadMedia" text="Télécharger médias" />
-                  <ProgressIndicator maxWidth="50.0" minWidth="50.0" prefHeight="50.0" prefWidth="50.0">
-                      <padding>
-                          <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
-                      </padding>
+                  <ProgressIndicator fx:id="progressIndicator" blendMode="MULTIPLY" prefHeight="35.0" prefWidth="35.0">
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
                   </ProgressIndicator>
-              </buttons>
-               <padding>
-                  <Insets left="15.0" right="15.0" />
-               </padding>
-            </ButtonBar>
+                  <Label text="Statut:" underline="true">
+                     <HBox.margin>
+                        <Insets left="10.0" top="15.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="operationIP" prefWidth="300.0" text="Téléchargement des médias du village en cours">
+                     <HBox.margin>
+                        <Insets left="10.0" top="15.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Arial Italic" size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <VBox alignment="CENTER" fillWidth="false" GridPane.columnIndex="5">
+               <children>
+                  <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#uploadMedia" prefHeight="25.0" prefWidth="150.0" style="-fx-border-color: #3399FF;" text="Uploader médias">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Button>
+                <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#downloadMedia" prefHeight="25.0" prefWidth="150.0" style="-fx-border-color: #3399FF;" text="Télécharger médias">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Button>
+               </children>
+               <GridPane.margin>
+                  <Insets bottom="1.0" />
+               </GridPane.margin>
+            </VBox>
+            <Separator blendMode="MULTIPLY" orientation="VERTICAL" prefHeight="50.0" GridPane.columnIndex="2" />
+            <Separator blendMode="MULTIPLY" orientation="VERTICAL" prefHeight="50.0" GridPane.columnIndex="4" />
+            <ImageView fx:id="logoL" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </GridPane>
    </children>
