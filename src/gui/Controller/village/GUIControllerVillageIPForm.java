@@ -1,5 +1,7 @@
 package gui.Controller.village;
 
+import com.lynden.gmapsfx.GMap;
+import com.lynden.gmapsfx.ShortContainer;
 import entities.village.InterestPoint;
 import entities.village.Visit;
 import files.FileManager;
@@ -27,6 +29,7 @@ public class GUIControllerVillageIPForm {
     public TextArea ipPresTextEN;
 
     public Button addDescImage;
+    public Button preFillButton;
 
     public Label descLabel;
     public Label imageLabel;
@@ -40,6 +43,7 @@ public class GUIControllerVillageIPForm {
     private File descPic;
     private ArrayList<File> photos, interieur, _360, videos;
     private String errorList;
+    public ShortContainer coords;
 
 
     private GUIControllerVillageIPForm() {
@@ -48,6 +52,8 @@ public class GUIControllerVillageIPForm {
         _360 = new ArrayList<>();
         videos = new ArrayList<>();
         errorList = "";
+        coords = new ShortContainer();
+        //preFillButton.setDisable(true);
     }
 
 
@@ -439,6 +445,26 @@ public class GUIControllerVillageIPForm {
         }
 
         return isValid;
+    }
+
+    public void displayGmap() {
+
+        preFillButton.setDisable(false);
+
+        GMap map = new GMap();
+        map.setC(coords);
+
+        try {
+            map.display();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void preFillPos() {
+        coordLat.setText(String.valueOf(coords.getLat()));
+        coordLong.setText(String.valueOf(coords.getLon()));
     }
 
     @FXML public void addDescriptivePicture() {

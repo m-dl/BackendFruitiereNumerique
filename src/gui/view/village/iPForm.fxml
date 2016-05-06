@@ -52,7 +52,7 @@
                         <TextField fx:id="coordLong" layoutX="349.0" layoutY="23.0" />
                      </children>
                   </Group>
-                        <HBox layoutX="86.0" layoutY="112.0">
+                        <HBox layoutX="88.0" layoutY="144.0">
                             <children>
                                 <VBox spacing="5.0">
                                     <children>
@@ -69,9 +69,15 @@
                                 </VBox>
                             </children>
                         </HBox>
+                  <HBox layoutX="175.0" layoutY="93.0" spacing="5.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#displayGmap" text="Afficher Google Maps" />
+                        <Button fx:id="preFillButton" disable="true" mnemonicParsing="false" onAction="#preFillPos" text="Préremplir" />
+                     </children>
+                  </HBox>
                </children>
             </Group>
-                <Group layoutX="6.0" layoutY="546.0">
+                <Group layoutX="6.0" layoutY="574.0">
                     <children>
                         <Label layoutX="233.0" layoutY="-2.0" text="Médias optionnels:" underline="true">
                      <font>
@@ -103,7 +109,7 @@
                         </HBox>
                     </children>
                 </Group>
-                <Group layoutX="6.0" layoutY="723.0">
+                <Group layoutX="6.0" layoutY="751.0">
                     <children>
                         <Separator prefHeight="13.0" prefWidth="589.0" />
                         <Button fx:id="saveChanges" layoutX="254.0" layoutY="13.0" mnemonicParsing="false" onAction="#saveChanges" text="Enregister" />
