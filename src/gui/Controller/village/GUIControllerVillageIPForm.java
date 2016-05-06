@@ -1,7 +1,7 @@
 package gui.Controller.village;
 
 import com.lynden.gmapsfx.GMap;
-import com.lynden.gmapsfx.ShortContainer;
+import com.lynden.gmapsfx.GPSContainer;
 import entities.village.InterestPoint;
 import entities.village.Visit;
 import files.FileManager;
@@ -43,7 +43,7 @@ public class GUIControllerVillageIPForm {
     private File descPic;
     private ArrayList<File> photos, interieur, _360, videos;
     private String errorList;
-    public ShortContainer coords;
+    public GPSContainer coords;
 
 
     private GUIControllerVillageIPForm() {
@@ -52,8 +52,7 @@ public class GUIControllerVillageIPForm {
         _360 = new ArrayList<>();
         videos = new ArrayList<>();
         errorList = "";
-        coords = new ShortContainer();
-        //preFillButton.setDisable(true);
+        coords = new GPSContainer();
     }
 
 

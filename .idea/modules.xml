@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BackendFruitiereNumerique.iml" filepath="$PROJECT_DIR$/BackendFruitiereNumerique.iml" />
+      <module fileurl="file://$USER_HOME$/Desktop/rterp-GMapsFX-6834df7/GMapsFX/src/main/GMap.iml" filepath="$USER_HOME$/Desktop/rterp-GMapsFX-6834df7/GMapsFX/src/main/GMap.iml" />
       <module fileurl="file://$PROJECT_DIR$/../BackendFruitiereNumeriqueGAPI/drive-cmdline-sample.iml" filepath="$PROJECT_DIR$/../BackendFruitiereNumeriqueGAPI/drive-cmdline-sample.iml" />
-      <module fileurl="file://$USER_HOME$/Desktop/rterp-GMapsFX-6834df7/GMapsFX/src/main/main.iml" filepath="$USER_HOME$/Desktop/rterp-GMapsFX-6834df7/GMapsFX/src/main/main.iml" />
     </modules>
   </component>
 </project>
