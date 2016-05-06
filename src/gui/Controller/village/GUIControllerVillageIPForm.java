@@ -449,7 +449,6 @@ public class GUIControllerVillageIPForm {
     public void displayGmap() {
 
         preFillButton.setDisable(false);
-
         GMap map = new GMap();
         map.setC(coords);
 
