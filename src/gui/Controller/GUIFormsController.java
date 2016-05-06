@@ -5,6 +5,7 @@ import gui.Controller.chateau.GUIControllerChateauVisitForm;
 import gui.Controller.enums.PictureFormType;
 import gui.Controller.enums.VisitType;
 import gui.Controller.photo.GUIControllerPhotoForm;
+import gui.Controller.photo.GUIControllerPointPlacer;
 import gui.Controller.village.GUIControllerVillageIPForm;
 import gui.Controller.village.GUIControllerVillageVisitForm;
 import javafx.scene.control.Alert;
@@ -94,6 +95,10 @@ public class GUIFormsController {
             GUIControllerPhotoForm.getInstance().displayForm(visitType, pictureFormType);
         else
             pictureFormToFront();
+    }
+
+    public void displayPointPlacerFrom() {
+        GUIControllerPointPlacer.getInstance().display();
     }
 
     public Alert displayErrorAlert(String content, String labelText, String error) {

@@ -37,6 +37,8 @@ public class GUIControllerChateauIPForm {
     public Label indoorLabel;
     public Label panoLabel;
 
+    private double coordX, coordY = -1;
+
     private Stage stage;
     private boolean isNewPoint;
 
@@ -129,6 +131,8 @@ public class GUIControllerChateauIPForm {
                         GUIControllerChateau.getInstance().getSelectedVisit().getName() + "/" + ipName;
 
                 InterestPoint ip = new InterestPoint(ipPath, ipName);
+
+
 
                 ip.addPicture(this.descPic.getAbsolutePath(), ipPath, this.descPic.getName());
 
@@ -373,28 +377,32 @@ public class GUIControllerChateauIPForm {
         return isValid;
     }
 
-    @FXML
+    public void placePoint() {
+        GUIFormsController.getInstance().displayPointPlacerFrom();
+    }
+
+    //@FXML
     public void addDescriptivePicture() {
         GUIFormsController.getInstance().displayPhotoForm(CHATEAU, DESCRIPTIVE_PICTURE, this.isNewPoint);
     }
 
-    @FXML
+    //@FXML
     public void addPictures() {
 
         GUIFormsController.getInstance().displayPhotoForm(CHATEAU, PICTURES, this.isNewPoint);
     }
 
-    @FXML
+    //@FXML
     public void addVideos() {
         GUIFormsController.getInstance().displayPhotoForm(CHATEAU, VIDEOS, this.isNewPoint);
     }
 
-    @FXML
+    //@FXML
     public void addPanoramic() {
         GUIFormsController.getInstance().displayPhotoForm(CHATEAU, PANORAMIC_PICTURES, this.isNewPoint);
     }
 
-    @FXML
+    //@FXML
     public void addIndoors() {
         GUIFormsController.getInstance().displayPhotoForm(CHATEAU, INDOORS_PICTURES, this.isNewPoint);
     }
@@ -450,4 +458,12 @@ public class GUIControllerChateauIPForm {
         }
     }
 
+    public void setCoords(double coordX, double coordY) {
+        this.coordX = coordX;
+        this.coordY = coordY;
+
+        System.out.println(coordX);
+        System.out.println(coordY);
+
+    }
 }
