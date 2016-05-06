@@ -7,6 +7,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/../BackendFruitiereNumeriqueGAPI/pom.xml" />
+        <option value="$PROJECT_DIR$/../GMapsFX/pom.xml" />
       </list>
     </option>
   </component>
