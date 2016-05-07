@@ -1,5 +1,6 @@
 package gui.Controller.village;
 
+//import com.lynden.gmapsfx.GMap;
 import com.lynden.gmapsfx.GMap;
 import com.lynden.gmapsfx.GPSContainer;
 import entities.village.InterestPoint;
@@ -179,6 +180,8 @@ public class GUIControllerVillageIPForm {
                 String ipPath = FileManager.WORKSPACE + "/" + FileManager.VILLAGE + "/" +
                         GUIControllerVillage.getInstance().getSelectedVisit().getName() + "/" + ipName;
 
+                // TODO: 07/05/2016  rempir auto les coord
+
                 if (!Objects.equals(ipNewName, originalName)) {
                     ipPath = FileManager.WORKSPACE + "/" + FileManager.VILLAGE + "/" +
                             GUIControllerVillage.getInstance().getSelectedVisit().getName();
@@ -191,7 +194,9 @@ public class GUIControllerVillageIPForm {
                     FileManager.getInstance().getVillageWorkspace().getV().get(visitIndex).getIP().get(ipIndex).writePresentation_EN(ipPresTextEN.getText());
 
                     if (descPic != null) {
-                        FileManager.getInstance().getVillageWorkspace().getV().get(visitIndex).getIP().get(ipIndex).removePicture(selectedPoint.getPicture().getPath(), selectedPoint.getPicture());
+                        if (selectedPoint.getPicture() != null) {
+                            FileManager.getInstance().getVillageWorkspace().getV().get(visitIndex).getIP().get(ipIndex).removePicture(selectedPoint.getPicture().getPath(), selectedPoint.getPicture());
+                        }
                         FileManager.getInstance().getVillageWorkspace().getV().get(visitIndex).getIP().get(ipIndex).addPicture(this.descPic.getAbsolutePath(), ipPath, this.descPic.getName());
                     }
 
@@ -448,6 +453,7 @@ public class GUIControllerVillageIPForm {
 
     public void displayGmap() {
 
+
         preFillButton.setDisable(false);
         GMap map = new GMap();
         map.setC(coords);
@@ -458,11 +464,14 @@ public class GUIControllerVillageIPForm {
             e.printStackTrace();
         }
 
+
     }
 
     public void preFillPos() {
+
         coordLat.setText(String.valueOf(coords.getLat()));
         coordLong.setText(String.valueOf(coords.getLon()));
+
     }
 
     @FXML public void addDescriptivePicture() {

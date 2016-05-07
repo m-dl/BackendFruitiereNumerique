@@ -110,8 +110,16 @@ public class GUIControllerChateauIPForm {
         ipPresTextFR.setText(p.readPresentation_FR());
         ipPresTextEN.setText(p.readPresentation_EN());
 
+        if(!p.readMarker().equals("")) {
+            coordX = Double.parseDouble((p.readMarker()).split(",")[0]);
+            coordY = Double.parseDouble((p.readMarker()).split(",")[1]);
+        }
+
+
+
         //opérateurs ternaires pour savoir si mettre le texte au singulier ou au pluriel
 
+        mapPointLabel.setText("Veuillez placer le point sur la carte");
         descLabel.setText((p.getPicture() == null) ? "Aucune image sélectionnée" : "Une image sélectionnée");
         imageLabel.setText((p.getPhotos().size() <= 1) ? p.getPhotos().size() + " image sélectionnée" : p.getPhotos().size() + " images sélectionnées");
         videoLabel.setText((p.getVideos().size() <= 1) ? p.getPhotos().size() + " vidéo sélectionnée" : p.getPhotos().size() + " vidéos sélectionnées");
@@ -119,6 +127,8 @@ public class GUIControllerChateauIPForm {
         panoLabel.setText((p.get_360().size() <= 1) ? p.getPhotos().size() + " image sélectionnée" : p.getPhotos().size() + " images sélectionnées");
     }
 
+
+    // TODO: 07/05/2016  rempir auto les coord
     @FXML
     public void saveChanges() {
 
@@ -132,9 +142,9 @@ public class GUIControllerChateauIPForm {
 
                 InterestPoint ip = new InterestPoint(ipPath, ipName);
 
-
-
                 ip.addPicture(this.descPic.getAbsolutePath(), ipPath, this.descPic.getName());
+
+                ip.writeMarker(coordX+","+coordY);
 
                 for (int i = 0; i < this.photos.size(); i++) {
                     ip.addPhotos(this.photos.get(i).getAbsolutePath(), ipPath, this.photos.get(i).getName());
@@ -187,8 +197,14 @@ public class GUIControllerChateauIPForm {
                     FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).writePresentation_FR(ipPresTextFR.getText());
                     FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).writePresentation_EN(ipPresTextEN.getText());
 
+                    FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).writeMarker(coordX+","+coordY);
+
+
                     if (descPic != null) {
-                        FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).removePicture(selectedPoint.getPicture().getPath(), selectedPoint.getPicture());
+                        if (selectedPoint.getPicture() != null) {
+                            FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).removePicture(selectedPoint.getPicture().getPath(), selectedPoint.getPicture());
+                        }
+
                         FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).addPicture(this.descPic.getAbsolutePath(), ipPath, this.descPic.getName());
                     }
 
@@ -291,6 +307,7 @@ public class GUIControllerChateauIPForm {
                 ip.addVideo(oldIP.getVideos().get(i).getAbsolutePath(), ipPath, oldIP.getVideos().get(i).getName());
             }
 
+            ip.writeMarker(oldIP.readMarker());
             ip.writePresentation_FR(oldIP.readPresentation_FR());
             ip.writePresentation_EN(oldIP.readPresentation_EN());
 
@@ -298,6 +315,8 @@ public class GUIControllerChateauIPForm {
         else {
 
             ip.addPicture(this.descPic.getAbsolutePath(), ipPath, this.descPic.getName());
+            ip.writeMarker(coordX+","+coordY);
+
 
             for (int i = 0; i < this.photos.size(); i++) {
                 ip.addPhotos(this.photos.get(i).getAbsolutePath(), ipPath, this.photos.get(i).getName());
@@ -461,6 +480,9 @@ public class GUIControllerChateauIPForm {
     public void setCoords(double coordX, double coordY) {
         this.coordX = coordX;
         this.coordY = coordY;
+
+        mapPointLabel.setText("Coordonnées enregistrées");
+
 
         System.out.println(coordX);
         System.out.println(coordY);

@@ -77,14 +77,14 @@ public class GUIControllerPointPlacer {
     }
 
     private double calcX() {
-        if (displayedImage.getImage().getWidth() != 0)
-            return coordX/displayedImage.getImage().getWidth();
+        if (displayedImage.getFitWidth() != 0)
+            return coordX/displayedImage.getFitWidth();
 
         return 0;
     }
     private double calcY() {
-        if (displayedImage.getImage().getHeight() != 0)
-            return coordY/displayedImage.getImage().getHeight();
+        if (displayedImage.getFitHeight() != 0)
+            return coordY/displayedImage.getFitHeight();
 
         return 0;
 
@@ -92,7 +92,7 @@ public class GUIControllerPointPlacer {
     private void loadFloor() {
         switch (currentFloor) {
             case 0:
-                displayedImage.setImage(new Image("plans.JPG"));
+                displayedImage.setImage(new Image("plan.jpg"));
                 break;
             case 1:
                 displayedImage.setImage(new Image("0_1.jpg"));
@@ -104,11 +104,13 @@ public class GUIControllerPointPlacer {
                 displayedImage.setImage(new Image("1_1.jpg"));
                 break;
         }
-        displayedWindow.setWidth(displayedImage.getImage().getWidth() > 300
-                ? displayedImage.getImage().getWidth()
-                : 300 );
-        displayedWindow.setHeight(displayedImage.getImage().getHeight());
 
+        displayedImage.setFitWidth(800);
+        displayedImage.setFitHeight(600);
+
+        displayedImage.setPreserveRatio(false);
+        displayedImage.setSmooth(true);
+        displayedImage.setCache(true);
         addListeners();
     }
 
@@ -130,6 +132,10 @@ public class GUIControllerPointPlacer {
         imagePanel.setOnMousePressed(event -> {
             coordX = event.getX();
             coordY = event.getY();
+
+            System.out.println(coordX/displayedImage.getFitWidth());
+            System.out.println(coordY/displayedImage.getFitHeight());
+
         });
 
         imagePanel.setOnMouseReleased(event -> {
