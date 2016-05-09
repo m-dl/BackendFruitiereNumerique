@@ -391,8 +391,8 @@ public class GUIControllerVillageVisitForm {
 
         this.overviewImages = selectedImages;
         overviewSizeText.setText((selectedImages.size() <= 1)
-                ? selectedImages + " image sélectionnée"
-                : selectedImages + " images sélectionnées");
+                ? selectedImages.size() + " image sélectionnée"
+                : selectedImages.size() + " images sélectionnées");
     }
 
     public ArrayList<File> getInfoImages() {
@@ -403,7 +403,7 @@ public class GUIControllerVillageVisitForm {
 
         this.infoImages = selectedImages;
         infoSizeText.setText((selectedImages.size() <= 1)
-                ? selectedImages + " image sélectionnée"
-                : selectedImages + " images sélectionnées");
+                ? selectedImages.size() + " image sélectionnée"
+                : selectedImages.size() + " images sélectionnées");
     }
 }
