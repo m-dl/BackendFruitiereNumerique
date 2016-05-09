@@ -447,16 +447,16 @@ public class FileTools {
     }
     
     // Parse floor and coordinates
-    public static void ParseCoordinates(File marker, int floor, double coordX, double coordY) {
-		String input = Read(marker);
+    public static void ParseCoordinates(entities.chateau.InterestPoint IP) {
+		String input = Read(IP.getMarker());
 		if(input != null) {
 			String[] lines = input.split(System.getProperty("line.separator"));
 			if(lines.length > 1) {
-				floor = Integer.parseInt(lines[0]);
+				IP.setFloor(Integer.parseInt(lines[0]));
 				String[] coord = lines[1].split(",");
 				if(coord.length > 1) {
-					coordX = Double.parseDouble(coord[0]);
-					coordY = Double.parseDouble(coord[1]);
+					IP.setCoordX(Double.parseDouble(coord[0]));
+					IP.setCoordY(Double.parseDouble(coord[1]));
 				}
 			}
 		}
