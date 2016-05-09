@@ -7,7 +7,9 @@ import java.util.ArrayList;
  *
  */
 public class Location {
-	
+    public static final int FLOOR_ONE = 1;
+    public static final int FLOOR_TWO = 2;
+    public static final int FLOOR_THREE = 3;
     private ArrayList<Visit> V;
     
     public Location() {

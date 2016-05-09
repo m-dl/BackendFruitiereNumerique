@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class Visit {
 
-    private ArrayList<InterestPoint> IP;
+    private ArrayList<InterestPoint> IP1, IP2, IP3;
     private Overview overview;
     private Info info;
     private File name_EN;
@@ -24,7 +24,9 @@ public class Visit {
     	
         initVisit(pathFrom);
 
-        this.setIP(new ArrayList<InterestPoint>());
+        this.setIP1(new ArrayList<InterestPoint>());
+        this.setIP2(new ArrayList<InterestPoint>());
+        this.setIP3(new ArrayList<InterestPoint>());
         this.setOverview(new Overview(pathFrom + "/" + FileManager.OVERVIEW_FOLDER));
         this.setInfo(new Info(pathFrom + "/" + FileManager.INFO_FOLDER));
         this.name = name;
@@ -39,20 +41,30 @@ public class Visit {
 			FileTools.CreateFile(pathFrom + "/" + FileManager.NAME_EN);
     }
 
-    /**
-     * @return the iP
-     */
-    public ArrayList<InterestPoint> getIP() {
-        return IP;
+    public ArrayList<InterestPoint> getIP1() {
+        return IP1;
     }
 
-    /**
-     * @param iP the iP to set
-     */
-    public void setIP(ArrayList<InterestPoint> IP) {
-        this.IP = IP;
+    public void setIP1(ArrayList<InterestPoint> IP1) {
+        this.IP1 = IP1;
     }
 
+    public ArrayList<InterestPoint> getIP2() {
+        return IP2;
+    }
+
+    public void setIP2(ArrayList<InterestPoint> IP2) {
+        this.IP2 = IP2;
+    }
+
+    public ArrayList<InterestPoint> getIP3() {
+        return IP3;
+    }
+
+    public void setIP3(ArrayList<InterestPoint> IP3) {
+        this.IP3 = IP3;
+    }
+    
     public Overview getOverview() {
         return overview;
     }
@@ -83,14 +95,14 @@ public class Visit {
     }
     
     // Delete an IP to a visit
-    public void deleteInterestPoint(InterestPoint IP, String pathFrom) {
-        this.IP.remove(IP);
+    public void deleteInterestPoint(InterestPoint IP, String pathFrom, ArrayList<InterestPoint> IPArray) {
+        IPArray.remove(IP);
         IP.delete(pathFrom);
     }
     
     // Add an interest point to a visit
-    public void addInterestPoint(InterestPoint IP) {
-        this.IP.add(IP);
+    public void addInterestPoint(InterestPoint IP, ArrayList<InterestPoint> IPArray) {
+        IPArray.add(IP);
     }
     
 	public String readName_EN() {

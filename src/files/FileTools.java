@@ -341,7 +341,12 @@ public class FileTools {
             if(file.isDirectory()){ // Overview or Info or IP folder
                 if(!file.getName().equals(FileManager.OVERVIEW_FOLDER) && !file.getName().equals(FileManager.INFO_FOLDER)) {
                 	entities.chateau.InterestPoint tmpIP = new entities.chateau.InterestPoint(pathFrom + "/" + file.getName(), file.getName());
-                	tmpVisit.addInterestPoint(tmpIP);
+					if(tmpIP.getFloor() == entities.chateau.Location.FLOOR_ONE)
+                		tmpVisit.addInterestPoint(tmpIP, tmpVisit.getIP1());
+					else if(tmpIP.getFloor() == entities.chateau.Location.FLOOR_TWO)
+						tmpVisit.addInterestPoint(tmpIP, tmpVisit.getIP2());
+					else if(tmpIP.getFloor() == entities.chateau.Location.FLOOR_THREE)
+						tmpVisit.addInterestPoint(tmpIP, tmpVisit.getIP3());
                 }
             }
         }
@@ -439,5 +444,21 @@ public class FileTools {
 		}
 		scanner.close();
 		return coord;
+    }
+    
+    // Parse floor and coordinates
+    public static void ParseCoordinates(File marker, int floor, double coordX, double coordY) {
+		String input = Read(marker);
+		if(input != null) {
+			String[] lines = input.split(System.getProperty("line.separator"));
+			if(lines.length > 1) {
+				floor = Integer.parseInt(lines[0]);
+				String[] coord = lines[1].split(",");
+				if(coord.length > 1) {
+					coordX = Double.parseDouble(coord[0]);
+					coordY = Double.parseDouble(coord[1]);
+				}
+			}
+		}
     }
 }
