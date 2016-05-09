@@ -83,7 +83,8 @@ public class InterestPoint {
 		FileTools.ParseCoordinates(this);
 	}
 	
-	public void writeMarker(String input) {
+	public void writeMarker() {
+		String input = this.floor + "\n" + this.coordX + "," + this.coordY;
 		FileTools.Write(this.marker, input);
 	}
 

@@ -97,8 +97,8 @@ public class GUIFormsController {
             pictureFormToFront();
     }
 
-    public void displayPointPlacerFrom() {
-        GUIControllerPointPlacer.getInstance().display();
+    public void displayPointPlacerFrom(boolean isNewPoint) {
+        GUIControllerPointPlacer.getInstance().display(isNewPoint);
     }
 
     public Alert displayErrorAlert(String content, String labelText, String error) {

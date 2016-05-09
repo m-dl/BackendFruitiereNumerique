@@ -140,7 +140,9 @@ public class GUIControllerChateauVisitForm {
                 String visitInfosPath = visitPath + "/" + "visite-info";
 
                 Visit v = new Visit(visitPath, vName);
-                v.setIP(new ArrayList<>());
+                v.setIP1(new ArrayList<>());
+                v.setIP2(new ArrayList<>());
+                v.setIP3(new ArrayList<>());
                 v.writeName_EN(vNameEN);
 
                 visitOverview = new Overview(visitOverviewPath);
@@ -261,10 +263,20 @@ public class GUIControllerChateauVisitForm {
 
         //on bouge les poi
 
-        ArrayList<InterestPoint> ip = oldVisit.getIP();
+        ArrayList<InterestPoint> ip1 = oldVisit.getIP1();
+        ArrayList<InterestPoint> ip2 = oldVisit.getIP2();
+        ArrayList<InterestPoint> ip3 = oldVisit.getIP3();
 
-        for (int i = 0; i < ip.size(); i++) {
-            v.addInterestPoint(GUIControllerChateauIPForm.getInstance().renameIP(ip.get(i), newVisitPath, ip.get(i).getName(), true));
+        for (int i = 0; i < ip1.size(); i++) {
+            v.addInterestPoint(GUIControllerChateauIPForm.getInstance().renameIP(ip1.get(i), newVisitPath, ip1.get(i).getName(), true),v.getIP1());
+        }
+
+        for (int i = 0; i < ip2.size(); i++) {
+            v.addInterestPoint(GUIControllerChateauIPForm.getInstance().renameIP(ip2.get(i), newVisitPath, ip2.get(i).getName(), true),v.getIP2());
+        }
+
+        for (int i = 0; i < ip3.size(); i++) {
+            v.addInterestPoint(GUIControllerChateauIPForm.getInstance().renameIP(ip3.get(i), newVisitPath, ip3.get(i).getName(), true),v.getIP3());
         }
 
         //on bouge overview

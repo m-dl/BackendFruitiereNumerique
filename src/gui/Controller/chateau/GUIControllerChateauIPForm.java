@@ -1,9 +1,6 @@
 package gui.Controller.chateau;
 
-import entities.chateau.Info;
-import entities.chateau.InterestPoint;
-import entities.chateau.Overview;
-import entities.chateau.Visit;
+import entities.chateau.*;
 import files.FileManager;
 import gui.Controller.GUIFormsController;
 import gui.GUIUtilities;
@@ -37,7 +34,8 @@ public class GUIControllerChateauIPForm {
     public Label indoorLabel;
     public Label panoLabel;
 
-    private double coordX, coordY = -1;
+    private double coordX = -1;
+    private double coordY = -1;
 
     private Stage stage;
     private boolean isNewPoint;
@@ -45,6 +43,7 @@ public class GUIControllerChateauIPForm {
     private File descPic;
     private ArrayList<File> photos, interieur, _360, videos;
     private String errorList;
+    private int floor;
 
     private GUIControllerChateauIPForm()
     {
@@ -80,13 +79,39 @@ public class GUIControllerChateauIPForm {
                 if(!isNewPoint) {
                     if (selectedPoint != null) {
                         int visitIndex = FileManager.getInstance().getChateauWorkspace().getV().indexOf(GUIControllerChateau.getInstance().getSelectedVisit());
-                        int ipIndex = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().indexOf(GUIControllerChateau.getInstance().getSelectedPoint());
 
-                        descPic = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).getPicture();
-                        photos = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).getPhotos();
-                        interieur = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).getInterieur();
-                        videos = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).getVideos();
-                        _360 = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).get_360();
+                        if (selectedPoint.getFloor() == Location.FLOOR_ONE) {
+                            int ipIndex = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().indexOf(GUIControllerChateau.getInstance().getSelectedPoint());
+
+                            descPic = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).getPicture();
+                            photos = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).getPhotos();
+                            interieur = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).getInterieur();
+                            videos = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).getVideos();
+                            _360 = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).get_360();
+
+                        }
+                        else if (selectedPoint.getFloor() == Location.FLOOR_TWO) {
+                            int ipIndex = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().indexOf(GUIControllerChateau.getInstance().getSelectedPoint());
+
+                            descPic = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).getPicture();
+                            photos = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).getPhotos();
+                            interieur = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).getInterieur();
+                            videos = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).getVideos();
+                            _360 = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).get_360();
+
+
+                        }
+                        else if (selectedPoint.getFloor() == Location.FLOOR_THREE) {
+                            int ipIndex = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().indexOf(GUIControllerChateau.getInstance().getSelectedPoint());
+
+                            descPic = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).getPicture();
+                            photos = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).getPhotos();
+                            interieur = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).getInterieur();
+                            videos = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).getVideos();
+                            _360 = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).get_360();
+
+
+                        }
 
                         this.fillInputs(selectedPoint);
                         stage.setTitle("Modification du point: " + selectedPoint.getName());
@@ -110,10 +135,11 @@ public class GUIControllerChateauIPForm {
         ipPresTextFR.setText(p.readPresentation_FR());
         ipPresTextEN.setText(p.readPresentation_EN());
 
-        if(!p.readMarker().equals("")) {
-            coordX = Double.parseDouble((p.readMarker()).split(",")[0]);
-            coordY = Double.parseDouble((p.readMarker()).split(",")[1]);
-        }
+        //if(p.getCoordX()  ) {
+        coordX = p.getCoordX();
+        coordY = p.getCoordY();
+        floor = p.getFloor();
+        //}
 
 
 
@@ -127,6 +153,7 @@ public class GUIControllerChateauIPForm {
         panoLabel.setText((p.get_360().size() <= 1) ? p.getPhotos().size() + " image sélectionnée" : p.getPhotos().size() + " images sélectionnées");
     }
 
+    // TODO: 09/05/2016  
 
     // TODO: 07/05/2016  rempir auto les coord
     @FXML
@@ -144,7 +171,10 @@ public class GUIControllerChateauIPForm {
 
                 ip.addPicture(this.descPic.getAbsolutePath(), ipPath, this.descPic.getName());
 
-                ip.writeMarker(coordX+","+coordY);
+                ip.setCoordX(this.coordX);
+                ip.setCoordY(this.coordY);
+                ip.setFloor(this.floor);
+                ip.writeMarker();
 
                 for (int i = 0; i < this.photos.size(); i++) {
                     ip.addPhotos(this.photos.get(i).getAbsolutePath(), ipPath, this.photos.get(i).getName());
@@ -165,8 +195,29 @@ public class GUIControllerChateauIPForm {
                 ip.writePresentation_FR(ipPresTextFR.getText());
                 ip.writePresentation_EN(ipPresTextEN.getText());
 
-                FileManager.getInstance().getChateauWorkspace().getV().get(FileManager.getInstance()
-                        .getChateauWorkspace().getV().indexOf(GUIControllerChateau.getInstance().getSelectedVisit())).addInterestPoint(ip);
+                if (this.floor == Location.FLOOR_ONE) {
+                    FileManager.getInstance().getChateauWorkspace().getV().get(FileManager.getInstance()
+                            .getChateauWorkspace().getV().indexOf(GUIControllerChateau.getInstance().getSelectedVisit()))
+                            .addInterestPoint(ip, GUIControllerChateau.getInstance().getSelectedVisit().getIP1());
+
+                }
+                else if (this.floor == Location.FLOOR_TWO) {
+                    FileManager.getInstance().getChateauWorkspace().getV().get(FileManager.getInstance()
+                            .getChateauWorkspace().getV().indexOf(GUIControllerChateau.getInstance().getSelectedVisit()))
+                            .addInterestPoint(ip, GUIControllerChateau.getInstance().getSelectedVisit().getIP2());
+                }
+                else if (this.floor == Location.FLOOR_THREE) {
+                    FileManager.getInstance().getChateauWorkspace().getV().get(FileManager.getInstance()
+                            .getChateauWorkspace().getV().indexOf(GUIControllerChateau.getInstance().getSelectedVisit()))
+                            .addInterestPoint(ip, GUIControllerChateau.getInstance().getSelectedVisit().getIP3());
+                }
+                else {
+                    try {
+                        throw new Exception("can't find the floor while creating new IP");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
 
                 GUIControllerChateau.getInstance().iPListC.add(ip);
 
@@ -176,91 +227,284 @@ public class GUIControllerChateauIPForm {
                 Visit selectedVisit = GUIControllerChateau.getInstance().getSelectedVisit();
                 InterestPoint selectedPoint = GUIControllerChateau.getInstance().getSelectedPoint();
 
-                int visitIndex = FileManager.getInstance().getChateauWorkspace().getV().indexOf(selectedVisit);
-                int ipIndex = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().indexOf(selectedPoint);
 
-                String ipNewName = this.ipName.getText();
-                String originalName = selectedPoint.getName();
+                if (selectedPoint.getFloor() == Location.FLOOR_ONE) {
 
+                    int visitIndex = FileManager.getInstance().getChateauWorkspace().getV().indexOf(selectedVisit);
+                    int ipIndex = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().indexOf(selectedPoint);
 
-                String ipPath = FileManager.WORKSPACE + "/" + FileManager.CHATEAU + "/" +
-                        GUIControllerChateau.getInstance().getSelectedVisit().getName() + "/" + originalName;
-
-                if (!Objects.equals(ipNewName, originalName)) {
-                    ipPath = FileManager.WORKSPACE + "/" + FileManager.CHATEAU + "/" +
-                            GUIControllerChateau.getInstance().getSelectedVisit().getName();
-
-                    renameIP(selectedPoint, ipPath,ipNewName, false);
-
-                } else {
-
-                    FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).writePresentation_FR(ipPresTextFR.getText());
-                    FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).writePresentation_EN(ipPresTextEN.getText());
-
-                    FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).writeMarker(coordX+","+coordY);
+                    String ipNewName = this.ipName.getText();
+                    String originalName = selectedPoint.getName();
 
 
-                    if (descPic != null) {
-                        if (selectedPoint.getPicture() != null) {
-                            FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).removePicture(selectedPoint.getPicture().getPath(), selectedPoint.getPicture());
+                    String ipPath = FileManager.WORKSPACE + "/" + FileManager.CHATEAU + "/" +
+                            GUIControllerChateau.getInstance().getSelectedVisit().getName() + "/" + originalName;
+
+                    if (!Objects.equals(ipNewName, originalName)) {
+                        ipPath = FileManager.WORKSPACE + "/" + FileManager.CHATEAU + "/" +
+                                GUIControllerChateau.getInstance().getSelectedVisit().getName();
+
+                        renameIP(selectedPoint, ipPath, ipNewName, false);
+
+                    } else {
+
+                        FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).writePresentation_FR(ipPresTextFR.getText());
+                        FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).writePresentation_EN(ipPresTextEN.getText());
+
+                        FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).setCoordX(coordX);
+                        FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).setCoordY(coordY);
+                        FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).setFloor(floor);
+                        FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).writeMarker();
+
+
+                        if (descPic != null && !descPic.equals(selectedPoint.getPicture())) {
+                            if (selectedPoint.getPicture() != null) {
+                                FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).removePicture(selectedPoint.getPicture().getPath(), selectedPoint.getPicture());
+                            }
+
+                            FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).addPicture(this.descPic.getAbsolutePath(), ipPath, this.descPic.getName());
                         }
 
-                        FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).addPicture(this.descPic.getAbsolutePath(), ipPath, this.descPic.getName());
-                    }
+                        for (int i = 0; i < FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).getPhotos().size(); i++) {
+                            if (!(photos.contains(FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).getPhotos().get(i)))) {
+                                File imageToDel = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).getPhotos().get(i);
+                                FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).removePhotos(imageToDel.getPath(), imageToDel);
+                            }
+                        }
 
-                    for (int i = 0; i < FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).getPhotos().size(); i++) {
-                        if (!(photos.contains(FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).getPhotos().get(i)))) {
-                            File imageToDel = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).getPhotos().get(i);
-                            FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).removePhotos(imageToDel.getPath(), imageToDel);
+                        for (int i = 0; i < photos.size(); i++) {
+                            if (!FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).getPhotos().contains(photos.get(i))) {
+                                FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).addPhotos(photos.get(i).getAbsolutePath(), ipPath, photos.get(i).getName());
+
+                            }
+                        }
+
+                        for (int i = 0; i < FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).getInterieur().size(); i++) {
+                            if (!(interieur.contains(FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).getInterieur().get(i)))) {
+                                File imageToDel = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).getInterieur().get(i);
+                                FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).removeInterieur(imageToDel.getPath(), imageToDel);
+                            }
+                        }
+
+                        for (int i = 0; i < interieur.size(); i++) {
+                            if (!FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).getInterieur().contains(interieur.get(i))) {
+                                FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).addInterieur(interieur.get(i).getAbsolutePath(), ipPath, interieur.get(i).getName());
+
+                            }
+                        }
+
+                        for (int i = 0; i < FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).get_360().size(); i++) {
+                            if (!(_360.contains(FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).get_360().get(i)))) {
+                                File imageToDel = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).get_360().get(i);
+                                FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).remove360(imageToDel.getPath(), imageToDel);
+                            }
+                        }
+
+                        for (int i = 0; i < _360.size(); i++) {
+                            if (!FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).get_360().contains(_360.get(i))) {
+                                FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).add360(_360.get(i).getAbsolutePath(), ipPath, _360.get(i).getName());
+
+                            }
+                        }
+
+                        for (int i = 0; i < FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).getVideos().size(); i++) {
+                            if (!(videos.contains(FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).getVideos().get(i)))) {
+                                File imageToDel = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).getVideos().get(i);
+                                FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).removeVideo(imageToDel.getPath(), imageToDel);
+                            }
+                        }
+
+                        for (int i = 0; i < videos.size(); i++) {
+                            if (!FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).getVideos().contains(videos.get(i))) {
+                                FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).addVideo(videos.get(i).getAbsolutePath(), ipPath, videos.get(i).getName());
+
+                            }
+                        }
+                    }
+                }
+                else if(selectedPoint.getFloor() == Location.FLOOR_TWO) {
+                    int visitIndex = FileManager.getInstance().getChateauWorkspace().getV().indexOf(selectedVisit);
+                    int ipIndex = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().indexOf(selectedPoint);
+
+                    String ipNewName = this.ipName.getText();
+                    String originalName = selectedPoint.getName();
+
+
+                    String ipPath = FileManager.WORKSPACE + "/" + FileManager.CHATEAU + "/" +
+                            GUIControllerChateau.getInstance().getSelectedVisit().getName() + "/" + originalName;
+
+                    if (!Objects.equals(ipNewName, originalName)) {
+                        ipPath = FileManager.WORKSPACE + "/" + FileManager.CHATEAU + "/" +
+                                GUIControllerChateau.getInstance().getSelectedVisit().getName();
+
+                        renameIP(selectedPoint, ipPath, ipNewName, false);
+
+                    } else {
+
+                        FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).writePresentation_FR(ipPresTextFR.getText());
+                        FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).writePresentation_EN(ipPresTextEN.getText());
+
+                        FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).setCoordX(coordX);
+                        FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).setCoordY(coordY);
+                        FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).setFloor(floor);
+                        FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).writeMarker();
+
+                        if (descPic != null) {
+                            if (selectedPoint.getPicture() != null) {
+                                FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).removePicture(selectedPoint.getPicture().getPath(), selectedPoint.getPicture());
+                            }
+
+                            FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).addPicture(this.descPic.getAbsolutePath(), ipPath, this.descPic.getName());
+                        }
+
+                        for (int i = 0; i < FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).getPhotos().size(); i++) {
+                            if (!(photos.contains(FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).getPhotos().get(i)))) {
+                                File imageToDel = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).getPhotos().get(i);
+                                FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).removePhotos(imageToDel.getPath(), imageToDel);
+                            }
+                        }
+
+                        for (int i = 0; i < photos.size(); i++) {
+                            if (!FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).getPhotos().contains(photos.get(i))) {
+                                FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).addPhotos(photos.get(i).getAbsolutePath(), ipPath, photos.get(i).getName());
+
+                            }
+                        }
+
+                        for (int i = 0; i < FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).getInterieur().size(); i++) {
+                            if (!(interieur.contains(FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).getInterieur().get(i)))) {
+                                File imageToDel = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).getInterieur().get(i);
+                                FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).removeInterieur(imageToDel.getPath(), imageToDel);
+                            }
+                        }
+
+                        for (int i = 0; i < interieur.size(); i++) {
+                            if (!FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).getInterieur().contains(interieur.get(i))) {
+                                FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).addInterieur(interieur.get(i).getAbsolutePath(), ipPath, interieur.get(i).getName());
+
+                            }
+                        }
+
+                        for (int i = 0; i < FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).get_360().size(); i++) {
+                            if (!(_360.contains(FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).get_360().get(i)))) {
+                                File imageToDel = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).get_360().get(i);
+                                FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).remove360(imageToDel.getPath(), imageToDel);
+                            }
+                        }
+
+                        for (int i = 0; i < _360.size(); i++) {
+                            if (!FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).get_360().contains(_360.get(i))) {
+                                FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).add360(_360.get(i).getAbsolutePath(), ipPath, _360.get(i).getName());
+
+                            }
+                        }
+
+                        for (int i = 0; i < FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).getVideos().size(); i++) {
+                            if (!(videos.contains(FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).getVideos().get(i)))) {
+                                File imageToDel = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).getVideos().get(i);
+                                FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).removeVideo(imageToDel.getPath(), imageToDel);
+                            }
+                        }
+
+                        for (int i = 0; i < videos.size(); i++) {
+                            if (!FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).getVideos().contains(videos.get(i))) {
+                                FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).addVideo(videos.get(i).getAbsolutePath(), ipPath, videos.get(i).getName());
+
+                            }
                         }
                     }
 
-                    for (int i = 0; i < photos.size(); i++) {
-                        if (!FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).getPhotos().contains(photos.get(i))) {
-                            FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).addPhotos(photos.get(i).getAbsolutePath(), ipPath, photos.get(i).getName());
+                }
+                else if (selectedPoint.getFloor() == Location.FLOOR_THREE) {
+                    int visitIndex = FileManager.getInstance().getChateauWorkspace().getV().indexOf(selectedVisit);
+                    int ipIndex = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().indexOf(selectedPoint);
 
+                    String ipNewName = this.ipName.getText();
+                    String originalName = selectedPoint.getName();
+
+
+                    String ipPath = FileManager.WORKSPACE + "/" + FileManager.CHATEAU + "/" +
+                            GUIControllerChateau.getInstance().getSelectedVisit().getName() + "/" + originalName;
+
+                    if (!Objects.equals(ipNewName, originalName)) {
+                        ipPath = FileManager.WORKSPACE + "/" + FileManager.CHATEAU + "/" +
+                                GUIControllerChateau.getInstance().getSelectedVisit().getName();
+
+                        renameIP(selectedPoint, ipPath, ipNewName, false);
+
+                    } else {
+
+                        FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).writePresentation_FR(ipPresTextFR.getText());
+                        FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).writePresentation_EN(ipPresTextEN.getText());
+
+                        FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).setCoordX(coordX);
+                        FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).setCoordY(coordY);
+                        FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).setFloor(floor);
+                        FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).writeMarker();
+
+
+                        if (descPic != null) {
+                            if (selectedPoint.getPicture() != null) {
+                                FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).removePicture(selectedPoint.getPicture().getPath(), selectedPoint.getPicture());
+                            }
+
+                            FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).addPicture(this.descPic.getAbsolutePath(), ipPath, this.descPic.getName());
                         }
-                    }
 
-                    for (int i = 0; i < FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).getInterieur().size(); i++) {
-                        if (!(interieur.contains(FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).getInterieur().get(i)))) {
-                            File imageToDel = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).getInterieur().get(i);
-                            FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).removeInterieur(imageToDel.getPath(), imageToDel);
+                        for (int i = 0; i < FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).getPhotos().size(); i++) {
+                            if (!(photos.contains(FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).getPhotos().get(i)))) {
+                                File imageToDel = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).getPhotos().get(i);
+                                FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).removePhotos(imageToDel.getPath(), imageToDel);
+                            }
                         }
-                    }
 
-                    for (int i = 0; i < interieur.size(); i++) {
-                        if (!FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).getInterieur().contains(interieur.get(i))) {
-                            FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).addInterieur(interieur.get(i).getAbsolutePath(), ipPath, interieur.get(i).getName());
+                        for (int i = 0; i < photos.size(); i++) {
+                            if (!FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).getPhotos().contains(photos.get(i))) {
+                                FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).addPhotos(photos.get(i).getAbsolutePath(), ipPath, photos.get(i).getName());
 
+                            }
                         }
-                    }
 
-                    for (int i = 0; i < FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).get_360().size(); i++) {
-                        if (!(_360.contains(FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).get_360().get(i)))) {
-                            File imageToDel = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).get_360().get(i);
-                            FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).remove360(imageToDel.getPath(), imageToDel);
+                        for (int i = 0; i < FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).getInterieur().size(); i++) {
+                            if (!(interieur.contains(FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).getInterieur().get(i)))) {
+                                File imageToDel = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).getInterieur().get(i);
+                                FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).removeInterieur(imageToDel.getPath(), imageToDel);
+                            }
                         }
-                    }
 
-                    for (int i = 0; i < _360.size(); i++) {
-                        if (!FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).get_360().contains(_360.get(i))) {
-                            FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).add360(_360.get(i).getAbsolutePath(), ipPath, _360.get(i).getName());
+                        for (int i = 0; i < interieur.size(); i++) {
+                            if (!FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).getInterieur().contains(interieur.get(i))) {
+                                FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).addInterieur(interieur.get(i).getAbsolutePath(), ipPath, interieur.get(i).getName());
 
+                            }
                         }
-                    }
 
-                    for (int i = 0; i < FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).getVideos().size(); i++) {
-                        if (!(videos.contains(FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).getVideos().get(i)))) {
-                            File imageToDel = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).getVideos().get(i);
-                            FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).removeVideo(imageToDel.getPath(), imageToDel);
+                        for (int i = 0; i < FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).get_360().size(); i++) {
+                            if (!(_360.contains(FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).get_360().get(i)))) {
+                                File imageToDel = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).get_360().get(i);
+                                FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).remove360(imageToDel.getPath(), imageToDel);
+                            }
                         }
-                    }
 
-                    for (int i = 0; i < videos.size(); i++) {
-                        if (!FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).getVideos().contains(videos.get(i))) {
-                            FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP().get(ipIndex).addVideo(videos.get(i).getAbsolutePath(), ipPath, videos.get(i).getName());
+                        for (int i = 0; i < _360.size(); i++) {
+                            if (!FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).get_360().contains(_360.get(i))) {
+                                FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).add360(_360.get(i).getAbsolutePath(), ipPath, _360.get(i).getName());
 
+                            }
+                        }
+
+                        for (int i = 0; i < FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).getVideos().size(); i++) {
+                            if (!(videos.contains(FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).getVideos().get(i)))) {
+                                File imageToDel = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).getVideos().get(i);
+                                FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).removeVideo(imageToDel.getPath(), imageToDel);
+                            }
+                        }
+
+                        for (int i = 0; i < videos.size(); i++) {
+                            if (!FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).getVideos().contains(videos.get(i))) {
+                                FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).addVideo(videos.get(i).getAbsolutePath(), ipPath, videos.get(i).getName());
+
+                            }
                         }
                     }
                 }
@@ -307,7 +551,12 @@ public class GUIControllerChateauIPForm {
                 ip.addVideo(oldIP.getVideos().get(i).getAbsolutePath(), ipPath, oldIP.getVideos().get(i).getName());
             }
 
+            /*
+            ip.setCoordX(this.coordX);
+            ip.setCoordY(this.coordY);
+            ip.setFloor(this.floor);
             ip.writeMarker(oldIP.readMarker());
+            */
             ip.writePresentation_FR(oldIP.readPresentation_FR());
             ip.writePresentation_EN(oldIP.readPresentation_EN());
 
@@ -315,7 +564,11 @@ public class GUIControllerChateauIPForm {
         else {
 
             ip.addPicture(this.descPic.getAbsolutePath(), ipPath, this.descPic.getName());
-            ip.writeMarker(coordX+","+coordY);
+
+            ip.setFloor(floor);
+            ip.setCoordX(coordX);
+            ip.setCoordY(coordY);
+            ip.writeMarker();
 
 
             for (int i = 0; i < this.photos.size(); i++) {
@@ -337,14 +590,55 @@ public class GUIControllerChateauIPForm {
             ip.writePresentation_FR(ipPresTextFR.getText());
             ip.writePresentation_EN(ipPresTextEN.getText());
 
-            FileManager.getInstance().getChateauWorkspace().getV().get(FileManager.getInstance()
-                    .getChateauWorkspace().getV().indexOf(GUIControllerChateau.getInstance().getSelectedVisit())).deleteInterestPoint(oldIP,oldPath);
 
-            FileManager.getInstance().getChateauWorkspace().getV().get(FileManager.getInstance()
-                    .getChateauWorkspace().getV().indexOf(GUIControllerChateau.getInstance().getSelectedVisit())).addInterestPoint(ip);
 
-            GUIControllerChateau.getInstance().iPListC.add(ip);
-            GUIControllerChateau.getInstance().iPListC.remove(oldIP);
+
+            if (this.floor == Location.FLOOR_ONE) {
+                FileManager.getInstance().getChateauWorkspace().getV().get(FileManager.getInstance()
+                        .getChateauWorkspace().getV().indexOf(GUIControllerChateau.getInstance().getSelectedVisit()))
+                        .deleteInterestPoint(oldIP,oldPath,GUIControllerChateau.getInstance().getSelectedVisit().getIP1());
+
+                FileManager.getInstance().getChateauWorkspace().getV().get(FileManager.getInstance()
+                        .getChateauWorkspace().getV().indexOf(GUIControllerChateau.getInstance().getSelectedVisit()))
+                        .addInterestPoint(ip,GUIControllerChateau.getInstance().getSelectedVisit().getIP1());
+
+                GUIControllerChateau.getInstance().iPListC.add(ip);
+                GUIControllerChateau.getInstance().iPListC.remove(oldIP);
+
+            }
+            else if (this.floor == Location.FLOOR_TWO) {
+                FileManager.getInstance().getChateauWorkspace().getV().get(FileManager.getInstance()
+                        .getChateauWorkspace().getV().indexOf(GUIControllerChateau.getInstance().getSelectedVisit()))
+                        .deleteInterestPoint(oldIP,oldPath,GUIControllerChateau.getInstance().getSelectedVisit().getIP2());
+
+                FileManager.getInstance().getChateauWorkspace().getV().get(FileManager.getInstance()
+                        .getChateauWorkspace().getV().indexOf(GUIControllerChateau.getInstance().getSelectedVisit()))
+                        .addInterestPoint(ip,GUIControllerChateau.getInstance().getSelectedVisit().getIP2());
+
+                GUIControllerChateau.getInstance().iPListC.add(ip);
+                GUIControllerChateau.getInstance().iPListC.remove(oldIP);
+            }
+            else if (this.floor == Location.FLOOR_THREE) {
+                FileManager.getInstance().getChateauWorkspace().getV().get(FileManager.getInstance()
+                        .getChateauWorkspace().getV().indexOf(GUIControllerChateau.getInstance().getSelectedVisit()))
+                        .deleteInterestPoint(oldIP,oldPath,GUIControllerChateau.getInstance().getSelectedVisit().getIP3());
+
+                FileManager.getInstance().getChateauWorkspace().getV().get(FileManager.getInstance()
+                        .getChateauWorkspace().getV().indexOf(GUIControllerChateau.getInstance().getSelectedVisit()))
+                        .addInterestPoint(ip,GUIControllerChateau.getInstance().getSelectedVisit().getIP3());
+
+                GUIControllerChateau.getInstance().iPListC.add(ip);
+                GUIControllerChateau.getInstance().iPListC.remove(oldIP);
+            }
+            else {
+                try {
+                    throw new Exception("can't find the floor while deleting IP");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+
         }
 
         return ip;
@@ -397,7 +691,7 @@ public class GUIControllerChateauIPForm {
     }
 
     public void placePoint() {
-        GUIFormsController.getInstance().displayPointPlacerFrom();
+        GUIFormsController.getInstance().displayPointPlacerFrom(isNewPoint);
     }
 
     //@FXML
@@ -477,15 +771,25 @@ public class GUIControllerChateauIPForm {
         }
     }
 
-    public void setCoords(double coordX, double coordY) {
+    public void setCoords(int floor, double coordX, double coordY) {
+        this.floor = floor+1;
         this.coordX = coordX;
         this.coordY = coordY;
 
+        System.out.println(this.floor);
         mapPointLabel.setText("Coordonnées enregistrées");
 
+    }
 
-        System.out.println(coordX);
-        System.out.println(coordY);
+    public double getCoordY() {
+        return coordY;
+    }
 
+    public double getCoordX() {
+        return coordX;
+    }
+
+    public int getFloor() {
+        return floor;
     }
 }

@@ -29,6 +29,7 @@ import static javafx.scene.paint.Color.RED;
 public class GUIControllerPointPlacer {
 
     private static GUIControllerPointPlacer INSTANCE = new GUIControllerPointPlacer();
+
     public static GUIControllerPointPlacer getInstance() {
         return INSTANCE;
     }
@@ -43,13 +44,8 @@ public class GUIControllerPointPlacer {
     private double coordX, coordY;
 
 
-    public void displayModCoord(double x, double y) {
-        coordX = x;
-        coordY = y;
-        marker = createCircle();
-    }
+    public void display(boolean isNewPoint) {
 
-    public void display() {
         try {
 
             BorderPane root = (BorderPane) GUIUtilities.loadLayout("view/photos/pointPlacerView.fxml", this);
@@ -57,18 +53,33 @@ public class GUIControllerPointPlacer {
             displayedWindow = new Stage();
             displayedWindow.setTitle("Choix des coordonnées");
 
-            initContent();
+            if (isNewPoint) {
+                initContent();
+            }
+            else {
+                loadContent();
+            }
 
             displayedWindow.setScene(new Scene(root));
             displayedWindow.sizeToScene();
             displayedWindow.show();
 
             displayedWindow.setOnCloseRequest(closeEvent
-                    -> GUIControllerChateauIPForm.getInstance().setCoords(calcX(),calcY()));
+                    -> GUIControllerChateauIPForm.getInstance().setCoords(currentFloor,calcX(),calcY()));
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void loadContent() {
+        currentFloor = GUIControllerChateauIPForm.getInstance().getFloor();
+        loadFloor();
+
+        coordX = GUIControllerChateauIPForm.getInstance().getCoordX()*displayedImage.getFitWidth();
+        coordY = GUIControllerChateauIPForm.getInstance().getCoordY()*displayedImage.getFitHeight();
+        marker = createCircle();
+        displayContent();
     }
 
     private void initContent() {
@@ -100,9 +111,6 @@ public class GUIControllerPointPlacer {
             case 2:
                 displayedImage.setImage(new Image("1_0.jpg"));
                 break;
-            case 3:
-                displayedImage.setImage(new Image("1_1.jpg"));
-                break;
         }
 
         displayedImage.setFitWidth(800);
@@ -115,7 +123,7 @@ public class GUIControllerPointPlacer {
     }
 
     public void increaseFloor() {
-        if (currentFloor + 1 <= 3) {
+        if (currentFloor + 1 <= 2) {
             currentFloor++;
             loadFloor();
         }
@@ -132,9 +140,6 @@ public class GUIControllerPointPlacer {
         imagePanel.setOnMousePressed(event -> {
             coordX = event.getX();
             coordY = event.getY();
-
-            System.out.println(coordX/displayedImage.getFitWidth());
-            System.out.println(coordY/displayedImage.getFitHeight());
 
         });
 

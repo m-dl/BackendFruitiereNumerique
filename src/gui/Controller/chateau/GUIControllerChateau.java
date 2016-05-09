@@ -1,6 +1,7 @@
 package gui.Controller.chateau;
 
 import entities.chateau.InterestPoint;
+import entities.chateau.Location;
 import entities.chateau.Visit;
 import files.FileManager;
 import gui.Controller.GUIFormsController;
@@ -153,7 +154,7 @@ public class GUIControllerChateau implements Initializable{
     @FXML
     void deleteVisitC() {
         if(getSelectedVisit() != null) {
-            String path = FileManager.getInstance().WORKSPACE + "/" + FileManager.getInstance().CHATEAU + "/" + visitListViewC.getSelectionModel().getSelectedItem().getName();
+            String path = FileManager.WORKSPACE + "/" + FileManager.CHATEAU + "/" + visitListViewC.getSelectionModel().getSelectedItem().getName();
             guiWindow.FM.getChateauWorkspace().deleteVisit(visitListViewC.getSelectionModel().getSelectedItem(), path);
             visitListC.remove(visitListViewC.getSelectionModel().getSelectedItem());
             visitListViewC.getParent().requestFocus();
@@ -170,9 +171,21 @@ public class GUIControllerChateau implements Initializable{
     void deleteIPC() {
         if(getSelectedPoint() != null) {
             System.out.println("del point : " + iPListViewC.getSelectionModel().getSelectedItem());
-            String path = FileManager.getInstance().WORKSPACE + "/" + FileManager.getInstance().CHATEAU + "/" + visitListViewC.getSelectionModel().getSelectedItem().getName() + "/" + iPListViewC.getSelectionModel().getSelectedItem().getName();
+            String path = FileManager.WORKSPACE + "/" + FileManager.CHATEAU + "/" + visitListViewC.getSelectionModel().getSelectedItem().getName() + "/" + iPListViewC.getSelectionModel().getSelectedItem().getName();
             ArrayList<Visit> visits = FileManager.getInstance().getChateauWorkspace().getV();
-            visits.get(visits.indexOf(visitListViewC.getSelectionModel().getSelectedItem())).deleteInterestPoint(iPListViewC.getSelectionModel().getSelectedItem(), path);
+
+            if (getSelectedPoint().getFloor() == Location.FLOOR_ONE) {
+                visits.get(visits.indexOf(visitListViewC.getSelectionModel().getSelectedItem())).deleteInterestPoint(iPListViewC.getSelectionModel().getSelectedItem(), path
+                        , visits.get(visits.indexOf(visitListViewC.getSelectionModel().getSelectedItem())).getIP1());
+            }
+            else if(getSelectedPoint().getFloor() == Location.FLOOR_TWO) {
+                visits.get(visits.indexOf(visitListViewC.getSelectionModel().getSelectedItem())).deleteInterestPoint(iPListViewC.getSelectionModel().getSelectedItem(), path
+                        , visits.get(visits.indexOf(visitListViewC.getSelectionModel().getSelectedItem())).getIP2());
+            }
+            else if (getSelectedPoint().getFloor() == Location.FLOOR_THREE) {
+                visits.get(visits.indexOf(visitListViewC.getSelectionModel().getSelectedItem())).deleteInterestPoint(iPListViewC.getSelectionModel().getSelectedItem(), path
+                        , visits.get(visits.indexOf(visitListViewC.getSelectionModel().getSelectedItem())).getIP3());
+            }
             iPListC.remove(iPListViewC.getSelectionModel().getSelectedItem());
             iPListViewC.getParent().requestFocus();
         }
@@ -199,8 +212,14 @@ public class GUIControllerChateau implements Initializable{
 
     public void loadIPData(Visit visit) {
         if(visit != null) {
-            for (int i = 0; i < visit.getIP().size(); i++) {
-                this.iPListC.add(visit.getIP().get(i));
+            for (int i = 0; i < visit.getIP1().size(); i++) {
+                this.iPListC.add(visit.getIP1().get(i));
+            }
+            for (int i = 0; i < visit.getIP2().size(); i++) {
+                this.iPListC.add(visit.getIP2().get(i));
+            }
+            for (int i = 0; i < visit.getIP3().size(); i++) {
+                this.iPListC.add(visit.getIP3().get(i));
             }
         }
     }
