@@ -1,26 +1,16 @@
 package gui.Controller.photo;
 
-import files.FileManager;
-import gui.Controller.GUIFormsController;
-import gui.Controller.chateau.GUIControllerChateau;
 import gui.Controller.chateau.GUIControllerChateauIPForm;
 import gui.GUIUtilities;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ToolBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 import static javafx.scene.paint.Color.BLACK;
@@ -103,13 +93,13 @@ public class GUIControllerPointPlacer {
     private void loadFloor() {
         switch (currentFloor) {
             case 0:
-                displayedImage.setImage(new Image("plan.jpg"));
+                displayedImage.setImage(new Image(new File("res/etage0.jpg").toURI().toString()));
                 break;
             case 1:
-                displayedImage.setImage(new Image("0_1.jpg"));
+                displayedImage.setImage(new Image(new File("res/etage1.jpg").toURI().toString()));
                 break;
             case 2:
-                displayedImage.setImage(new Image("1_0.jpg"));
+                displayedImage.setImage(new Image(new File("res/etage2.jpg").toURI().toString()));
                 break;
         }
 
