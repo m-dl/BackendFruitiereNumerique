@@ -349,3 +349,5 @@ public class GUIControllerPhotoForm {
     }
 
 }
+
+// TODO: 12/05/2016 fermer la fenetre sur enregister

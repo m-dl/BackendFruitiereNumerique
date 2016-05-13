@@ -1,6 +1,8 @@
 package gui.Controller;
 
 import files.FileManager;
+import gui.Controller.chateau.GUIControllerChateau;
+import gui.Controller.village.GUIControllerVillage;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -75,6 +77,7 @@ public class GUIMainViewController implements Initializable {
                             updateMessage("Téléchargement terminé");
                             progressIndicator.setVisible(false);
 
+
                         } else if (operation.equals("downV")) {
 
                             updateMessage("Téléchargement des médias du village en cours");
@@ -84,6 +87,7 @@ public class GUIMainViewController implements Initializable {
 
                             updateMessage("Téléchargement terminé");
                             progressIndicator.setVisible(false);
+
 
                         }
                         operationInprogress = false;
@@ -124,6 +128,14 @@ public class GUIMainViewController implements Initializable {
             operation = "upV";
         }
         runThread();
+
+        if (getTabPane().getSelectionModel().getSelectedIndex() == 0) {
+            GUIControllerChateau.getInstance().reloadCastleData();
+        } else if (getTabPane().getSelectionModel().getSelectedIndex() == 1) {
+            GUIControllerVillage.getInstance().reloadVillageData();
+        }
+
+
     }
 
     @FXML

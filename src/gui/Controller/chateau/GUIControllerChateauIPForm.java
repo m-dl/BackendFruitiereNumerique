@@ -61,10 +61,6 @@ public class GUIControllerChateauIPForm {
     public void displayForm(boolean isNewPoint, InterestPoint selectedPoint) {
 
         this.isNewPoint = isNewPoint;
-        photos.clear();
-        interieur.clear();
-        videos.clear();
-        _360.clear();
 
         try {
 
@@ -110,7 +106,6 @@ public class GUIControllerChateauIPForm {
                             videos = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).getVideos();
                             _360 = FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).get_360();
 
-
                         }
 
                         this.fillInputs(selectedPoint);
@@ -135,22 +130,18 @@ public class GUIControllerChateauIPForm {
         ipPresTextFR.setText(p.readPresentation_FR());
         ipPresTextEN.setText(p.readPresentation_EN());
 
-        //if(p.getCoordX()  ) {
         coordX = p.getCoordX();
         coordY = p.getCoordY();
         floor = p.getFloor();
-        //}
-
-
 
         //opérateurs ternaires pour savoir si mettre le texte au singulier ou au pluriel
 
         mapPointLabel.setText("Veuillez placer le point sur la carte");
         descLabel.setText((p.getPicture() == null) ? "Aucune image sélectionnée" : "Une image sélectionnée");
         imageLabel.setText((p.getPhotos().size() <= 1) ? p.getPhotos().size() + " image sélectionnée" : p.getPhotos().size() + " images sélectionnées");
-        videoLabel.setText((p.getVideos().size() <= 1) ? p.getPhotos().size() + " vidéo sélectionnée" : p.getPhotos().size() + " vidéos sélectionnées");
-        indoorLabel.setText((p.getInterieur().size() <= 1) ? p.getPhotos().size() + " image sélectionnée" : p.getPhotos().size() + " images sélectionnées");
-        panoLabel.setText((p.get_360().size() <= 1) ? p.getPhotos().size() + " image sélectionnée" : p.getPhotos().size() + " images sélectionnées");
+        videoLabel.setText((p.getVideos().size() <= 1) ? p.getVideos().size() + " vidéo sélectionnée" : p.getVideos().size() + " vidéos sélectionnées");
+        indoorLabel.setText((p.getInterieur().size() <= 1) ? p.getInterieur().size() + " image sélectionnée" : p.getInterieur().size() + " images sélectionnées");
+        panoLabel.setText((p.get_360().size() <= 1) ? p.get_360().size() + " image sélectionnée" : p.get_360().size() + " images sélectionnées");
     }
 
     // TODO: 09/05/2016  
@@ -257,12 +248,12 @@ public class GUIControllerChateauIPForm {
                         FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).writeMarker();
 
 
-                        if (descPic != null && !descPic.equals(selectedPoint.getPicture())) {
+                        if (this.descPic != null && !descPic.equals(selectedPoint.getPicture())) {
                             if (selectedPoint.getPicture() != null) {
                                 FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).removePicture(selectedPoint.getPicture().getPath(), selectedPoint.getPicture());
-                            }
+                                FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).addPicture(this.descPic.getAbsolutePath(), ipPath, this.descPic.getName());
 
-                            FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).addPicture(this.descPic.getAbsolutePath(), ipPath, this.descPic.getName());
+                            }
                         }
 
                         for (int i = 0; i < FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).getPhotos().size(); i++) {
@@ -349,12 +340,15 @@ public class GUIControllerChateauIPForm {
                         FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).setFloor(floor);
                         FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).writeMarker();
 
-                        if (descPic != null) {
+                        if (descPic != null && !descPic.equals(selectedPoint.getPicture())) {
                             if (selectedPoint.getPicture() != null) {
                                 FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).removePicture(selectedPoint.getPicture().getPath(), selectedPoint.getPicture());
                             }
 
+                            System.out.println(descPic.getAbsolutePath());
+
                             FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).addPicture(this.descPic.getAbsolutePath(), ipPath, this.descPic.getName());
+
                         }
 
                         for (int i = 0; i < FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).getPhotos().size(); i++) {
@@ -443,12 +437,11 @@ public class GUIControllerChateauIPForm {
                         FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).writeMarker();
 
 
-                        if (descPic != null) {
+                        if (descPic != null && !descPic.equals(selectedPoint.getPicture())) {
                             if (selectedPoint.getPicture() != null) {
                                 FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).removePicture(selectedPoint.getPicture().getPath(), selectedPoint.getPicture());
+                                FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).addPicture(this.descPic.getAbsolutePath(), ipPath, this.descPic.getName());
                             }
-
-                            FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).addPicture(this.descPic.getAbsolutePath(), ipPath, this.descPic.getName());
                         }
 
                         for (int i = 0; i < FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).getPhotos().size(); i++) {
@@ -551,12 +544,11 @@ public class GUIControllerChateauIPForm {
                 ip.addVideo(oldIP.getVideos().get(i).getAbsolutePath(), ipPath, oldIP.getVideos().get(i).getName());
             }
 
-            /*
+
             ip.setCoordX(this.coordX);
             ip.setCoordY(this.coordY);
             ip.setFloor(this.floor);
-            ip.writeMarker(oldIP.readMarker());
-            */
+            ip.writeMarker();
             ip.writePresentation_FR(oldIP.readPresentation_FR());
             ip.writePresentation_EN(oldIP.readPresentation_EN());
 
@@ -589,8 +581,6 @@ public class GUIControllerChateauIPForm {
 
             ip.writePresentation_FR(ipPresTextFR.getText());
             ip.writePresentation_EN(ipPresTextEN.getText());
-
-
 
 
             if (this.floor == Location.FLOOR_ONE) {
@@ -687,6 +677,7 @@ public class GUIControllerChateauIPForm {
             addDescImage.getStyleClass().addAll("button");
         }
 
+        // TODO: 12/05/2016 ne pas valider form si pas de point placé
         return isValid;
     }
 

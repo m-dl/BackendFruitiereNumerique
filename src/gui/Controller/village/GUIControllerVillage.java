@@ -206,4 +206,19 @@ public class GUIControllerVillage implements Initializable{
         }
     }
 
+    public void reloadVillageData() {
+
+        visitListV.clear();
+        iPListV.clear();
+        ArrayList<Visit> visits = FileManager.getInstance().getVillageWorkspace().getV();
+
+        for (int i = 0; i < visits.size(); i++) {
+            this.visitListV.add(visits.get(i));
+
+        }
+
+        visitListViewV.setItems(visitListV);
+        iPListViewV.setItems(iPListV);
+    }
+
 }
