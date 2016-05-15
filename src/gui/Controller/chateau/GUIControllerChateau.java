@@ -227,25 +227,12 @@ public class GUIControllerChateau implements Initializable{
     public void reloadCastleData() {
 
         visitListC.clear();
-        iPListC.clear();
 
-        visitListViewC.getParent().requestFocus();
-        iPListViewC.getParent().requestFocus();
-
-        FileManager.getInstance().Init();
         FileManager.getInstance().InitChateau();
-        ArrayList<Visit> visits = FileManager.getInstance().getChateauWorkspace().getV();
 
-        for (int i = 0; i < visits.size(); i++) {
-            this.visitListC.add(visits.get(i));
+        for (int i = 0; i < FileManager.getInstance().getChateauWorkspace().getV().size(); i++) {
+            this.visitListC.add(FileManager.getInstance().getChateauWorkspace().getV().get(i));
         }
-
-        visitListViewC.setItems(visitListC);
-        iPListViewC.setItems(iPListC);
-
-
-        visitListViewC.refresh();
-        iPListViewC.refresh();
     }
 
 }

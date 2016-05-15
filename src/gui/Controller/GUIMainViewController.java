@@ -77,6 +77,7 @@ public class GUIMainViewController implements Initializable {
                             updateMessage("Téléchargement terminé");
                             progressIndicator.setVisible(false);
 
+                            GUIControllerChateau.getInstance().reloadCastleData();
 
                         } else if (operation.equals("downV")) {
 
@@ -88,15 +89,21 @@ public class GUIMainViewController implements Initializable {
                             updateMessage("Téléchargement terminé");
                             progressIndicator.setVisible(false);
 
-
+                            GUIControllerVillage.getInstance().reloadVillageData();
                         }
                         operationInprogress = false;
 
 
                     return null;
                 }
+
+
+
+
             };
+
         }
+
     };
 
 
@@ -129,13 +136,6 @@ public class GUIMainViewController implements Initializable {
         }
         runThread();
 
-        if (getTabPane().getSelectionModel().getSelectedIndex() == 0) {
-            GUIControllerChateau.getInstance().reloadCastleData();
-        } else if (getTabPane().getSelectionModel().getSelectedIndex() == 1) {
-            GUIControllerVillage.getInstance().reloadVillageData();
-        }
-
-
     }
 
     @FXML
@@ -148,6 +148,8 @@ public class GUIMainViewController implements Initializable {
             operation = "downV";
         }
         runThread();
+
+
     }
 
     public TabPane getTabPane() {

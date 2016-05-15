@@ -134,6 +134,8 @@ public class GUIControllerPhotoForm {
                     break;
             }
         }
+
+        stage.close();
     }
 
     public void displayForm(VisitType visitType, PictureFormType pictureFormType) {

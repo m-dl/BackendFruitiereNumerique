@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.BorderPane?>
 
@@ -10,7 +11,8 @@
         <items>
             <Button mnemonicParsing="false" onAction="#addImage" text="Ajouter des images" />
             <Button mnemonicParsing="false" onAction="#deleteImages" text="Supprimer les images sélectionnées" />
-            <Button alignment="TOP_RIGHT" contentDisplay="TOP" mnemonicParsing="false" onAction="#saveChanges" text="Enregister" textAlignment="CENTER" />
+            <Separator orientation="VERTICAL" />
+            <Button alignment="TOP_RIGHT" contentDisplay="TOP" mnemonicParsing="false" onAction="#saveChanges" text="Enregister et Fermer" textAlignment="CENTER" />
         </items>
       </ToolBar>
    </bottom>

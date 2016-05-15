@@ -209,16 +209,13 @@ public class GUIControllerVillage implements Initializable{
     public void reloadVillageData() {
 
         visitListV.clear();
-        iPListV.clear();
-        ArrayList<Visit> visits = FileManager.getInstance().getVillageWorkspace().getV();
 
-        for (int i = 0; i < visits.size(); i++) {
-            this.visitListV.add(visits.get(i));
+        FileManager.getInstance().Init();
+        FileManager.getInstance().InitChateau();
 
+        for (int i = 0; i < FileManager.getInstance().getVillageWorkspace().getV().size(); i++) {
+            this.visitListV.add(FileManager.getInstance().getVillageWorkspace().getV().get(i));
         }
-
-        visitListViewV.setItems(visitListV);
-        iPListViewV.setItems(iPListV);
     }
 
 }

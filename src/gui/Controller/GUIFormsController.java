@@ -90,11 +90,7 @@ public class GUIFormsController {
     }
 
     public void displayPhotoForm(VisitType visitType, PictureFormType pictureFormType, boolean isNew) {
-
-        if (!isPictureFormDisplayed)
             GUIControllerPhotoForm.getInstance().displayForm(visitType, pictureFormType);
-        else
-            pictureFormToFront();
     }
 
     public void displayPointPlacerFrom(boolean isNewPoint) {
