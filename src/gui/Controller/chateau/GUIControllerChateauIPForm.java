@@ -26,6 +26,7 @@ public class GUIControllerChateauIPForm {
     public TextArea ipPresTextEN;
 
     public Button addDescImage;
+    public Button placePointB;
 
     public Label descLabel;
     public Label mapPointLabel;
@@ -144,7 +145,6 @@ public class GUIControllerChateauIPForm {
         panoLabel.setText((p.get_360().size() <= 1) ? p.get_360().size() + " image sélectionnée" : p.get_360().size() + " images sélectionnées");
     }
 
-    // TODO: 09/05/2016  
 
     // TODO: 07/05/2016  rempir auto les coord
     @FXML
@@ -677,7 +677,16 @@ public class GUIControllerChateauIPForm {
             addDescImage.getStyleClass().addAll("button");
         }
 
-        // TODO: 12/05/2016 ne pas valider form si pas de point placé
+        if(this.coordX == -1 || this.coordY == -1 ) {
+            errorList += "• Vous devez placer un point sur la carte\n";
+            placePointB.getStyleClass().addAll("buttonErrorStyle");
+            isValid = false;
+        }
+        else {
+            placePointB.getStyleClass().clear();
+            placePointB.getStyleClass().addAll("button");
+        }
+
         return isValid;
     }
 

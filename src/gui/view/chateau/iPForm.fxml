@@ -48,7 +48,7 @@
                         <VBox spacing="5.0">
                            <children>
                                   <Button fx:id="addDescImage" mnemonicParsing="false" onAction="#addDescriptivePicture" prefWidth="230.0" text="Modifier l'image descriptive" />
-                              <Button mnemonicParsing="false" onAction="#placePoint" prefWidth="230.0" text="Placer le point sur la carte" />
+                              <Button fx:id="placePointB" mnemonicParsing="false" onAction="#placePoint" prefWidth="230.0" text="Placer le point sur la carte" />
                            </children>
                         </VBox>
                         <VBox alignment="CENTER" spacing="10.0">
