@@ -37,6 +37,7 @@ public class GUIFormsController {
 
     public void closeForm() {
         isFormDisplayed = false;
+        GUIControllerPhotoForm.getInstance().wipePictures();
     }
 
     public void formToFront() {

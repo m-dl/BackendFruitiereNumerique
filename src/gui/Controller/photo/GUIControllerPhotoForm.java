@@ -138,6 +138,11 @@ public class GUIControllerPhotoForm {
         stage.close();
     }
 
+    public void wipePictures() {
+        workingImageList.clear();
+        selectedDescImage = null;
+    }
+
     public void displayForm(VisitType visitType, PictureFormType pictureFormType) {
         this.visitType = visitType;
         this.pictureFormType = pictureFormType;
@@ -351,5 +356,3 @@ public class GUIControllerPhotoForm {
     }
 
 }
-
-// TODO: 12/05/2016 fermer la fenetre sur enregister
