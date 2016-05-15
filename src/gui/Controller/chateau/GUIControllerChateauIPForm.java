@@ -146,7 +146,6 @@ public class GUIControllerChateauIPForm {
     }
 
 
-    // TODO: 07/05/2016  rempir auto les coord
     @FXML
     public void saveChanges() {
 
