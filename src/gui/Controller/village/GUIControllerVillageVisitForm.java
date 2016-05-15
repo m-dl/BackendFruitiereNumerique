@@ -94,6 +94,8 @@ public class GUIControllerVillageVisitForm {
 
         } catch (IOException e) {
             e.printStackTrace();
+            GUIFormsController.getInstance().displayExceptionAlert(e,"Erreur lors de l'affichage du formulaire d'ajout de visites").showAndWait();
+
         }
     }
 
@@ -108,6 +110,8 @@ public class GUIControllerVillageVisitForm {
 
         visitPresTextFRInf.setText(v.getInfo().readContent_FR());
         visitPresTextENInf.setText(v.getInfo().readContent_EN());
+
+
 
         //opérateurs ternaires pour savoir si mettre le texte au singulier ou au pluriel
         overviewSizeText.setText((v.getOverview().getImagesContent().size() <= 1)

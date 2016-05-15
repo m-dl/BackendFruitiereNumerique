@@ -4,6 +4,7 @@ import java.io.File;
 
 import com.google.api.services.drive.cmdline.DriveTools;
 import com.google.api.services.drive.cmdline.View;
+import gui.Controller.GUIFormsController;
 
 /**
  * @author Maxime
@@ -115,6 +116,7 @@ public class FileManager {
         	}
 		} catch (Exception exception) {
 			exception.printStackTrace();
+            GUIFormsController.getInstance().displayExceptionAlert(exception,"Erreur upload sur le drive chateau").showAndWait();
 		}
     }
     
@@ -151,7 +153,9 @@ public class FileManager {
         	}
 		} catch (Exception exception) {
 			exception.printStackTrace();
-		}
+            GUIFormsController.getInstance().displayExceptionAlert(exception,"Erreur upload sur le drive village").showAndWait();
+
+        }
     }
     
     // Download media from drive Village

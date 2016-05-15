@@ -104,6 +104,8 @@ public class GUIControllerVillageIPForm {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            GUIFormsController.getInstance().displayExceptionAlert(e,"Erreur lors de l'affichage du formulaire d'ajout de point").showAndWait();
+
         }
 
     }
@@ -113,6 +115,10 @@ public class GUIControllerVillageIPForm {
         ipName.setText(p.getName());
         ipPresTextFR.setText(p.readPresentation_FR());
         ipPresTextEN.setText(p.readPresentation_EN());
+
+
+        coordLat.setText(p.readMarker().split(",")[0]);
+        coordLong.setText(p.readMarker().split(",")[1]);
 
         //opérateurs ternaires pour savoir si mettre le texte au singulier ou au pluriel
 
@@ -462,6 +468,8 @@ public class GUIControllerVillageIPForm {
             map.display();
         } catch (Exception e) {
             e.printStackTrace();
+            GUIFormsController.getInstance().displayExceptionAlert(e,"Erreur lors de l'affichage de la fenêtre Google Map").showAndWait();
+
         }
 
 
@@ -509,7 +517,7 @@ public class GUIControllerVillageIPForm {
     }
 
     public void setInterieur(ArrayList<File> interieur) {
-        indoorLabel.setText((interieur.size() <= 1) ? interieur + " image sélectionnée" : interieur.size() + " images sélectionnées");
+        indoorLabel.setText((interieur.size() <= 1) ? interieur.size() + " image sélectionnée" : interieur.size() + " images sélectionnées");
         this.interieur = interieur;
     }
 

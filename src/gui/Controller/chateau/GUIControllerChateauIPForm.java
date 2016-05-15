@@ -122,6 +122,8 @@ public class GUIControllerChateauIPForm {
                 }
         } catch (IOException e) {
             e.printStackTrace();
+            GUIFormsController.getInstance().displayExceptionAlert(e,"Erreur lors de l'affichage du formulaire d'ajout de point d'intérêt").showAndWait();
+
         }
     }
 
@@ -206,6 +208,8 @@ public class GUIControllerChateauIPForm {
                         throw new Exception("can't find the floor while creating new IP");
                     } catch (Exception e) {
                         e.printStackTrace();
+                        GUIFormsController.getInstance().displayExceptionAlert(e,"Erreur lors de la création du point: étage non trouvé").showAndWait();
+
                     }
                 }
 
@@ -624,6 +628,8 @@ public class GUIControllerChateauIPForm {
                     throw new Exception("can't find the floor while deleting IP");
                 } catch (Exception e) {
                     e.printStackTrace();
+                    GUIFormsController.getInstance().displayExceptionAlert(e,"Erreur lors du chargement de l'étage").showAndWait();
+
                 }
             }
 
@@ -733,7 +739,7 @@ public class GUIControllerChateauIPForm {
     }
 
     public void setInterieur(ArrayList<File> interieur) {
-        indoorLabel.setText((interieur.size() <= 1) ? interieur + " image sélectionnée" : interieur.size() + " images sélectionnées");
+        indoorLabel.setText((interieur.size() <= 1) ? interieur.size() + " image sélectionnée" : interieur.size() + " images sélectionnées");
         this.interieur = interieur;
     }
 

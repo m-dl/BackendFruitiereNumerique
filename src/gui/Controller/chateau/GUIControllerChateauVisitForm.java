@@ -88,6 +88,8 @@ public class GUIControllerChateauVisitForm {
 
         } catch (IOException e) {
             e.printStackTrace();
+            GUIFormsController.getInstance().displayExceptionAlert(e,"Erreur lors de l'affichage du formulaire d'ajout de visite").showAndWait();
+
         }
     }
 

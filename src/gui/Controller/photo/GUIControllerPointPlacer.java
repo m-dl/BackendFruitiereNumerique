@@ -1,5 +1,6 @@
 package gui.Controller.photo;
 
+import gui.Controller.GUIFormsController;
 import gui.Controller.chateau.GUIControllerChateauIPForm;
 import gui.GUIUtilities;
 import javafx.scene.Scene;
@@ -59,6 +60,8 @@ public class GUIControllerPointPlacer {
 
         } catch (IOException e) {
             e.printStackTrace();
+            GUIFormsController.getInstance().displayExceptionAlert(e,"Erreur lors de l'affichage de la fenêtre pour le placement du point").showAndWait();
+
         }
     }
 

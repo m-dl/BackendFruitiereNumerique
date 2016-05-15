@@ -1,6 +1,7 @@
 package gui.Controller.photo;
 
 import files.FileTools;
+import gui.Controller.GUIFormsController;
 import gui.Controller.chateau.GUIControllerChateauIPForm;
 import gui.Controller.chateau.GUIControllerChateauVisitForm;
 import gui.Controller.enums.PictureFormType;
@@ -65,6 +66,8 @@ public class GUIControllerPhotoForm {
 
         } catch (IOException e) {
             e.printStackTrace();
+            GUIFormsController.getInstance().displayExceptionAlert(e,"Erreur lors de l'affichage du formulaire de modification des images").showAndWait();
+
         }
     }
 
@@ -254,6 +257,8 @@ public class GUIControllerPhotoForm {
             return image;
         } catch (IOException e) {
             e.printStackTrace();
+            GUIFormsController.getInstance().displayExceptionAlert(e,"Erreur lors de la création des miniatures d'images").showAndWait();
+
         }
         return null;
     }

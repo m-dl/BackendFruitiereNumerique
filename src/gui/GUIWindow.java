@@ -99,6 +99,8 @@ public class GUIWindow extends Application {
 
         } catch (IOException e) {
             e.printStackTrace();
+            GUIFormsController.getInstance().displayExceptionAlert(e,"Erreur lors du chargement de la fenêtre").showAndWait();
+
         }
     }
 

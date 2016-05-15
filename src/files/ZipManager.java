@@ -1,5 +1,7 @@
 package files;
 
+import gui.Controller.GUIFormsController;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -97,6 +99,8 @@ public class ZipManager {
 			zis.close();
 		} catch (IOException ex) {
 			ex.printStackTrace();
+			GUIFormsController.getInstance().displayExceptionAlert(ex,"Erreur lors de la décompression du l'archive Zip").showAndWait();
+
 		}
 	}
 }

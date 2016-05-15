@@ -1,5 +1,6 @@
 package files;
 
+import gui.Controller.GUIFormsController;
 import org.apache.commons.io.FileUtils;
 
 import entities.village.Road;
@@ -132,7 +133,10 @@ public class FileTools {
 		  } catch(IOException ex) {
 			  ex.printStackTrace();
 		  } finally {
-		     try {writer.close();} catch (Exception ex) {}
+		     try {writer.close();} catch (Exception ex) {
+				 GUIFormsController.getInstance().displayExceptionAlert(ex,"Erreur d'écriture de fichier").showAndWait();
+
+			 }
 		  }
 	}
 	
@@ -154,6 +158,8 @@ public class FileTools {
 			FileUtils.forceDelete(file);
 		} catch (IOException e) {
 			e.printStackTrace();
+			GUIFormsController.getInstance().displayExceptionAlert(e,"Erreur de suppression de fichier").showAndWait();
+
 		}
 	}
 	
@@ -165,6 +171,8 @@ public class FileTools {
 			FileUtils.copyDirectory(fileFrom, fileTo);
 		} catch (IOException e) {
 			e.printStackTrace();
+			GUIFormsController.getInstance().displayExceptionAlert(e,"Erreur de copie de répertoire").showAndWait();
+
 		}
 	}
 	
@@ -176,6 +184,8 @@ public class FileTools {
 			FileUtils.copyFile(fileFrom, fileTo, false);
 		} catch (IOException e) {
 			e.printStackTrace();
+			GUIFormsController.getInstance().displayExceptionAlert(e,"Erreur de copie de fichier").showAndWait();
+
 		}
 	}
 	
@@ -190,7 +200,9 @@ public class FileTools {
 	            return true; // success
 	        } catch (IOException e) {
 	            e.printStackTrace();
-	        }
+				GUIFormsController.getInstance().displayExceptionAlert(e,"erreur de rennomage").showAndWait();
+
+			}
         }
         return false; // not renamed
     }
