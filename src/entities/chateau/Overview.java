@@ -59,34 +59,71 @@ public class Overview {
      */
 
 
+    /**
+     * Method readPresentation_FR ...
+     *
+     * @return String
+     */
     public String readPresentation_FR() {
         return FileTools.Read(this.presentation_FR);
     }
 
+    /**
+     * Method writePresentation_FR ...
+     *
+     * @param input of type String
+     */
     public void writePresentation_FR(String input) {
         FileTools.Write(this.presentation_FR, input);
     }
 
+    /**
+     * Method readPresentation_EN ...
+     * @return String
+     */
     public String readPresentation_EN() {
         return FileTools.Read(this.presentation_EN);
     }
 
+    /**
+     * Method writePresentation_EN ...
+     *
+     * @param input of type String
+     */
     public void writePresentation_EN(String input) {
         FileTools.Write(this.presentation_EN, input);
     }
 
+    /**
+     * Method readLength_FR ...
+     * @return String
+     */
     public String readLength_FR() {
         return FileTools.Read(this.length_FR);
     }
 
+    /**
+     * Method writeLength_FR ...
+     *
+     * @param input of type String
+     */
     public void writeLength_FR(String input) {
         FileTools.Write(this.length_FR, input);
     }
 
+    /**
+     * Method readLength_EN ...
+     * @return String
+     */
     public String readLength_EN() {
         return FileTools.Read(this.length_EN);
     }
 
+    /**
+     * Method writeLength_EN ...
+     *
+     * @param input of type String
+     */
     public void writeLength_EN(String input) {
         FileTools.Write(this.length_EN, input);
     }
@@ -132,42 +169,115 @@ public class Overview {
      */
 
 
+    /**
+     * Method getPresentation_FR returns the presentation_FR of this Overview object.
+     *
+     *
+     *
+     * @return the presentation_FR (type File) of this Overview object.
+     */
     public File getPresentation_FR() {
         return presentation_FR;
     }
 
+    /**
+     * Method setPresentation_FR sets the presentation_FR of this Overview object.
+     *
+     *
+     *
+     * @param presentation_FR the presentation_FR of this Overview object.
+     *
+     */
     public void setPresentation_FR(File presentation_FR) {
         this.presentation_FR = presentation_FR;
     }
 
+    /**
+     * Method getPresentation_EN returns the presentation_EN of this Overview object.
+     *
+     *
+     *
+     * @return the presentation_EN (type File) of this Overview object.
+     */
     public File getPresentation_EN() {
         return presentation_EN;
     }
 
+    /**
+     * Method setPresentation_EN sets the presentation_EN of this Overview object.
+     *
+     *
+     *
+     * @param presentation_EN the presentation_EN of this Overview object.
+     *
+     */
     public void setPresentation_EN(File presentation_EN) {
         this.presentation_EN = presentation_EN;
     }
 
+    /**
+     * Method getLength_FR returns the length_FR of this Overview object.
+     *
+     *
+     *
+     * @return the length_FR (type File) of this Overview object.
+     */
     public File getLength_FR() {
         return length_FR;
     }
 
+    /**
+     * Method setLength_FR sets the length_FR of this Overview object.
+     *
+     *
+     *
+     * @param length_FR the length_FR of this Overview object.
+     *
+     */
     public void setLength_FR(File length_FR) {
         this.length_FR = length_FR;
     }
 
+    /**
+     * Method getLength_EN returns the length_EN of this Overview object.
+     *
+     *
+     *
+     * @return the length_EN (type File) of this Overview object.
+     */
     public File getLength_EN() {
         return length_EN;
     }
 
+    /**
+     * Method setLength_EN sets the length_EN of this Overview object.
+     *
+     *
+     *
+     * @param length_EN the length_EN of this Overview object.
+     *
+     */
     public void setLength_EN(File length_EN) {
         this.length_EN = length_EN;
     }
 
+    /**
+     * Method getImagesContent returns the imagesContent of this Overview object.
+     *
+     *
+     *
+     * @return the imagesContent (type ArrayList<File>) of this Overview object.
+     */
     public ArrayList<File> getImagesContent() {
         return imagesContent;
     }
 
+    /**
+     * Method setImagesContent ...
+     *
+     * @param imagesContent of type ArrayList<File>
+     * @param pathTo of type String
+     */
     public void setImagesContent(ArrayList<File> imagesContent, String pathTo) {
 
         for (int i = 0; i < imagesContent.size(); i++) {

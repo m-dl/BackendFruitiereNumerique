@@ -33,8 +33,6 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="BackendFruitiereNumerique" target="1.8" />
-      <module name="drive-cmdline-sample" target="1.6" />
-      <module name="GMapsFX" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

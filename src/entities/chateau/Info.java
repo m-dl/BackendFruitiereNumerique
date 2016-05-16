@@ -145,34 +145,92 @@ public class Info {
      */
 
 
+    /**
+     * Method getContent_FR returns the content_FR of this Info object.
+     *
+     * @return the content_FR (type File) of this Info object.
+     */
     public File getContent_FR() {
         return content_FR;
     }
 
+    /**
+     * Method setContent_FR sets the content_FR of this Info object.
+     *
+     *
+     *
+     * @param content_FR the content_FR of this Info object.
+     *
+     */
     public void setContent_FR(File content_FR) {
         this.content_FR = content_FR;
     }
 
+    /**
+     * Method getContent_EN returns the content_EN of this Info object.
+     *
+     *
+     *
+     * @return the content_EN (type File) of this Info object.
+     */
     public File getContent_EN() {
         return content_EN;
     }
 
+    /**
+     * Method setContent_EN sets the content_EN of this Info object.
+     *
+     *
+     *
+     * @param content_EN the content_EN of this Info object.
+     *
+     */
     public void setContent_EN(File content_EN) {
         this.content_EN = content_EN;
     }
 
+    /**
+     * Method getPicture returns the picture of this Info object.
+     *
+     *
+     *
+     * @return the picture (type File) of this Info object.
+     */
     public File getPicture() {
         return picture;
     }
 
+    /**
+     * Method setPicture sets the picture of this Info object.
+     *
+     *
+     *
+     * @param picture the picture of this Info object.
+     *
+     */
     public void setPicture(File picture) {
         this.picture = picture;
     }
 
+    /**
+     * Method getPhotos returns the photos of this Info object.
+     *
+     *
+     *
+     * @return the photos (type ArrayList<File>) of this Info object.
+     */
     public ArrayList<File> getPhotos() {
         return photos;
     }
 
+    /**
+     * Method setPhotos sets the photos of this Info object.
+     *
+     *
+     *
+     * @param photos the photos of this Info object.
+     *
+     */
     public void setPhotos(ArrayList<File> photos) {
         this.photos = photos;
     }

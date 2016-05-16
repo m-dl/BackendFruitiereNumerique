@@ -1,10 +1,10 @@
 package files;
 
-import java.io.File;
-
 import com.google.api.services.drive.cmdline.DriveTools;
 import com.google.api.services.drive.cmdline.View;
 import gui.Controller.GUIFormsController;
+
+import java.io.File;
 
 /**
  * @author Maxime
@@ -34,20 +34,19 @@ public class FileManager {
     final public static String LENGTH_EN = "duree_en.txt";
     final public static String MARKER = "marker.txt";
     final public static String ROAD = "chemin.txt";
+    private static FileManager INSTANCE = new FileManager();
     private entities.chateau.Location chateauWorkspace;
     private entities.village.Location villageWorkspace;
-    
-    private static FileManager INSTANCE = new FileManager();
-    
-	// Singleton
-	public static FileManager getInstance() {	
-		return INSTANCE;
-	}
-	
+
     public FileManager() {
         this.setChateauWorkspace(new entities.chateau.Location());
         this.setVillageWorkspace(new entities.village.Location());
     }
+
+    // Singleton
+    public static FileManager getInstance() {
+        return INSTANCE;
+	}
     
     /**
      * @return the villageWorkspace
@@ -121,6 +120,10 @@ public class FileManager {
     }
     
     // Download media from drive Chateau
+
+    /**
+     * hjjk
+     */
     public void downloadFromDriveChateau() {
     	// download file
     	if(DriveTools.download(DriveTools.CHATEAU_MEDIAS)) {
