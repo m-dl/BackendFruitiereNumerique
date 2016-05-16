@@ -54,7 +54,7 @@ public class Overview {
     }
 
 
-    /**
+    /*
      * Fonctions pour l'écriture et la lecture des fichiers de description
      */
 

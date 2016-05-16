@@ -3,48 +3,54 @@ package entities.village;
 import java.util.ArrayList;
 
 /**
- * @author Maxime
- *
+ * Classe définissant une Road
+ * Un chemin sur lequel est un point avec la couleur du chemin et l'épaisseur du trait.
  */
 public class Road {
-	final public static String ROAD_WIDTH = "width=";
-	final public static String ROAD_COLOR = "color=";
+    final public static String ROAD_WIDTH = "width=";
+    final public static String ROAD_COLOR = "color=";
 
-	private String width, color;
-	private ArrayList<String> coord;
-	
-	/**
-	 * @param coord
-	 * @param width
-	 * @param color
-	 */
-	public Road(ArrayList<String> coord, String width, String color) {
-		this.coord = coord;
-		this.width = width;
-		this.color = color;
-	}
+    private String width, color;
+    private ArrayList<String> coord;
 
-	public ArrayList<String> getCoord() {
-		return coord;
-	}
+    /**
+     * Constructeur pour la classe Visit
+     * Permet de créer les fichiers et de les initialiser à vide.
+     * @param coord la liste des coordonnées des points du chemin
+     * @param width l'épaisseur du trait du chemin à afficher
+     * @param color la couleur du trait à afficher
+     */
+    public Road(ArrayList<String> coord, String width, String color) {
+        this.coord = coord;
+        this.width = width;
+        this.color = color;
+    }
 
-	public void setCoord(ArrayList<String> coord) {
-		this.coord = coord;
-	}
+     /*
+        Getters et setters
+     */
 
-	public String getWidth() {
-		return width;
-	}
+    public ArrayList<String> getCoord() {
+        return coord;
+    }
 
-	public void setWidth(String width) {
-		this.width = width;
-	}
+    public void setCoord(ArrayList<String> coord) {
+        this.coord = coord;
+    }
 
-	public String getColor() {
-		return color;
-	}
+    public String getWidth() {
+        return width;
+    }
 
-	public void setColor(String color) {
-		this.color = color;
-	}
+    public void setWidth(String width) {
+        this.width = width;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
 }
