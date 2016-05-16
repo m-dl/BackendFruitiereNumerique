@@ -8,13 +8,11 @@ import gui.Controller.GUIFormsController;
 import gui.GUIWindow;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.cell.TextFieldListCell;
-import javafx.scene.input.MouseEvent;
 import javafx.util.StringConverter;
 
 import java.net.URL;
@@ -23,15 +21,14 @@ import java.util.ResourceBundle;
 
 public class GUIControllerChateau implements Initializable{
 
-    private GUIWindow guiWindow;
-    private GUIFormsController guiForms;
+
     private static GUIControllerChateau INSTANCE = new GUIControllerChateau();
-
-
     public ListView<Visit> visitListViewC;
     public ListView<InterestPoint> iPListViewC;
     public ObservableList<Visit> visitListC;
     public ObservableList<InterestPoint> iPListC;
+    private GUIWindow guiWindow;
+    private GUIFormsController guiForms;
 
 
     private GUIControllerChateau() {
