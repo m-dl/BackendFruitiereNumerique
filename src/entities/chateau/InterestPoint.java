@@ -289,110 +289,299 @@ public class InterestPoint {
     }
 
 
-     /*
-        Getters et setters
+    /**
+     * Method getPresentation_FR returns the presentation_FR of this InterestPoint object.
+     *
+     * @return the presentation_FR (type File) of this InterestPoint object.
      */
-
     public File getPresentation_FR() {
         return presentation_FR;
     }
 
+    /**
+     * Method setPresentation_FR sets the presentation_FR of this InterestPoint object.
+     *
+     *
+     *
+     * @param presentation_FR the presentation_FR of this InterestPoint object.
+     *
+     */
     public void setPresentation_FR(File presentation_FR) {
         this.presentation_FR = presentation_FR;
     }
 
+    /**
+     * Method getPresentation_EN returns the presentation_EN of this InterestPoint object.
+     *
+     *
+     *
+     * @return the presentation_EN (type File) of this InterestPoint object.
+     */
     public File getPresentation_EN() {
         return presentation_EN;
     }
 
+    /**
+     * Method setPresentation_EN sets the presentation_EN of this InterestPoint object.
+     *
+     *
+     *
+     * @param presentation_EN the presentation_EN of this InterestPoint object.
+     *
+     */
     public void setPresentation_EN(File presentation_EN) {
         this.presentation_EN = presentation_EN;
     }
 
+    /**
+     * Method getMarker returns the marker of this InterestPoint object.
+     *
+     *
+     *
+     * @return the marker (type File) of this InterestPoint object.
+     */
     public File getMarker() {
         return marker;
     }
 
+    /**
+     * Method setMarker sets the marker of this InterestPoint object.
+     *
+     *
+     *
+     * @param marker the marker of this InterestPoint object.
+     *
+     */
     public void setMarker(File marker) {
         this.marker = marker;
     }
 
+    /**
+     * Method getPicture returns the picture of this InterestPoint object.
+     *
+     *
+     *
+     * @return the picture (type File) of this InterestPoint object.
+     */
     public File getPicture() {
         return picture;
     }
 
+    /**
+     * Method setPicture sets the picture of this InterestPoint object.
+     *
+     *
+     *
+     * @param picture the picture of this InterestPoint object.
+     *
+     */
     public void setPicture(File picture) {
         this.picture = picture;
     }
 
+    /**
+     * Method getPhotos returns the photos of this InterestPoint object.
+     *
+     *
+     *
+     * @return the photos (type ArrayList<File>) of this InterestPoint object.
+     */
     public ArrayList<File> getPhotos() {
         return photos;
     }
 
+    /**
+     * Method setPhotos sets the photos of this InterestPoint object.
+     *
+     *
+     *
+     * @param photos the photos of this InterestPoint object.
+     *
+     */
     public void setPhotos(ArrayList<File> photos) {
         this.photos = photos;
     }
 
+    /**
+     * Method getName returns the name of this InterestPoint object.
+     *
+     *
+     *
+     * @return the name (type String) of this InterestPoint object.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Method setName sets the name of this InterestPoint object.
+     *
+     *
+     *
+     * @param name the name of this InterestPoint object.
+     *
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Method getInterieur returns the interieur of this InterestPoint object.
+     *
+     *
+     *
+     * @return the interieur (type ArrayList<File>) of this InterestPoint object.
+     */
     public ArrayList<File> getInterieur() {
         return interieur;
     }
 
+    /**
+     * Method setInterieur sets the interieur of this InterestPoint object.
+     *
+     *
+     *
+     * @param interieur the interieur of this InterestPoint object.
+     *
+     */
     public void setInterieur(ArrayList<File> interieur) {
         this.interieur = interieur;
     }
 
+    /**
+     * Method getVideos returns the videos of this InterestPoint object.
+     *
+     *
+     *
+     * @return the videos (type ArrayList<File>) of this InterestPoint object.
+     */
     public ArrayList<File> getVideos() {
         return videos;
     }
 
+    /**
+     * Method setVideos sets the videos of this InterestPoint object.
+     *
+     *
+     *
+     * @param videos the videos of this InterestPoint object.
+     *
+     */
     public void setVideos(ArrayList<File> videos) {
         this.videos = videos;
     }
 
+    /**
+     * Method get_360 returns the _360 of this InterestPoint object.
+     *
+     *
+     *
+     * @return the _360 (type ArrayList<File>) of this InterestPoint object.
+     */
     public ArrayList<File> get_360() {
         return _360;
     }
 
+    /**
+     * Method set_360 sets the _360 of this InterestPoint object.
+     *
+     *
+     *
+     * @param _360 the _360 of this InterestPoint object.
+     *
+     */
     public void set_360(ArrayList<File> _360) {
         this._360 = _360;
     }
 
+    /**
+     * Method getName_EN returns the name_EN of this InterestPoint object.
+     *
+     *
+     *
+     * @return the name_EN (type File) of this InterestPoint object.
+     */
     public File getName_EN() {
         return name_EN;
     }
 
+    /**
+     * Method setName_EN sets the name_EN of this InterestPoint object.
+     *
+     *
+     *
+     * @param name_EN the name_EN of this InterestPoint object.
+     *
+     */
     public void setName_EN(File name_EN) {
         this.name_EN = name_EN;
     }
 
+    /**
+     * Method getCoordX returns the coordX of this InterestPoint object.
+     *
+     *
+     *
+     * @return the coordX (type double) of this InterestPoint object.
+     */
     public double getCoordX() {
         return coordX;
     }
 
+    /**
+     * Method setCoordX sets the coordX of this InterestPoint object.
+     *
+     *
+     *
+     * @param coordX the coordX of this InterestPoint object.
+     *
+     */
     public void setCoordX(double coordX) {
         this.coordX = coordX;
     }
 
+    /**
+     * Method getCoordY returns the coordY of this InterestPoint object.
+     *
+     *
+     *
+     * @return the coordY (type double) of this InterestPoint object.
+     */
     public double getCoordY() {
         return coordY;
     }
 
+    /**
+     * Method setCoordY sets the coordY of this InterestPoint object.
+     *
+     *
+     *
+     * @param coordY the coordY of this InterestPoint object.
+     *
+     */
     public void setCoordY(double coordY) {
         this.coordY = coordY;
     }
 
+    /**
+     * Method getFloor returns the floor of this InterestPoint object.
+     *
+     *
+     *
+     * @return the floor (type int) of this InterestPoint object.
+     */
     public int getFloor() {
         return floor;
     }
 
+    /**
+     * Method setFloor sets the floor of this InterestPoint object.
+     *
+     *
+     *
+     * @param floor the floor of this InterestPoint object.
+     *
+     */
     public void setFloor(int floor) {
         this.floor = floor;
     }

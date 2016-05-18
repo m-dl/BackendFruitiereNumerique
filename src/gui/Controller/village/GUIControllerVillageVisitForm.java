@@ -6,6 +6,7 @@ import entities.village.Overview;
 import entities.village.Visit;
 import files.FileManager;
 import gui.Controller.GUIFormsController;
+import gui.Controller.photo.GUIControllerPhotoForm;
 import gui.GUIUtilities;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -17,8 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static gui.Controller.enums.PictureFormType.INFO;
-import static gui.Controller.enums.PictureFormType.OVERVIEW;
+import static gui.Controller.enums.PictureFormType.*;
 import static gui.Controller.enums.VisitType.VILLAGE;
 
 public class GUIControllerVillageVisitForm {
@@ -33,9 +33,11 @@ public class GUIControllerVillageVisitForm {
     public TextArea visitPresTextFRInf;
     public TextArea visitPresTextENInf;
 
+    public Label infoDescLabel;
     public Label overviewSizeText, infoSizeText;
-    public Button addPicOverview,addPicInf;
+    public Button addPicOverview, addPicInf, addInfoDescB;
 
+    public File infoDesctiptive;
     public ArrayList<File> overviewImages;
     public ArrayList<File> infoImages;
 
@@ -61,6 +63,11 @@ public class GUIControllerVillageVisitForm {
         GUIFormsController.getInstance().displayPhotoForm(VILLAGE, INFO, this.isNewVisit);
     }
 
+    @FXML
+    public void addInfoDescPic() {
+        GUIFormsController.getInstance().displayPhotoForm(VILLAGE, INFO_DESC, this.isNewVisit);
+    }
+
     public void displayForm(boolean isNewVisit, Visit selectedVisit) {
 
         this.isNewVisit = isNewVisit;
@@ -78,6 +85,8 @@ public class GUIControllerVillageVisitForm {
             if (!isNewVisit) {
                 if (selectedVisit != null) {
                     int index = FileManager.getInstance().getVillageWorkspace().getV().indexOf(GUIControllerVillage.getInstance().getSelectedVisit());
+
+                    infoDesctiptive = FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().getPicture();
                     overviewImages = FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().getImagesContent();
                     infoImages = FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().getPhotos();
 
@@ -111,7 +120,7 @@ public class GUIControllerVillageVisitForm {
         visitPresTextFRInf.setText(v.getInfo().readContent_FR());
         visitPresTextENInf.setText(v.getInfo().readContent_EN());
 
-
+        infoDescLabel.setText((v.getInfo().getPicture() == null) ? "Aucune image sélectionnée" : "Une image sélectionnée");
 
         //opérateurs ternaires pour savoir si mettre le texte au singulier ou au pluriel
         overviewSizeText.setText((v.getOverview().getImagesContent().size() <= 1)
@@ -156,6 +165,9 @@ public class GUIControllerVillageVisitForm {
                 visitInfos.writeContent_EN(visitPresTextENInf.getText());
                 visitInfos.writeContent_FR(visitPresTextFRInf.getText());
 
+                visitInfos.addPicture(this.infoDesctiptive.getAbsolutePath(), visitInfosPath, this.infoDesctiptive.getName());
+
+
                 for (int i = 0; i < this.infoImages.size(); i++) {
                     visitInfos.addPhotos(this.infoImages.get(i).getAbsolutePath(), visitInfosPath, this.infoImages.get(i).getName());
                 }
@@ -189,6 +201,14 @@ public class GUIControllerVillageVisitForm {
                     FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().writeLength_FR(visitLengthFROv.getText());
                     FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().writeLength_EN(visitLengthENOv.getText());
 
+                    if (this.infoDesctiptive != null && !infoDesctiptive.equals(selectedVisit.getInfo().getPicture())) {
+                        if (selectedVisit.getInfo().getPicture() != null) {
+                            FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().removePicture(selectedVisit.getInfo().getPicture().getPath(), selectedVisit.getInfo().getPicture());
+                            FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().addPicture(this.infoDesctiptive.getAbsolutePath(), visitInfosPath, this.infoDesctiptive.getName());
+                        } else {
+                            FileManager.getInstance().getVillageWorkspace().getV().get(index).getInfo().addPicture(this.infoDesctiptive.getAbsolutePath(), visitInfosPath, this.infoDesctiptive.getName());
+                        }
+                    }
 
                     //Suppression et ajout des images qui ont été supprimées ou ajoutées pour Overview.
                     for (int i = 0; i < FileManager.getInstance().getVillageWorkspace().getV().get(index).getOverview().getImagesContent().size(); i++) {
@@ -230,6 +250,7 @@ public class GUIControllerVillageVisitForm {
                 }
             }
 
+            wipeData();
             GUIFormsController.getInstance().closeForm();
             stage.close();
         }
@@ -239,6 +260,13 @@ public class GUIControllerVillageVisitForm {
             errorList = "";
 
         }
+    }
+
+    private void wipeData() {
+        infoDesctiptive = null;
+        overviewImages.clear();
+        infoImages.clear();
+        GUIControllerPhotoForm.getInstance().wipePictures();
     }
 
     private void renameVisit(Visit oldVisit, String visitPath, String newName) {
@@ -276,6 +304,9 @@ public class GUIControllerVillageVisitForm {
 
         visitInfos.writeContent_FR(oldVisit.getInfo().readContent_FR());
         visitInfos.writeContent_EN(oldVisit.getInfo().readContent_EN());
+
+        visitInfos.addPicture(this.infoDesctiptive.getAbsolutePath(), visitInfosPath, this.infoDesctiptive.getName());
+
 
         for (int i = 0; i < this.infoImages.size(); i++) {
             visitInfos.addPhotos(this.infoImages.get(i).getAbsolutePath(), visitInfosPath, this.infoImages.get(i).getName());
@@ -365,14 +396,24 @@ public class GUIControllerVillageVisitForm {
             visitPresTextENInf.getStyleClass().addAll("text-input","text-area");
         }
 
-        if (this.overviewImages.size() == 0) {
-            errorList += "• Au moins une image 'Overview' doit être sélectionnée\n";
+        if (this.overviewImages.size() < 3) {
+            errorList += "• Au moins trois images 'Overview' doit être sélectionnées\n";
             addPicOverview.getStyleClass().addAll("buttonErrorStyle");
             isValid = false;
         }
         else {
             addPicOverview.getStyleClass().clear();
             addPicOverview.getStyleClass().addAll("button");
+        }
+
+
+        if (this.infoDesctiptive == null) {
+            errorList += "• Une image descriptive doit être sélectionnée\n";
+            addInfoDescB.getStyleClass().addAll("buttonErrorStyle");
+            isValid = false;
+        } else {
+            addInfoDescB.getStyleClass().clear();
+            addInfoDescB.getStyleClass().addAll("button");
         }
 
         if (this.infoImages.size() == 0) {
@@ -384,6 +425,7 @@ public class GUIControllerVillageVisitForm {
             addPicInf.getStyleClass().clear();
             addPicInf.getStyleClass().addAll("button");
         }
+
         return isValid;
     }
 
@@ -409,5 +451,19 @@ public class GUIControllerVillageVisitForm {
         infoSizeText.setText((selectedImages.size() <= 1)
                 ? selectedImages.size() + " image sélectionnée"
                 : selectedImages.size() + " images sélectionnées");
+    }
+
+    public File getInfoDesctiptive() {
+        return this.infoDesctiptive;
+    }
+
+    public void setInfoDesctiptive(File descPic) {
+        this.infoDesctiptive = descPic;
+
+        if (descPic == null) {
+            infoDescLabel.setText("Aucune image sélectionnée");
+        } else {
+            infoDescLabel.setText("Une image sélectionnée");
+        }
     }
 }

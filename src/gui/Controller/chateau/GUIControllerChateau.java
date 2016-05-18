@@ -6,6 +6,7 @@ import entities.chateau.Visit;
 import files.FileManager;
 import gui.Controller.GUIFormsController;
 import gui.GUIWindow;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -185,6 +186,7 @@ public class GUIControllerChateau implements Initializable{
             }
             iPListC.remove(iPListViewC.getSelectionModel().getSelectedItem());
             iPListViewC.getParent().requestFocus();
+            visitListViewC.getParent().requestFocus();
         }
         else {
             String header = "Aucun point sélectionné";
@@ -223,13 +225,17 @@ public class GUIControllerChateau implements Initializable{
 
     public void reloadCastleData() {
 
-        visitListC.clear();
+        Platform.runLater(() -> {
+            visitListC.clear();
 
-        FileManager.getInstance().InitChateau();
+            FileManager.getInstance().InitChateau();
 
-        for (int i = 0; i < FileManager.getInstance().getChateauWorkspace().getV().size(); i++) {
-            this.visitListC.add(FileManager.getInstance().getChateauWorkspace().getV().get(i));
-        }
+            for (int i = 0; i < FileManager.getInstance().getChateauWorkspace().getV().size(); i++) {
+                visitListC.add(FileManager.getInstance().getChateauWorkspace().getV().get(i));
+            }
+
+            visitListViewC.refresh();
+        });
     }
 
 }

@@ -131,9 +131,8 @@ public class Info {
      * @param pathFrom chemin de l'image à supprimer
      * @param f l'image en elle même
      */
-    public void removePicture(String pathFrom, String f) {
-        String path = pathFrom + "/" + f;
-        FileTools.Delete(path);
+    public void removePicture(String pathFrom, File f) {
+        FileTools.Delete(pathFrom);
         this.picture = null;
     }
 

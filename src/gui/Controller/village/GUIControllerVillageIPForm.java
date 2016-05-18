@@ -7,6 +7,7 @@ import entities.village.InterestPoint;
 import entities.village.Visit;
 import files.FileManager;
 import gui.Controller.GUIFormsController;
+import gui.Controller.photo.GUIControllerPhotoForm;
 import gui.GUIUtilities;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -37,14 +38,12 @@ public class GUIControllerVillageIPForm {
     public Label videoLabel;
     public Label indoorLabel;
     public Label panoLabel;
-
+    public GPSContainer coords;
     private Stage stage;
     private boolean isNewPoint;
-
     private File descPic;
     private ArrayList<File> photos, interieur, _360, videos;
     private String errorList;
-    public GPSContainer coords;
 
 
     private GUIControllerVillageIPForm() {
@@ -273,6 +272,8 @@ public class GUIControllerVillageIPForm {
 
                 }
             }
+
+            wipeData();
             GUIFormsController.getInstance().closeForm();
             stage.close();
         }
@@ -281,6 +282,15 @@ public class GUIControllerVillageIPForm {
                     "Les champs manquants sont:",errorList).showAndWait();
             errorList = "";
         }
+    }
+
+    private void wipeData() {
+        descPic = null;
+        photos.clear();
+        videos.clear();
+        interieur.clear();
+        _360.clear();
+        GUIControllerPhotoForm.getInstance().wipePictures();
     }
 
     public InterestPoint renameIP(InterestPoint oldIP, String newPath, String newName, boolean isFromVisit) {

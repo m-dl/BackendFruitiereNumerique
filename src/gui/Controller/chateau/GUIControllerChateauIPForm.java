@@ -1,8 +1,11 @@
 package gui.Controller.chateau;
 
-import entities.chateau.*;
+import entities.chateau.InterestPoint;
+import entities.chateau.Location;
+import entities.chateau.Visit;
 import files.FileManager;
 import gui.Controller.GUIFormsController;
+import gui.Controller.photo.GUIControllerPhotoForm;
 import gui.GUIUtilities;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -507,6 +510,7 @@ public class GUIControllerChateauIPForm {
 
             }
 
+            wipeData();
             GUIFormsController.getInstance().closeForm();
             stage.close();
         }
@@ -515,6 +519,15 @@ public class GUIControllerChateauIPForm {
                     "Les champs manquants sont:",errorList).showAndWait();
             errorList = "";
         }
+    }
+
+    private void wipeData() {
+        descPic = null;
+        photos.clear();
+        videos.clear();
+        interieur.clear();
+        _360.clear();
+        GUIControllerPhotoForm.getInstance().wipePictures();
     }
 
     public InterestPoint renameIP(InterestPoint oldIP, String newPath, String newName, boolean isFromVisit) {
@@ -673,7 +686,7 @@ public class GUIControllerChateauIPForm {
         }
 
         if (this.descPic == null) {
-            errorList += "• Au moins une image descriptive doit être sélectionnée\n";
+            errorList += "• Une image descriptive doit être sélectionnée\n";
             addDescImage.getStyleClass().addAll("buttonErrorStyle");
             isValid = false;
         }

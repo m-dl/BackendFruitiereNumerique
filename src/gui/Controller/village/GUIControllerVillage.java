@@ -5,6 +5,7 @@ import entities.village.Visit;
 import files.FileManager;
 import gui.Controller.GUIFormsController;
 import gui.GUIWindow;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -22,14 +23,13 @@ import java.util.ResourceBundle;
 
 public class GUIControllerVillage implements Initializable{
 
-    private GUIWindow guiWindow;
-    private GUIFormsController guiForms;
-
     private static GUIControllerVillage INSTANCE = new GUIControllerVillage();
     public ListView<Visit> visitListViewV;
     public ListView<InterestPoint> iPListViewV;
     public ObservableList<Visit> visitListV;
     public ObservableList<InterestPoint> iPListV;
+    private GUIWindow guiWindow;
+    private GUIFormsController guiForms;
 
 
     private GUIControllerVillage() {
@@ -156,10 +156,11 @@ public class GUIControllerVillage implements Initializable{
     void deleteVisitV() {
         if(getSelectedVisit() != null) {
             System.out.println("del visit : " + visitListViewV.getSelectionModel().getSelectedItem());
-            String path = FileManager.getInstance().WORKSPACE + "/" + FileManager.getInstance().VILLAGE + "/" + visitListViewV.getSelectionModel().getSelectedItem().getName();
+            String path = FileManager.WORKSPACE + "/" + FileManager.VILLAGE + "/" + visitListViewV.getSelectionModel().getSelectedItem().getName();
             guiWindow.FM.getVillageWorkspace().deleteVisit(visitListViewV.getSelectionModel().getSelectedItem(), path);
             visitListV.remove(visitListViewV.getSelectionModel().getSelectedItem());
             visitListViewV.getParent().requestFocus();
+            iPListViewV.getParent().requestFocus();
         }
         else {
             String header = "Aucune visite sélectionnée";
@@ -172,7 +173,7 @@ public class GUIControllerVillage implements Initializable{
     void deleteIPV() {
         if(getSelectedPoint() != null) {
             System.out.println("del point : " + iPListViewV.getSelectionModel().getSelectedItem());
-            String path = FileManager.getInstance().WORKSPACE + "/" + FileManager.getInstance().VILLAGE + "/" + visitListViewV.getSelectionModel().getSelectedItem().getName() + "/" + iPListViewV.getSelectionModel().getSelectedItem().getName();
+            String path = FileManager.WORKSPACE + "/" + FileManager.VILLAGE + "/" + visitListViewV.getSelectionModel().getSelectedItem().getName() + "/" + iPListViewV.getSelectionModel().getSelectedItem().getName();
             ArrayList<Visit> visits = FileManager.getInstance().getVillageWorkspace().getV();
             visits.get(visits.indexOf(visitListViewV.getSelectionModel().getSelectedItem())).deleteInterestPoint(iPListViewV.getSelectionModel().getSelectedItem(), path);
             iPListV.remove(iPListViewV.getSelectionModel().getSelectedItem());
@@ -208,14 +209,17 @@ public class GUIControllerVillage implements Initializable{
 
     public void reloadVillageData() {
 
-        visitListV.clear();
+        Platform.runLater(() -> {
+            visitListV.clear();
 
-        FileManager.getInstance().Init();
-        FileManager.getInstance().InitChateau();
+            FileManager.getInstance().InitVillage();
 
-        for (int i = 0; i < FileManager.getInstance().getVillageWorkspace().getV().size(); i++) {
-            this.visitListV.add(FileManager.getInstance().getVillageWorkspace().getV().get(i));
-        }
+            for (int i = 0; i < FileManager.getInstance().getVillageWorkspace().getV().size(); i++) {
+                this.visitListV.add(FileManager.getInstance().getVillageWorkspace().getV().get(i));
+            }
+
+            visitListViewV.refresh();
+        });
     }
 
 }

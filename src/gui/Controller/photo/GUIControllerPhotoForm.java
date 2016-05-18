@@ -84,6 +84,10 @@ public class GUIControllerPhotoForm {
                     GUIControllerChateauVisitForm.getInstance().setInfoImages(workingImageList);
                     break;
 
+                case INFO_DESC:
+                    GUIControllerChateauVisitForm.getInstance().setInfoDesctiptive(selectedDescImage);
+                    break;
+
                 case DESCRIPTIVE_PICTURE:
                     GUIControllerChateauIPForm.getInstance().setDescPic(selectedDescImage);
                     break;
@@ -114,6 +118,10 @@ public class GUIControllerPhotoForm {
 
                 case INFO:
                     GUIControllerVillageVisitForm.getInstance().setInfoImages(workingImageList);
+                    break;
+
+                case INFO_DESC:
+                    GUIControllerVillageVisitForm.getInstance().setInfoDesctiptive(selectedDescImage);
                     break;
 
                 case DESCRIPTIVE_PICTURE:
@@ -161,7 +169,7 @@ public class GUIControllerPhotoForm {
         verticalContentDisplay.setPadding(new Insets(1, 1, 1, 1));
         initWorkingList();
 
-        if (pictureFormType == PictureFormType.DESCRIPTIVE_PICTURE) {
+        if (pictureFormType == PictureFormType.DESCRIPTIVE_PICTURE || pictureFormType == PictureFormType.INFO_DESC) {
             pictureContentContainer.add(createAnchorPane(selectedDescImage));
         }
         else {
@@ -182,7 +190,7 @@ public class GUIControllerPhotoForm {
         verticalContentDisplay = new VBox();
         verticalContentDisplay.setPadding(new Insets(1, 1, 1, 1));
 
-        if (pictureFormType == PictureFormType.DESCRIPTIVE_PICTURE) {
+        if (pictureFormType == PictureFormType.DESCRIPTIVE_PICTURE || pictureFormType == PictureFormType.INFO_DESC) {
             pictureContentContainer.addAll(createAnchorPane(selectedDescImage));
         }
         else {
@@ -204,6 +212,9 @@ public class GUIControllerPhotoForm {
                     break;
                 case INFO:
                     workingImageList = (ArrayList<File>) GUIControllerChateauVisitForm.getInstance().getInfoImages().clone();
+                    break;
+                case INFO_DESC:
+                    selectedDescImage = GUIControllerChateauVisitForm.getInstance().getInfoDesctiptive();
                     break;
                 case DESCRIPTIVE_PICTURE:
                     selectedDescImage = GUIControllerChateauIPForm.getInstance().getDescPic();
@@ -228,6 +239,9 @@ public class GUIControllerPhotoForm {
                     break;
                 case INFO:
                     workingImageList = (ArrayList<File>) GUIControllerVillageVisitForm.getInstance().getInfoImages().clone();
+                    break;
+                case INFO_DESC:
+                    selectedDescImage = GUIControllerVillageVisitForm.getInstance().getInfoDesctiptive();
                     break;
                 case DESCRIPTIVE_PICTURE:
                     selectedDescImage = GUIControllerVillageIPForm.getInstance().getDescPic();
@@ -337,6 +351,10 @@ public class GUIControllerPhotoForm {
                     workingImageList.addAll(FileTools.MultipleFileChooser(FileTools.IMAGES_FILE_FILTER));
                     break;
 
+                case INFO_DESC:
+                    selectedDescImage = FileTools.FileChooser(FileTools.IMAGES_FILE_FILTER);
+                    break;
+                
                 case DESCRIPTIVE_PICTURE:
                     selectedDescImage = FileTools.FileChooser(FileTools.IMAGES_FILE_FILTER);
                     break;

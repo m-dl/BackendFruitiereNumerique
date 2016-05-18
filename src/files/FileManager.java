@@ -6,8 +6,12 @@ import gui.Controller.GUIFormsController;
 
 import java.io.File;
 
+
 /**
- * @author Maxime
+ * Class FileManager
+ * Gère toute la partie de gestion de fichiers en local et avec le Drive
+ *
+ *
  */
 public class FileManager {
 	
@@ -38,45 +42,54 @@ public class FileManager {
     private entities.chateau.Location chateauWorkspace;
     private entities.village.Location villageWorkspace;
 
+    /**
+     * Constructor pour initialiser les workspace
+     */
     public FileManager() {
         this.setChateauWorkspace(new entities.chateau.Location());
         this.setVillageWorkspace(new entities.village.Location());
     }
 
-    // Singleton
+    /**
+     * Classe Singleton
+     *
+     * @return l'instance de classe
+     */
     public static FileManager getInstance() {
         return INSTANCE;
 	}
     
     /**
-     * @return the villageWorkspace
+     * @return le workspace du village
      */
     public entities.village.Location getVillageWorkspace() {
         return villageWorkspace;
     }
 
     /**
-     * @param villageWorkspace the villageWorkspace to set
+     * @param villageWorkspace le workspace à enregister
      */
     public void setVillageWorkspace(entities.village.Location villageWorkspace) {
         this.villageWorkspace = villageWorkspace;
     }
 
     /**
-     * @return the chateauWorkspace
+     * @return le workspace du chateau
      */
     public entities.chateau.Location getChateauWorkspace() {
         return chateauWorkspace;
     }
 
     /**
-     * @param chateauWorkspace the chateauWorkspace to set
+     * @param chateauWorkspace le workspace à enregister
      */
     public void setChateauWorkspace(entities.chateau.Location chateauWorkspace) {
         this.chateauWorkspace = chateauWorkspace;
     }
-	
-    // Init global media workspace
+
+    /**
+     * Methode Init pour la création de fichiers et dossiers correspondant à la structure des fichiers
+     */
     public void Init() {
         FileTools.CreateDirectory(WORKSPACE);
         FileTools.CreateDirectory(RES);
@@ -86,20 +99,26 @@ public class FileManager {
 	        FileTools.Write(new File(RES + "/" + CLIENT_DRIVE_JSON), CLIENT_DRIVE_JSON_CONTENT);
         }
     }
-    
-    // Init chateau media workspace
+
+    /**
+     * Initilisation et Lecture des fichiers chateau
+     */
     public void InitChateau() {
         FileTools.CreateDirectory(WORKSPACE + "/" + CHATEAU);
         FileTools.ListVisitChateau(WORKSPACE + "/" + CHATEAU, chateauWorkspace);
     }
-    
-    // Init village media workspace
+
+    /**
+     * Initilisation et Lecture des fichiers village
+     */
     public void InitVillage() {
         FileTools.CreateDirectory(WORKSPACE + "/" + VILLAGE);
         FileTools.ListVisitVillage(WORKSPACE + "/" + VILLAGE, villageWorkspace);
     }
-    
-    // Upload media to drive Chateau
+
+    /**
+     * Envoi du workspace chateau sur le drive
+     */
     public void uploadToDriveChateau() {
         try {
         	// check if exist
@@ -119,10 +138,9 @@ public class FileManager {
 		}
     }
     
-    // Download media from drive Chateau
 
     /**
-     * hjjk
+     * Téléchargement du workspace chateau depuis le drive
      */
     public void downloadFromDriveChateau() {
     	// download file
@@ -139,8 +157,11 @@ public class FileManager {
 	        FileTools.Delete(WORKSPACE + "/" + CHATEAU + ZIP_EXT);
     	}
     }
-    
-    // Upload media to drive Village
+
+
+    /**
+     * Envoi du workspace village sur le drive
+     */
     public void uploadToDriveVillage() {
         try {
         	// check if exist
@@ -160,7 +181,10 @@ public class FileManager {
 
         }
     }
-    
+
+    /**
+     * Téléchargement du workspace village depuis le drive
+     */
     // Download media from drive Village
     public void downloadFromDriveVillage() {
     	// download file
