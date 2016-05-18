@@ -433,7 +433,7 @@ public class GUIControllerChateauVisitForm {
         }
 
         if (this.overviewImages.size() < 3) {
-            errorList += "• Au moins trois images 'Overview' doit être sélectionnées\n";
+            errorList += "• Au moins trois images 'Overview' doivent être sélectionnées\n";
             addPicOverview.getStyleClass().addAll("buttonErrorStyle");
             isValid = false;
         }
