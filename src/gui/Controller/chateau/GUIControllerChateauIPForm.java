@@ -25,6 +25,7 @@ public class GUIControllerChateauIPForm {
     private static GUIControllerChateauIPForm INSTANCE = new GUIControllerChateauIPForm();
 
     public TextField ipName;
+    public TextField ipNameEN;
     public TextArea ipPresTextFR;
     public TextArea ipPresTextEN;
 
@@ -133,6 +134,8 @@ public class GUIControllerChateauIPForm {
 
     public void fillInputs(InterestPoint p) {
         ipName.setText(p.getName());
+        ipNameEN.setText(p.readName_EN());
+
         ipPresTextFR.setText(p.readPresentation_FR());
         ipPresTextEN.setText(p.readPresentation_EN());
 
@@ -189,6 +192,7 @@ public class GUIControllerChateauIPForm {
 
                 ip.writePresentation_FR(ipPresTextFR.getText());
                 ip.writePresentation_EN(ipPresTextEN.getText());
+                ip.writeName_EN(ipNameEN.getText());
 
                 if (this.floor == Location.FLOOR_ONE) {
                     FileManager.getInstance().getChateauWorkspace().getV().get(FileManager.getInstance()
@@ -244,6 +248,8 @@ public class GUIControllerChateauIPForm {
                         renameIP(selectedPoint, ipPath, ipNewName, false);
 
                     } else {
+
+                        FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).writeName_EN(ipNameEN.getText());
 
                         FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).writePresentation_FR(ipPresTextFR.getText());
                         FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP1().get(ipIndex).writePresentation_EN(ipPresTextEN.getText());
@@ -337,6 +343,8 @@ public class GUIControllerChateauIPForm {
                         renameIP(selectedPoint, ipPath, ipNewName, false);
 
                     } else {
+
+                        FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).writeName_EN(ipNameEN.getText());
 
                         FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).writePresentation_FR(ipPresTextFR.getText());
                         FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP2().get(ipIndex).writePresentation_EN(ipPresTextEN.getText());
@@ -433,6 +441,9 @@ public class GUIControllerChateauIPForm {
                         renameIP(selectedPoint, ipPath, ipNewName, false);
 
                     } else {
+
+                        FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).writeName_EN(ipNameEN.getText());
+
 
                         FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).writePresentation_FR(ipPresTextFR.getText());
                         FileManager.getInstance().getChateauWorkspace().getV().get(visitIndex).getIP3().get(ipIndex).writePresentation_EN(ipPresTextEN.getText());
@@ -567,6 +578,7 @@ public class GUIControllerChateauIPForm {
             ip.writeMarker();
             ip.writePresentation_FR(oldIP.readPresentation_FR());
             ip.writePresentation_EN(oldIP.readPresentation_EN());
+            ip.writeName_EN(oldIP.readName_EN());
 
         }
         else {
@@ -597,6 +609,7 @@ public class GUIControllerChateauIPForm {
 
             ip.writePresentation_FR(ipPresTextFR.getText());
             ip.writePresentation_EN(ipPresTextEN.getText());
+            ip.writeName_EN(ipNameEN.getText());
 
 
             if (this.floor == Location.FLOOR_ONE) {
@@ -663,6 +676,15 @@ public class GUIControllerChateauIPForm {
         else {
             ipName.getStyleClass().clear();
             ipName.getStyleClass().addAll("text-field", "text-input");
+        }
+
+        if (this.ipNameEN.getText().equals("")) {
+            errorList += "• Le case du nom anglais est vide\n";
+            ipNameEN.getStyleClass().add("errorStyle");
+            isValid = false;
+        } else {
+            ipNameEN.getStyleClass().clear();
+            ipNameEN.getStyleClass().addAll("text-field", "text-input");
         }
 
         if (this.ipPresTextFR.getText().equals("")) {

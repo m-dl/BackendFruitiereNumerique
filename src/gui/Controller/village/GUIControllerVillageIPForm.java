@@ -185,7 +185,6 @@ public class GUIControllerVillageIPForm {
                 String ipPath = FileManager.WORKSPACE + "/" + FileManager.VILLAGE + "/" +
                         GUIControllerVillage.getInstance().getSelectedVisit().getName() + "/" + ipName;
 
-                // TODO: 07/05/2016  rempir auto les coord
 
                 if (!Objects.equals(ipNewName, originalName)) {
                     ipPath = FileManager.WORKSPACE + "/" + FileManager.VILLAGE + "/" +
@@ -325,7 +324,7 @@ public class GUIControllerVillageIPForm {
 
             ip.writePresentation_FR(oldIP.readPresentation_FR());
             ip.writePresentation_EN(oldIP.readPresentation_EN());
-            ip.writeMarker(coordLat.getText()+","+ coordLong.getText());
+            ip.writeMarker(oldIP.readMarker());
         }
         else {
 
@@ -349,6 +348,8 @@ public class GUIControllerVillageIPForm {
 
             ip.writePresentation_FR(ipPresTextFR.getText());
             ip.writePresentation_EN(ipPresTextEN.getText());
+            ip.writeMarker(coordLat.getText() + "," + coordLong.getText());
+
 
             FileManager.getInstance().getVillageWorkspace().getV().get(FileManager.getInstance()
                     .getVillageWorkspace().getV().indexOf(GUIControllerVillage.getInstance().getSelectedVisit())).deleteInterestPoint(oldIP,oldPath);

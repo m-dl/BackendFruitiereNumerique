@@ -5,7 +5,8 @@
 <?import javafx.scene.Group?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<ScrollPane xmlns:fx="http://javafx.com/fxml/1" hbarPolicy="NEVER" xmlns="http://javafx.com/javafx/null">
+<ScrollPane xmlns:fx="http://javafx.com/fxml/1" hbarPolicy="NEVER" prefHeight="510.0"
+            xmlns="http://javafx.com/javafx/8.0.65">
    <content>
       <Pane prefHeight="1583.0" prefWidth="594.0">
          <children>
@@ -93,7 +94,8 @@
             <Group layoutX="5.0" layoutY="1507.0">
                <children>
                   <Separator prefHeight="13.0" prefWidth="589.0" />
-                  <Button fx:id="saveChanges" layoutX="254.0" layoutY="20.0" mnemonicParsing="false" onAction="#saveChanges" text="Enregister" />
+                  <Button fx:id="saveChanges" defaultButton="true" layoutX="254.0" layoutY="20.0"
+                          mnemonicParsing="false" onAction="#saveChanges" text="Enregister"/>
                </children>
             </Group>
             <Label layoutX="150.0" layoutY="96.0" text="Nom de la visite:"/>
