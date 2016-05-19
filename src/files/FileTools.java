@@ -487,8 +487,6 @@ public class FileTools {
 			System.err.println(x);
 		}
 
-		System.out.println("f"+ floor);
-		System.out.println("c"+ coord);
 
 		IP.setFloor(Integer.parseInt(floor));
 		String[] parseCoord = coord.split(",");

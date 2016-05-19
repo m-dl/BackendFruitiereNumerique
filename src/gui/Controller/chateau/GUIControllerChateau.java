@@ -227,6 +227,7 @@ public class GUIControllerChateau implements Initializable{
     public void reloadCastleData() {
 
         Platform.runLater(() -> {
+            FileManager.getInstance().getChateauWorkspace().getV().clear();
             visitListC.clear();
             visitListViewC.getItems().clear();
 
