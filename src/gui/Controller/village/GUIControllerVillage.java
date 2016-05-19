@@ -157,7 +157,7 @@ public class GUIControllerVillage implements Initializable{
         if(getSelectedVisit() != null) {
             System.out.println("del visit : " + visitListViewV.getSelectionModel().getSelectedItem());
             String path = FileManager.WORKSPACE + "/" + FileManager.VILLAGE + "/" + visitListViewV.getSelectionModel().getSelectedItem().getName();
-            guiWindow.FM.getVillageWorkspace().deleteVisit(visitListViewV.getSelectionModel().getSelectedItem(), path);
+            FileManager.getInstance().getVillageWorkspace().deleteVisit(visitListViewV.getSelectionModel().getSelectedItem(), path);
             visitListV.remove(visitListViewV.getSelectionModel().getSelectedItem());
             visitListViewV.getParent().requestFocus();
             iPListViewV.getParent().requestFocus();

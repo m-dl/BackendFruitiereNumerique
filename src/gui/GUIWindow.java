@@ -1,6 +1,7 @@
 package gui;
 
 import com.google.api.services.drive.cmdline.DriveTools;
+import com.google.api.services.drive.model.File;
 import files.FileManager;
 import gui.Controller.GUIFormsController;
 import gui.Controller.GUIMainViewController;
@@ -21,7 +22,6 @@ public class GUIWindow extends Application {
 
 
     private static GUIWindow INSTANCE = new GUIWindow();
-    public FileManager FM = FileManager.getInstance();
     private Pane rootLayout;
     private Stage primaryStage;
 
@@ -41,9 +41,9 @@ public class GUIWindow extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        FM.Init();
-        FM.InitChateau();
-        FM.InitVillage();
+        FileManager.getInstance().Init();
+        FileManager.getInstance().InitChateau();
+        FileManager.getInstance().InitVillage();
 
         DriveTools.auth();
 
@@ -100,23 +100,25 @@ public class GUIWindow extends Application {
         villageTab.setText("Visite Village");
         villageTab.setContent(villagePane);
 
-
+        /*
+         onglet non utilisé
         Tab photosTab = new Tab();
         photosTab.setDisable(true);
         photosTab.setText("Stockage Photos");
         photosTab.setContent(photosPane);
-
+        */
 
         tabPane.getTabs().clear();
-        tabPane.getTabs().addAll(chateauTab,villageTab,photosTab);
+        tabPane.getTabs().addAll(chateauTab,villageTab);
+        //tabPane.getTabs().addAll(chateauTab,villageTab,photosTab);
 
     }
 
     public void loadChateauData() {
-        GUIControllerChateau.getInstance().loadCastleData(FM.getChateauWorkspace().getV());
+        GUIControllerChateau.getInstance().loadCastleData(FileManager.getInstance().getChateauWorkspace().getV());
     }
 
     public void loadVillageData() {
-        GUIControllerVillage.getInstance().loadVisitData(FM.getVillageWorkspace().getV());
+        GUIControllerVillage.getInstance().loadVisitData(FileManager.getInstance().getVillageWorkspace().getV());
     }
 }

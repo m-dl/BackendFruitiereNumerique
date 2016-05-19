@@ -153,7 +153,7 @@ public class GUIControllerChateau implements Initializable{
     void deleteVisitC() {
         if(getSelectedVisit() != null) {
             String path = FileManager.WORKSPACE + "/" + FileManager.CHATEAU + "/" + visitListViewC.getSelectionModel().getSelectedItem().getName();
-            guiWindow.FM.getChateauWorkspace().deleteVisit(visitListViewC.getSelectionModel().getSelectedItem(), path);
+            FileManager.getInstance().getChateauWorkspace().deleteVisit(visitListViewC.getSelectionModel().getSelectedItem(), path);
             visitListC.remove(visitListViewC.getSelectionModel().getSelectedItem());
             visitListViewC.getParent().requestFocus();
         }

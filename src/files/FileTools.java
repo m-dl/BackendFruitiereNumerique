@@ -329,6 +329,8 @@ public class FileTools {
 
 	// List all Chateau visits from a location
 	public static void ListVisitChateau(String pathFrom, entities.chateau.Location l) {
+		System.out.println(pathFrom);
+
 		File fileFrom = new File(pathFrom);
         File[] list = fileFrom.listFiles();
         if(!Exist(fileFrom)) 
@@ -342,6 +344,7 @@ public class FileTools {
 	
 	// List a Chateau visit folder content
     public static void ListVisitContentChateau(String pathFrom, String visitName, entities.chateau.Location l) {
+
         File fileFrom = new File(pathFrom);
         File[] list = fileFrom.listFiles();
         
@@ -353,6 +356,8 @@ public class FileTools {
             if(file.isDirectory()){ // Overview or Info or IP folder
                 if(!file.getName().equals(FileManager.OVERVIEW_FOLDER) && !file.getName().equals(FileManager.INFO_FOLDER)) {
                 	entities.chateau.InterestPoint tmpIP = new entities.chateau.InterestPoint(pathFrom + "/" + file.getName(), file.getName());
+					System.out.println("tmp:" + tmpIP.getName() + "/ étage: " +tmpIP.getFloor());
+
 					if(tmpIP.getFloor() == entities.chateau.Location.FLOOR_ONE)
                 		tmpVisit.addInterestPoint(tmpIP, tmpVisit.getIP1());
 					else if(tmpIP.getFloor() == entities.chateau.Location.FLOOR_TWO)
@@ -462,8 +467,20 @@ public class FileTools {
     public static void ParseCoordinates(entities.chateau.InterestPoint IP) {
 		String input = Read(IP.getMarker());
 		if(input != null) {
-			String[] lines = input.split(System.getProperty("line.separator"));
+			System.out.print(System.getProperty("os.name").toLowerCase());
+
+			String[] lines = input.split("\r");
+
+			if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0) {
+				lines = input.split("\n");
+			}
+			else {
+				lines = input.split("\r");
+			}
+
+
 			if(lines.length > 1) {
+				System.out.println(lines[0]);
 				IP.setFloor(Integer.parseInt(lines[0]));
 				String[] coord = lines[1].split(",");
 				if(coord.length > 1) {
