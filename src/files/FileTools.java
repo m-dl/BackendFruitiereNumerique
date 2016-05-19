@@ -1,24 +1,21 @@
 package files;
 
-import gui.Controller.GUIFormsController;
-import org.apache.commons.io.FileUtils;
-
 import entities.village.Road;
+import gui.Controller.GUIFormsController;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
-import static javafx.scene.input.KeyCode.T;
 
 /**
  * @author Maxime
@@ -488,11 +485,13 @@ public class FileTools {
 		}
 
 
-		IP.setFloor(Integer.parseInt(floor));
-		String[] parseCoord = coord.split(",");
-		if(parseCoord.length > 1) {
-					IP.setCoordX(Double.parseDouble(parseCoord[0]));
-					IP.setCoordY(Double.parseDouble(parseCoord[1]));
+		if (!floor.equals("") && !coord.equals("")) {
+			IP.setFloor(Integer.parseInt(floor));
+			String[] parseCoord = coord.split(",");
+			if (parseCoord.length > 1) {
+				IP.setCoordX(Double.parseDouble(parseCoord[0]));
+				IP.setCoordY(Double.parseDouble(parseCoord[1]));
+			}
 		}
 
 
