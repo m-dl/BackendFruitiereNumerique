@@ -1,62 +1,36 @@
 package gui;
 
-import com.google.api.client.auth.oauth2.BearerToken;
-import com.google.api.client.http.HttpRequest;
 import com.google.api.services.drive.cmdline.DriveTools;
 import files.FileManager;
-import gui.Controller.*;
+import gui.Controller.GUIFormsController;
+import gui.Controller.GUIMainViewController;
 import gui.Controller.chateau.GUIControllerChateau;
-import gui.Controller.chateau.GUIControllerChateauIPForm;
-import gui.Controller.chateau.GUIControllerChateauVisitForm;
 import gui.Controller.photo.GUIControllerPhotos;
 import gui.Controller.village.GUIControllerVillage;
 import javafx.application.Application;
-import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebEvent;
-import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
-import java.io.Console;
 import java.io.IOException;
-import java.io.PrintStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 public class GUIWindow extends Application {
 
-    static final String APP_ID = "...";
-    static final String REDIRECT_URL = "https://login.live.com/oauth20_desktop.srf";
-    static final String RESPONSE_TYPE = "token";
-    static final String SCOPE = "wl.signin%20wl.offline_access";
 
-    public FileManager FM = FileManager.getInstance();
     private static GUIWindow INSTANCE = new GUIWindow();
-
-
+    public FileManager FM = FileManager.getInstance();
     private Pane rootLayout;
     private Stage primaryStage;
 
 
-    public static void main(String[] args) {
-        launch(args);
+    public GUIWindow() {
     }
 
-    public GUIWindow() {
+    public static void main(String[] args) {
+        launch(args);
     }
 
     public static GUIWindow getInstance() {
