@@ -220,6 +220,7 @@ public class GUIControllerChateau implements Initializable{
             for (int i = 0; i < visit.getIP3().size(); i++) {
                 this.iPListC.add(visit.getIP3().get(i));
             }
+            iPListViewC.refresh();
         }
     }
 
