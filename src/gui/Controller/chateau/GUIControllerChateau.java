@@ -228,6 +228,7 @@ public class GUIControllerChateau implements Initializable{
 
         Platform.runLater(() -> {
             visitListC.clear();
+            visitListViewC.getItems().clear();
 
             FileManager.getInstance().InitChateau();
 

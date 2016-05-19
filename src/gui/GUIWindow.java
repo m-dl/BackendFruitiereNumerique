@@ -102,6 +102,9 @@ public class GUIWindow extends Application {
 
         /*
          onglet non utilisé
+
+        Pour utilisation, modifier le fichier view/photos/photosView.fxml avec SceneBuilder
+        et décommenter ces blocs
         Tab photosTab = new Tab();
         photosTab.setDisable(true);
         photosTab.setText("Stockage Photos");

@@ -12,11 +12,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import static javafx.scene.input.KeyCode.T;
 
 /**
  * @author Maxime
@@ -465,29 +467,36 @@ public class FileTools {
     
     // Parse floor and coordinates
     public static void ParseCoordinates(entities.chateau.InterestPoint IP) {
-		String input = Read(IP.getMarker());
-		if(input != null) {
-			System.out.print(System.getProperty("os.name").toLowerCase());
 
-			String[] lines = input.split("\r");
+		int lineNb = 0;
+		String floor = "";
+		String coord = "";
 
-			if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0) {
-				lines = input.split("\n");
+		try (InputStream in = Files.newInputStream(IP.getMarker().toPath());
+			 BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
+			String line;
+			while ((line = reader.readLine()) != null) {
+				if (lineNb == 0)
+					floor = line;
+				else
+					coord = line;
+
+				lineNb++;
 			}
-			else {
-				lines = input.split("\r");
-			}
-
-
-			if(lines.length > 1) {
-				System.out.println(lines[0]);
-				IP.setFloor(Integer.parseInt(lines[0]));
-				String[] coord = lines[1].split(",");
-				if(coord.length > 1) {
-					IP.setCoordX(Double.parseDouble(coord[0]));
-					IP.setCoordY(Double.parseDouble(coord[1]));
-				}
-			}
+		} catch (IOException x) {
+			System.err.println(x);
 		}
+
+		System.out.println("f"+ floor);
+		System.out.println("c"+ coord);
+
+		IP.setFloor(Integer.parseInt(floor));
+		String[] parseCoord = coord.split(",");
+		if(parseCoord.length > 1) {
+					IP.setCoordX(Double.parseDouble(parseCoord[0]));
+					IP.setCoordY(Double.parseDouble(parseCoord[1]));
+		}
+
+
     }
 }
