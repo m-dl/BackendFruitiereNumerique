@@ -20,20 +20,19 @@ import static javafx.scene.paint.Color.RED;
 public class GUIControllerPointPlacer {
 
     private static GUIControllerPointPlacer INSTANCE = new GUIControllerPointPlacer();
+    public ImageView displayedImage;
+    public Pane imagePanel;
+    private Stage displayedWindow;
+    private Circle marker;
+    private int currentFloor;
+    private double coordX, coordY;
+
+    private GUIControllerPointPlacer() {
+    }
 
     public static GUIControllerPointPlacer getInstance() {
         return INSTANCE;
     }
-    private GUIControllerPointPlacer() {}
-
-    private Stage displayedWindow;
-    public ImageView displayedImage;
-    public Pane imagePanel;
-    private Circle marker;
-
-    private int currentFloor;
-    private double coordX, coordY;
-
 
     public void display(boolean isNewPoint) {
 
@@ -94,15 +93,39 @@ public class GUIControllerPointPlacer {
 
     }
     private void loadFloor() {
+        File f;
         switch (currentFloor) {
             case 0:
-                displayedImage.setImage(new Image(new File("res/etage0.jpg").toURI().toString()));
+                f = new File("res/etage0.jpg");
+
+                if (f.exists() && !f.isDirectory())
+                    displayedImage.setImage(new Image(new File("res/etage0.jpg").toURI().toString()));
+                else {
+                    System.out.println("pas de fichier, chargement par défaut");
+                    displayedImage.setImage(new Image(new File("../../../etage0.jpg").toURI().toString()));
+                }
                 break;
             case 1:
-                displayedImage.setImage(new Image(new File("res/etage1.jpg").toURI().toString()));
+                f = new File("res/etage1.jpg");
+
+                if (f.exists() && !f.isDirectory())
+                    displayedImage.setImage(new Image(new File("res/etage1.jpg").toURI().toString()));
+                else {
+                    System.out.println("aps de fichier charge par défaut");
+                    displayedImage.setImage(new Image(new File("etage1.jpg").toURI().toString()));
+                }
+
                 break;
             case 2:
-                displayedImage.setImage(new Image(new File("res/etage2.jpg").toURI().toString()));
+                f = new File("res/etage1.jpg");
+
+                if (f.exists() && !f.isDirectory())
+                    displayedImage.setImage(new Image(new File("res/etage2.jpg").toURI().toString()));
+                else {
+                    System.out.println("aps de fichier charge par défaut");
+                    displayedImage.setImage(new Image(new File("etage2.jpg").toURI().toString()));
+                }
+
                 break;
         }
 
