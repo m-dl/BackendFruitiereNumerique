@@ -174,7 +174,7 @@ public class GUIMainViewController implements Initializable {
 
     /**
      * Retourne le conteneur des onglets
-     * @return
+     * @return le conteneur
      */
     public TabPane getTabPane() {
         return tabPane;

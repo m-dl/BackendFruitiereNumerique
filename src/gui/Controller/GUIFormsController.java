@@ -99,13 +99,13 @@ public class GUIFormsController {
 
     /**
      * Affichage du formulaire correspondant au point d'intérêt chateau
-     * @param isNewVisit
-     * @param selectedPoint
+     * @param isNewPoint si nouveau point ou point modifié
+     * @param selectedPoint le point sélectionné si modification
      */
-    public void displayChateauIPForm(boolean isNewVisit, entities.chateau.InterestPoint selectedPoint) {
+    public void displayChateauIPForm(boolean isNewPoint, entities.chateau.InterestPoint selectedPoint) {
 
         if(!isFormDisplayed)
-            GUIControllerChateauIPForm.getInstance().displayForm(isNewVisit, selectedPoint);
+            GUIControllerChateauIPForm.getInstance().displayForm(isNewPoint, selectedPoint);
         else
             formToFront();
     }
@@ -124,13 +124,13 @@ public class GUIFormsController {
     }
 
     /**
-     * Affichage du formulaire correspondant au point d'intérêt village
-     * @param isNewVisit
-     * @param selectedPoint
+     * Affichage du formulaire correspondant au point d'intérêt chateau
+     * @param isNewPoint si nouveau point ou point modifié
+     * @param selectedPoint le point sélectionné si modification
      */
-    public void displayVillageIPForm(boolean isNewVisit, entities.village.InterestPoint selectedPoint) {
+    public void displayVillageIPForm(boolean isNewPoint, entities.village.InterestPoint selectedPoint) {
         if(!isFormDisplayed)
-            GUIControllerVillageIPForm.getInstance().displayForm(isNewVisit, selectedPoint);
+            GUIControllerVillageIPForm.getInstance().displayForm(isNewPoint, selectedPoint);
         else
             formToFront();
     }
