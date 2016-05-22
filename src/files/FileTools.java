@@ -17,8 +17,10 @@ import java.util.regex.Pattern;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
+
 /**
- * @author Maxime
+ * Fonctions de lecture et écriture des fichiers ou dossier
+ * Aussi pour parser les données
  */
 public class FileTools {
 	public static final Pattern WINDOWS_FILES_FORMATS = Pattern.compile(
@@ -78,9 +80,13 @@ public class FileTools {
     };
     
     public static final FileChooser.ExtensionFilter ALL_FILE_FILTER = new FileChooser.ExtensionFilter("*", "*.*");
-    
-	// Create a file
-	public static void CreateFile(String path) {
+
+    /**
+     * Fonction pour la création d'un fichier
+     *
+     * @param path dans laquelle le fichier sera créé
+     */
+    public static void CreateFile(String path) {
 		try {
 		      File file = new File(path);
 		      if(!file.createNewFile()){ 
@@ -88,11 +94,15 @@ public class FileTools {
 		      }
 	    	} catch(IOException e) {
 		      e.printStackTrace();
-		}
-	}
-	
-	// Create a directory
-	public static void CreateDirectory(String path) {
+        }
+    }
+
+
+    /**
+     * Fonction pour la création d'une dossier
+     * @param path dans laquelle le dossier sera créé
+     */
+    public static void CreateDirectory(String path) {
 		File dir = new File(path);
 		// if the directory does not exist, create it
 		if(Exist(dir)) {
@@ -109,7 +119,13 @@ public class FileTools {
 	}
 	
 	// Read from a file
-	public static String Read(File file) {
+
+    /**
+     * Fonction pour la lecture d'un fichier
+     * @param file le fichier à lire
+     * @return la chaîne lue
+     */
+    public static String Read(File file) {
 		String output = null;
 	    try {
 	        FileReader reader = new FileReader(file);
@@ -121,11 +137,17 @@ public class FileTools {
 	        e.printStackTrace();
 	    }
 		return output;
-	}
-	
-	// Write in a file
-	public static void Write(File file, String input) {
-		  Writer writer = null;
+    }
+
+
+    /**
+     * Permet l'écriture sur un fichier
+     *
+     * @param file  le fichier à écrire
+     * @param input la chaine à écrire
+     */
+    public static void Write(File file, String input) {
+        Writer writer = null;
 		  try {
 		      writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "utf-8"));
 		      writer.write(input);
@@ -135,12 +157,17 @@ public class FileTools {
 		     try {writer.close();} catch (Exception ex) {
 				 GUIFormsController.getInstance().displayExceptionAlert(ex,"Erreur d'écriture de fichier").showAndWait();
 
-			 }
-		  }
-	}
-	
-	// Move a file / directory
-	public static void Move(String pathFrom, String pathTo) {
+             }
+          }
+    }
+
+
+    /**
+     * Fonction pour bouger un dossier ou un ficher
+     * @param pathFrom le chemin du dossier ou fichier à bouger
+     * @param pathTo la destination
+     */
+    public static void Move(String pathFrom, String pathTo) {
 		try {
 			Path fileFrom = Paths.get(pathFrom);
 			Path fileTo = Paths.get(pathTo);
@@ -151,7 +178,12 @@ public class FileTools {
 	}
 	
 	// Delete a file / directory
-	public static void Delete(String path) {
+
+    /**
+     * Fonction pour supprimer un fichier ou dossier
+     * @param path le chemin du dossier ou fichier à supprimer
+     */
+    public static void Delete(String path) {
 		File file = new File(path);
 		try {
 			FileUtils.forceDelete(file);
@@ -159,11 +191,15 @@ public class FileTools {
 			e.printStackTrace();
 			GUIFormsController.getInstance().displayExceptionAlert(e,"Erreur de suppression de fichier").showAndWait();
 
-		}
-	}
-	
-	// Copy a directory
-	public static void CopyDirectory(String pathFrom, String pathTo) {
+        }
+    }
+
+    /**
+     * Fonction pour copier un dossier
+     * @param pathFrom le chemin du dossier à copier
+     * @param pathTo la destination dans lequelle la copie sera placée
+     */
+    public static void CopyDirectory(String pathFrom, String pathTo) {
 		File fileFrom = new File(pathFrom);
 		File fileTo = new File(pathTo);
 		try {
@@ -172,11 +208,15 @@ public class FileTools {
 			e.printStackTrace();
 			GUIFormsController.getInstance().displayExceptionAlert(e,"Erreur de copie de répertoire").showAndWait();
 
-		}
-	}
-	
-	// Copy a file
-	public static void CopyFile(String pathFrom, String pathTo) {
+        }
+    }
+
+    /**
+     * Fonction pour copier un fichier
+     * @param pathFrom le chemin du fichier à copier
+     * @param pathTo la destination dans lequelle la copie sera placée
+     */
+    public static void CopyFile(String pathFrom, String pathTo) {
 		File fileFrom = new File(pathFrom);
 		File fileTo = new File(pathTo);
 		try {
@@ -185,10 +225,15 @@ public class FileTools {
 			e.printStackTrace();
 			GUIFormsController.getInstance().displayExceptionAlert(e,"Erreur de copie de fichier").showAndWait();
 
-		}
-	}
-	
-    // Rename a file / directory
+        }
+    }
+
+    /**
+     * Fonction pour renommer un fichier ou dossier
+     * @param pathFrom le chemin du fichier ou dossier à renommer
+     * @param pathTo la destination
+     * @return si l'opération à bien été effectuée
+     */
     public static boolean Rename(String pathFrom, String pathTo) {
         Path fileFrom = Paths.get(pathFrom);
         Path fileTo = Paths.get(pathTo);
@@ -205,22 +250,35 @@ public class FileTools {
         }
         return false; // not renamed
     }
-	
-	// Check if folder or file exists
-	public static boolean Exist(File f) {
+
+
+    /**
+     * Vérifie si un fichier ou dossier existe déjà
+     * @param f le fichier ou dossier
+     * @return si le dossier existe ou non
+     */
+    public static boolean Exist(File f) {
 		if(f.exists())
 			return true;
 		return false;
-	}
-	
-    // Directory chooser
+    }
+
+
+    /**
+     * Permet l'affichage du sélecteur système de dossier
+     * @return le dossier sélectionné
+     */
     public static File DirectoryChooser(){
     	DirectoryChooser directoryChooser = new DirectoryChooser();
     	directoryChooser.setTitle("Sélectionner un dossier");
     	return directoryChooser.showDialog(null);
     }
-    
-    // File chooser
+
+    /**
+     * * Permet l'affichage du sélecteur système de fichier
+     * @param extFilter le type de contenu qui est accepté
+     * @return le fichier sélectionné
+     */
     public static File FileChooser(FileChooser.ExtensionFilter extFilter){
     	if(extFilter == null)
     		extFilter = FileTools.ALL_FILE_FILTER;
@@ -231,6 +289,12 @@ public class FileTools {
     }
     
     // Multiple File chooser
+
+    /**
+     * Permet l'affichage du sélecteur système de fichiers multiples
+     * @param extFilter le type de contenu qui est accepté
+     * @return les fichier sélectionnés
+     */
     public static ArrayList<File> MultipleFileChooser(FileChooser.ExtensionFilter extFilter){
     	if(extFilter == null)
     		extFilter = FileTools.ALL_FILE_FILTER;
@@ -239,8 +303,13 @@ public class FileTools {
     	fileChooser.setTitle("Sélectionner des fichiers " + extFilter.getDescription());
     	return new ArrayList<File>(fileChooser.showOpenMultipleDialog(null));
     }
-    
-    // Remove file extension
+
+
+    /**
+     * Fonction pour retirer l'extension d'un fichier
+     * @param s la chaine d'origine
+     * @return la chaine sans l'extension
+     */
     public static String RemoveExtension(String s) {
     	int pos = s.lastIndexOf(".");
     	if (pos > 0) {
@@ -248,8 +317,13 @@ public class FileTools {
     	}
     	return s;
     }
-    
-    // Get file extension
+
+
+    /**
+     * Fonction pour récupérer l'extension d'un fichier
+     * @param s la chaine d'origine
+     * @return l'extension extraite
+     */
     public static String GetExtension(String s) {
     	int i = s.lastIndexOf('.');
     	if (i > 0) {
@@ -257,8 +331,12 @@ public class FileTools {
     	}
     	return "";
     }
-    
-    // Get file extension without '.'
+
+    /**
+     * Fonction pour récupérer l'extension d'un fichier sans le point
+     * @param s la chaine d'origine
+     * @return l'extension extraite sans le point
+     */
     public static String GetShortExtension(String s) {
     	int i = s.lastIndexOf('.');
     	if (i > 0) {
@@ -268,22 +346,40 @@ public class FileTools {
     }
 	
     // String To lower case
+
+    /**
+     * Conversion d'une chaine pour que tout les caratère soient en minuscule
+     * @param input la chaine à traiter
+     * @return la chainé traitée
+     */
     public static String StringToLower(String input) {
     	return input.toLowerCase(); // to lower case
     }
-    
-    // Clear string double spaces / line jump
+
+    /**
+     * Fonction pour retirer les espaces doublons et sauts de ligne d'une chaine
+     * @param input la chaine à traiter
+     * @return la chainé traitée
+     */
     public static String StringClearSpaces(String input) {
     	return input.replaceAll("\\s+"," "); // removes spaces / line jump
     }
-    
-    // Clear string all spaces / line jump
+
+    /**
+     * Fonction pour retirer touts les espaces et sauts de ligne d'une chaine
+     * @param input la chaine à traiter
+     * @return la chainé traitée
+     */
     public static String StringClearAllSpaces(String input) {
     	return input.replaceAll("\\s+",""); // removes spaces / line jump
     }
-    
-	// List all pictures from a folder
-	public static ArrayList<File> ListFolderPictures(String p) {
+
+    /**
+     * Fonction pour lister toutes les images contenues dans le dossier Photo
+     * @param p le chemin du dossier
+     * @return la liste des fichiers
+     */
+    public static ArrayList<File> ListFolderPictures(String p) {
 		ArrayList<File> picturesList = new ArrayList<File>();
 		File pathFrom = new File(p);
 		if(!Exist(pathFrom)) 
@@ -294,10 +390,14 @@ public class FileTools {
 			picturesList.add(f);
         }
 		return picturesList;
-	}
-	
-	// List all 360 from a folder
-	public static ArrayList<File> ListFolder360(String p) {
+    }
+
+    /**
+     * Fonction pour lister toutes les images contenues dans le dossier 360
+     * @param p le chemin du dossier
+     * @return la liste des fichiers
+     */
+    public static ArrayList<File> ListFolder360(String p) {
 		ArrayList<File> _360List = new ArrayList<File>();
 		File pathFrom = new File(p);
 		if(!Exist(pathFrom)) 
@@ -310,10 +410,14 @@ public class FileTools {
 			}
         }
 		return _360List;
-	}
-	
-	// List all videos from a folder
-	public static ArrayList<File> ListFolderVideos(String p) {
+    }
+
+    /**
+     * Fonction pour lister toutes les images contenues dans le dossier videos
+     * @param p le chemin du dossier
+     * @return la liste des fichiers
+     */
+    public static ArrayList<File> ListFolderVideos(String p) {
 		ArrayList<File> videosList = new ArrayList<File>();
 		File pathFrom = new File(p);
 		if(!Exist(pathFrom)) 
@@ -324,10 +428,15 @@ public class FileTools {
 			videosList.add(f);
         }
 		return videosList;
-	}
+    }
 
-	// List all Chateau visits from a location
-	public static void ListVisitChateau(String pathFrom, entities.chateau.Location l) {
+
+    /**
+     * Fonction pour lister toutes les visites de chateau de Location
+     * @param pathFrom chemin du dossier visite
+     * @param l Location
+     */
+    public static void ListVisitChateau(String pathFrom, entities.chateau.Location l) {
 		System.out.println(pathFrom);
 
 		File fileFrom = new File(pathFrom);
@@ -339,9 +448,15 @@ public class FileTools {
             	ListVisitContentChateau(pathFrom + "/" + file.getName(), file.getName(), l);
             }
         }
-	}
-	
-	// List a Chateau visit folder content
+    }
+
+
+    /**
+     * Fonction pour lister tout le contenu d'un visite chateau
+     * @param pathFrom dossier de la visite
+     * @param visitName nom de la visite
+     * @param l Location
+     */
     public static void ListVisitContentChateau(String pathFrom, String visitName, entities.chateau.Location l) {
 
         File fileFrom = new File(pathFrom);
@@ -355,7 +470,6 @@ public class FileTools {
             if(file.isDirectory()){ // Overview or Info or IP folder
                 if(!file.getName().equals(FileManager.OVERVIEW_FOLDER) && !file.getName().equals(FileManager.INFO_FOLDER)) {
                 	entities.chateau.InterestPoint tmpIP = new entities.chateau.InterestPoint(pathFrom + "/" + file.getName(), file.getName());
-					System.out.println("tmp:" + tmpIP.getName() + "/ étage: " +tmpIP.getFloor());
 
 					if(tmpIP.getFloor() == entities.chateau.Location.FLOOR_ONE)
                 		tmpVisit.addInterestPoint(tmpIP, tmpVisit.getIP1());
@@ -368,9 +482,13 @@ public class FileTools {
         }
         l.addVisit(tmpVisit);
     }
-    
-	// List all Village visits from a location
-	public static void ListVisitVillage(String pathFrom, entities.village.Location l) {
+
+    /**
+     * Fonction pour lister toutes les visites de village de Location
+     * @param pathFrom chemin du dossier visite
+     * @param l Location
+     */
+    public static void ListVisitVillage(String pathFrom, entities.village.Location l) {
 		File fileFrom = new File(pathFrom);
         File[] list = fileFrom.listFiles();
         if(!Exist(fileFrom)) 
@@ -380,9 +498,14 @@ public class FileTools {
             	ListVisitContentVillage(pathFrom + "/" + file.getName(), file.getName(), l);
             }
         }
-	}
-	
-	// List a Village visit folder content
+    }
+
+    /**
+     * Fonction pour lister tout le contenu d'un visite village
+     * @param pathFrom dossier de la visite
+     * @param visitName nom de la visite
+     * @param l Location
+     */
     public static void ListVisitContentVillage(String pathFrom, String visitName, entities.village.Location l) {
         File fileFrom = new File(pathFrom);
         File[] list = fileFrom.listFiles();
@@ -401,8 +524,13 @@ public class FileTools {
         }
         l.addVisit(tmpVisit);
     }
-    
-    // Parse file name
+
+
+    /**
+     * Chaine à parser
+     * @param input la chaine a traiter
+     * @return la chaine traitée
+     */
     public static String ParseFileName(String input) {
     	input = StringClearSpaces(input);
     	input = StringToLower(input);
@@ -415,8 +543,13 @@ public class FileTools {
     	}
         return input;
     }
-    
-    // Parse GPS coordinates
+
+
+    /**
+     * Fonction pour parser le coordonnées GPS
+     * @param input la chaine à traiter
+     * @return la chaine traitée
+     */
     public static String ParseCoordinates(String input) {
     	input = StringClearAllSpaces(input);
     	Matcher matcher = GPS.matcher(input);
@@ -430,6 +563,12 @@ public class FileTools {
     }
     
     // Read road file
+
+    /**
+     * Lecture d'un chemin pour la visite village
+     * @param road le fichier road à lire
+     * @return la Road extraite
+     */
     public static Road ReadRoad(File road) {
     	String width = "", color = "";
 		ArrayList<String> coord = new ArrayList<String>();
@@ -446,8 +585,13 @@ public class FileTools {
 		scanner.close();
 		return new Road(coord, width, color);
     }
-    
-    // Read village marker file
+
+
+    /**
+     * Lire les coordonnées pour le village
+     * @param marker le fichier qui contient les données
+     * @return les coordonnées dans une chaine
+     */
     public static String ReadMarkerVillage(File marker) {
 		String coord = "";
 		Scanner scanner = new Scanner(Read(marker));
@@ -461,8 +605,13 @@ public class FileTools {
 		scanner.close();
 		return coord;
     }
-    
-    // Parse floor and coordinates
+
+
+    /**
+     *
+     * Lire les coordonnées pour le chateau
+     * @param IP point d'interet
+     */
     public static void ParseCoordinates(entities.chateau.InterestPoint IP) {
 
 		int lineNb = 0;

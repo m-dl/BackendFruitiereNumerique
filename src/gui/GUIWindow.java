@@ -1,7 +1,6 @@
 package gui;
 
 import com.google.api.services.drive.cmdline.DriveTools;
-import com.google.api.services.drive.model.File;
 import files.FileManager;
 import gui.Controller.GUIFormsController;
 import gui.Controller.GUIMainViewController;
@@ -18,9 +17,16 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Classe mère de la partie GUI
+ * Intialise toutes les parties du GUI et affiche la fenêtre principale
+ */
 public class GUIWindow extends Application {
 
 
+    /**
+     * Field INSTANCE pour classe singleton
+     */
     private static GUIWindow INSTANCE = new GUIWindow();
     private Pane rootLayout;
     private Stage primaryStage;
@@ -38,6 +44,12 @@ public class GUIWindow extends Application {
     }
 
 
+    /**
+     * Method start qui init tout les dossier de visite et la fenêtre
+     *
+     * @param primaryStage le stage JavaFX
+     * @throws Exception lors d'un problème de chargement
+     */
     @Override
     public void start(Stage primaryStage) throws Exception{
 
@@ -48,12 +60,15 @@ public class GUIWindow extends Application {
         DriveTools.auth();
 
         this.primaryStage = primaryStage;
-        primaryStage.setTitle("Ajout de fichiers");
+        primaryStage.setTitle("Backend Fuitière Numérique");
 
         initRootLayout();
 
     }
 
+    /**
+     * Charge la vue principale ainsi que les données à afficher
+     */
     public void initRootLayout() {
 
         try {
@@ -79,7 +94,10 @@ public class GUIWindow extends Application {
     }
 
 
-
+    /**
+     * Charge les vues associés aux onglets
+     * @throws IOException
+     */
     public void loadTabPane() throws IOException {
 
 
@@ -117,10 +135,16 @@ public class GUIWindow extends Application {
 
     }
 
+    /**
+     * Initialise la partie chateau du backend
+     */
     public void loadChateauData() {
         GUIControllerChateau.getInstance().loadCastleData(FileManager.getInstance().getChateauWorkspace().getV());
     }
 
+    /**
+     * Initialis la partie village du backend
+     */
     public void loadVillageData() {
         GUIControllerVillage.getInstance().loadVisitData(FileManager.getInstance().getVillageWorkspace().getV());
     }

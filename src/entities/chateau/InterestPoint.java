@@ -315,7 +315,7 @@ public class InterestPoint {
      *
      *
      *
-     * @return the presentation_EN (type File) of this InterestPoint object.
+     * @return the presentation_EN  of this InterestPoint object.
      */
     public File getPresentation_EN() {
         return presentation_EN;
@@ -338,7 +338,7 @@ public class InterestPoint {
      *
      *
      *
-     * @return the marker (type File) of this InterestPoint object.
+     * @return the marker of this InterestPoint object.
      */
     public File getMarker() {
         return marker;
@@ -384,7 +384,7 @@ public class InterestPoint {
      *
      *
      *
-     * @return the photos (type ArrayList<File>) of this InterestPoint object.
+     * @return the photos  of this InterestPoint object.
      */
     public ArrayList<File> getPhotos() {
         return photos;
@@ -407,7 +407,7 @@ public class InterestPoint {
      *
      *
      *
-     * @return the name (type String) of this InterestPoint object.
+     * @return the name  of this InterestPoint object.
      */
     public String getName() {
         return name;
@@ -430,7 +430,7 @@ public class InterestPoint {
      *
      *
      *
-     * @return the interieur (type ArrayList<File>) of this InterestPoint object.
+     * @return the interieur  of this InterestPoint object.
      */
     public ArrayList<File> getInterieur() {
         return interieur;
@@ -453,7 +453,7 @@ public class InterestPoint {
      *
      *
      *
-     * @return the videos (type ArrayList<File>) of this InterestPoint object.
+     * @return the videos  of this InterestPoint object.
      */
     public ArrayList<File> getVideos() {
         return videos;
@@ -476,7 +476,7 @@ public class InterestPoint {
      *
      *
      *
-     * @return the _360 (type ArrayList<File>) of this InterestPoint object.
+     * @return the _360  of this InterestPoint object.
      */
     public ArrayList<File> get_360() {
         return _360;

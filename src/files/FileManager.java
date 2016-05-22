@@ -11,7 +11,6 @@ import java.io.File;
  * Class FileManager
  * Gère toute la partie de gestion de fichiers en local et avec le Drive
  *
- *
  */
 public class FileManager {
 	
@@ -185,7 +184,6 @@ public class FileManager {
     /**
      * Téléchargement du workspace village depuis le drive
      */
-    // Download media from drive Village
     public void downloadFromDriveVillage() {
     	// download file
     	if(DriveTools.download(DriveTools.VILLAGE_MEDIAS)) {

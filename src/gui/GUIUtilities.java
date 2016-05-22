@@ -4,11 +4,20 @@ import javafx.fxml.FXMLLoader;
 
 import java.io.IOException;
 
+
 /**
- * Created by adriansalas on 26/03/2016.
+ * Classe utilitaire pour le GUI du backend
  */
 public class GUIUtilities {
 
+    /**
+     * Charge la vue du FXML
+     *
+     * @param resourcePath le chemin du FXML à charger
+     * @param Controller   le controller associé à la vue
+     * @return l'objet contenant les objets chargés
+     * @throws IOException
+     */
     public static Object loadLayout(String resourcePath, Object Controller) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(GUIWindow.class.getResource(resourcePath));

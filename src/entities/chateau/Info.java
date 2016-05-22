@@ -147,7 +147,7 @@ public class Info {
     /**
      * Method getContent_FR returns the content_FR of this Info object.
      *
-     * @return the content_FR (type File) of this Info object.
+     * @return the content_FR of this Info object.
      */
     public File getContent_FR() {
         return content_FR;
@@ -170,7 +170,7 @@ public class Info {
      *
      *
      *
-     * @return the content_EN (type File) of this Info object.
+     * @return the content_EN of this Info object.
      */
     public File getContent_EN() {
         return content_EN;
@@ -193,7 +193,7 @@ public class Info {
      *
      *
      *
-     * @return the picture (type File) of this Info object.
+     * @return the picture of this Info object.
      */
     public File getPicture() {
         return picture;
@@ -216,7 +216,7 @@ public class Info {
      *
      *
      *
-     * @return the photos (type ArrayList<File>) of this Info object.
+     * @return the photos of this Info object.
      */
     public ArrayList<File> getPhotos() {
         return photos;

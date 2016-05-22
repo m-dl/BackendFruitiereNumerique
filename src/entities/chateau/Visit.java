@@ -61,7 +61,7 @@ public class Visit {
 
     /**
      * Fonction pour la suppression d'une visite
-     * @param pathFrom
+     * @param pathFrom le chemin de la visite
      */
     public void delete(String pathFrom) {
         FileTools.Delete(pathFrom);

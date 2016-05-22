@@ -266,7 +266,7 @@ public class Overview {
      *
      *
      *
-     * @return the imagesContent (type ArrayList<File>) of this Overview object.
+     * @return the imagesContent  of this Overview object.
      */
     public ArrayList<File> getImagesContent() {
         return imagesContent;
@@ -275,7 +275,7 @@ public class Overview {
     /**
      * Method setImagesContent ...
      *
-     * @param imagesContent of type ArrayList<File>
+     * @param imagesContent the list to set
      * @param pathTo of type String
      */
     public void setImagesContent(ArrayList<File> imagesContent, String pathTo) {
