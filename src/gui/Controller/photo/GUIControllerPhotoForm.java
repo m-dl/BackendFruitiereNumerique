@@ -30,10 +30,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+/**
+ * Controlleur pour l'ajout des photos et vidéos
+ * Classe Singleton
+ */
 public class GUIControllerPhotoForm {
 
-    private static GUIControllerPhotoForm INSTANCE = new GUIControllerPhotoForm();
-    private ObservableList<CheckBox> picturesCheckBoxList = FXCollections.observableArrayList();
+    private static GUIControllerPhotoForm INSTANCE = new GUIControllerPhotoForm(); // instance singleton
+    private ObservableList<CheckBox> picturesCheckBoxList = FXCollections.observableArrayList(); //liste des cases a cocher
     private ObservableList<AnchorPane> pictureContentContainer = FXCollections.observableArrayList();
     private VBox verticalContentDisplay;
     private Stage stage;
@@ -44,16 +48,25 @@ public class GUIControllerPhotoForm {
     private ArrayList<File> workingImageList;
     private File selectedDescImage;
 
+
     private GUIControllerPhotoForm() {
         initializeWindow();
         selectedDescImage = null;
         workingImageList = new ArrayList<>();
     }
 
+    /**
+     * Retourne l'instance de la classe singleton
+     *
+     * @return l'instance de classe
+     */
     public static GUIControllerPhotoForm getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Charge la view fxml
+     */
     private void initializeWindow() {
         try {
             pictureForm = (BorderPane) GUIUtilities.loadLayout("view/photos/photoFormView.fxml", this);
@@ -71,6 +84,9 @@ public class GUIControllerPhotoForm {
         }
     }
 
+    /**
+     * fonction qui set les images séléctionnés selon le form qui a appelé la classe
+     */
     @FXML
     public void saveChanges() {
 
@@ -149,11 +165,19 @@ public class GUIControllerPhotoForm {
         stage.close();
     }
 
+    /**
+     * Clean les listes contenant les médias pour remettre à zero
+     */
     public void wipePictures() {
         workingImageList.clear();
         selectedDescImage = null;
     }
 
+    /**
+     * Affichage du formulaire
+     * @param visitType type de visite appelante
+     * @param pictureFormType type de donnée nécessaire
+     */
     public void displayForm(VisitType visitType, PictureFormType pictureFormType) {
         this.visitType = visitType;
         this.pictureFormType = pictureFormType;
@@ -161,7 +185,11 @@ public class GUIControllerPhotoForm {
         stage.show();
     }
 
-
+    /**
+     * Charge les images existantes pour affichage
+     * Initialise la fenêtre
+     * @return le conteneur des données
+     */
     private ScrollPane loadContent() {
         pictureContentContainer.clear();
         picturesCheckBoxList.clear();
@@ -182,7 +210,10 @@ public class GUIControllerPhotoForm {
         return sc;
     }
 
-
+    /**
+     * Recharge le contenu de la fenêtre
+     * @return le conteneur des données
+     */
     private ScrollPane reloadContent() {
         pictureContentContainer.clear();
         picturesCheckBoxList.clear();
@@ -203,6 +234,9 @@ public class GUIControllerPhotoForm {
         return sc;
     }
 
+    /**
+     * Récupère les données existantes pour modification
+     */
     private void initWorkingList() {
 
         if (visitType == VisitType.CHATEAU) {
@@ -262,6 +296,11 @@ public class GUIControllerPhotoForm {
         }
     }
 
+    /**
+     * Creation de miniature des images
+     * @param imageFile l'image à afficher
+     * @return la miniature créée
+     */
     private Image createImage(final File imageFile) {
 
         try {
@@ -277,6 +316,11 @@ public class GUIControllerPhotoForm {
         return null;
     }
 
+    /**
+     * Conteneur avec une case à cocher, la miniature et le nom pour chaque image
+     * @param file le fichier sur lequel se baser
+     * @return le conteneur avec les données initialisées
+     */
     private AnchorPane createAnchorPane(File file) {
 
         AnchorPane ap = new AnchorPane();
@@ -312,6 +356,9 @@ public class GUIControllerPhotoForm {
         return ap;
     }
 
+    /**
+     * Suppression des avec les cases cochées
+     */
     @FXML
     public void deleteImages() {
         System.out.println("del");
@@ -339,6 +386,10 @@ public class GUIControllerPhotoForm {
     }
 
 
+    /**
+     * Ajout d'un média grâce au sélecteur systeme
+     * Diffère selon le type de fichier
+     */
     @FXML
     public void addImage() {
 

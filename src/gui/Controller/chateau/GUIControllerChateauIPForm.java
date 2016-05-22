@@ -20,6 +20,9 @@ import java.util.Objects;
 import static gui.Controller.enums.PictureFormType.*;
 import static gui.Controller.enums.VisitType.CHATEAU;
 
+/**
+ * Controlleur du form d'ajout et de modification de point du château
+ */
 public class GUIControllerChateauIPForm {
 
     private static GUIControllerChateauIPForm INSTANCE = new GUIControllerChateauIPForm();
@@ -50,6 +53,9 @@ public class GUIControllerChateauIPForm {
     private String errorList;
     private int floor;
 
+    /**
+     * Constructeur initialisant les listes de média
+     */
     private GUIControllerChateauIPForm()
     {
         photos = new ArrayList<>();
@@ -59,10 +65,20 @@ public class GUIControllerChateauIPForm {
         errorList = "";
     }
 
+    /**
+     * Classe singleton, retourne l'instance de la classe
+     *
+     * @return l'instance de la classe
+     */
     public static GUIControllerChateauIPForm getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Affichage de la fenêtre du formulaire
+     * @param isNewPoint si le point est un nouveau point ou existant
+     * @param selectedPoint le point sélectionné
+     */
     public void displayForm(boolean isNewPoint, InterestPoint selectedPoint) {
 
         this.isNewPoint = isNewPoint;
@@ -132,6 +148,10 @@ public class GUIControllerChateauIPForm {
     }
 
 
+    /**
+     * Pré-remplissage des champs en cas de modification
+     * @param p le point concerné
+     */
     public void fillInputs(InterestPoint p) {
         ipName.setText(p.getName());
         ipNameEN.setText(p.readName_EN());
@@ -154,6 +174,9 @@ public class GUIControllerChateauIPForm {
     }
 
 
+    /**
+     * Enregistrement des données du formulaire
+     */
     @FXML
     public void saveChanges() {
 
@@ -532,6 +555,9 @@ public class GUIControllerChateauIPForm {
         }
     }
 
+    /**
+     * Remise à zéro des données
+     */
     private void wipeData() {
         descPic = null;
         photos.clear();
@@ -541,6 +567,15 @@ public class GUIControllerChateauIPForm {
         GUIControllerPhotoForm.getInstance().wipePictures();
     }
 
+    /**
+     * Renommage d'un point d'intérêt, déplacement du dossier
+     *
+     * @param oldIP point d'intérêt avant le renommage
+     * @param newPath chemin de destination du nouveau point
+     * @param newName nouveau nom du point
+     * @param isFromVisit si l'appel de la fonction provient du controlleur de visite
+     * @return le nouveau point d'intérêt
+     */
     public InterestPoint renameIP(InterestPoint oldIP, String newPath, String newName, boolean isFromVisit) {
 
         String oldPath = FileManager.WORKSPACE + "/" + FileManager.CHATEAU + "/" +
@@ -665,6 +700,10 @@ public class GUIControllerChateauIPForm {
         return ip;
     }
 
+    /**
+     * Vérifie la validité du formulaire
+     * @return si le form est bien rempli
+     */
     private boolean validForm() {
         boolean isValid = true;
 
@@ -730,76 +769,134 @@ public class GUIControllerChateauIPForm {
         return isValid;
     }
 
+    /**
+     * Affichage de la fenêtre de placement du point
+     */
     public void placePoint() {
         GUIFormsController.getInstance().displayPointPlacerFrom(isNewPoint);
     }
 
-    //@FXML
+    /**
+     * Affichage du form d'ajout d'image descriptive
+     */
+    @FXML
     public void addDescriptivePicture() {
         GUIFormsController.getInstance().displayPhotoForm(CHATEAU, DESCRIPTIVE_PICTURE, this.isNewPoint);
     }
 
-    //@FXML
+    /**
+     * Affichage du form d'ajout d'images du point
+     */
+    @FXML
     public void addPictures() {
 
         GUIFormsController.getInstance().displayPhotoForm(CHATEAU, PICTURES, this.isNewPoint);
     }
 
-    //@FXML
+    /**
+     * Affichage du form d'ajout de vidéos du point
+     */
+    @FXML
     public void addVideos() {
         GUIFormsController.getInstance().displayPhotoForm(CHATEAU, VIDEOS, this.isNewPoint);
     }
 
-    //@FXML
+    /**
+     * Affichage du form d'ajout d'images 360 du point
+     */
+    @FXML
     public void addPanoramic() {
         GUIFormsController.getInstance().displayPhotoForm(CHATEAU, PANORAMIC_PICTURES, this.isNewPoint);
     }
 
-    //@FXML
+    /**
+     * Affichage du form d'ajout d'images intérieures du point
+     */
+    @FXML
     public void addIndoors() {
         GUIFormsController.getInstance().displayPhotoForm(CHATEAU, INDOORS_PICTURES, this.isNewPoint);
     }
 
+    /**
+     * Getteur des photos du point
+     * @return les photos du point
+     */
     public ArrayList<File> getPhotos() {
         return photos;
     }
 
+    /**
+     * setteur des photos du point
+     * @param photos les photos à enregister dans le point
+     */
     public void setPhotos(ArrayList<File> photos) {
         imageLabel.setText((photos.size() <= 1) ? photos.size() + " image sélectionnée" : photos.size() + " images sélectionnées");
         this.photos = photos;
     }
 
+    /**
+     * Getteur des photos intérieures du point
+     * @return les photos intérieures du point
+     */
     public ArrayList<File> getInterieur() {
         return interieur;
     }
 
+    /**
+     * setteur des photos intérieures du point
+     * @param interieur les photos intérieures à enregister dans le point
+     */
     public void setInterieur(ArrayList<File> interieur) {
         indoorLabel.setText((interieur.size() <= 1) ? interieur.size() + " image sélectionnée" : interieur.size() + " images sélectionnées");
         this.interieur = interieur;
     }
 
+    /**
+     * Getteur des photos panoramiques du point
+     * @return les photos panoramique du point
+     */
     public ArrayList<File> get_360() {
         return _360;
     }
 
+    /**
+     * setteur des photos panoramiques du point
+     * @param _360 les photos panoramiques à enregister dans le point
+     */
     public void set_360(ArrayList<File> _360) {
         panoLabel.setText((_360.size() <= 1) ? _360.size() + " image sélectionnée" : _360.size() + " images sélectionnées");
         this._360 = _360;
     }
 
+    /**
+     * Getteur des vidéos  du point
+     * @return les vidéos  du point
+     */
     public ArrayList<File> getVideos() {
         return videos;
     }
 
+    /**
+     * setteur des vidéos  du point
+     * @param videos les vidéos  à enregister dans le point
+     */
     public void setVideos(ArrayList<File> videos) {
         videoLabel.setText((videos.size() <= 1) ? videos.size() + " vidéo sélectionnée" : videos.size() + " vidéos sélectionnées");
         this.videos = videos;
     }
 
+    /**
+     * Getteur de l'image descriptive  du point
+     * @return l'image descriptive du point
+     */
     public File getDescPic() {
         return descPic;
     }
 
+    /**
+     * setteur de l'image descriptive du point
+     * @param descPic l'image descriptive à enregister dans le point
+     */
     public void setDescPic(File descPic) {
         this.descPic = descPic;
 
@@ -811,6 +908,12 @@ public class GUIControllerChateauIPForm {
         }
     }
 
+    /**
+     * Enregistement des coordonnées du point
+     * @param floor l'étage du point
+     * @param coordX les coordonnées X du point
+     * @param coordY les coordonnées Y du point
+     */
     public void setCoords(int floor, double coordX, double coordY) {
         this.floor = floor+1;
         this.coordX = coordX;
@@ -821,14 +924,26 @@ public class GUIControllerChateauIPForm {
 
     }
 
+    /**
+     * Retourne la coordonée Y du point
+     * @return la coordonnée
+     */
     public double getCoordY() {
         return coordY;
     }
 
+    /**
+     * Retourne la coordonnée X du point
+     * @return la coordonnée
+     */
     public double getCoordX() {
         return coordX;
     }
 
+    /**
+     * Retourne l'étage du point
+     * @return l'étage
+     */
     public int getFloor() {
         return floor;
     }

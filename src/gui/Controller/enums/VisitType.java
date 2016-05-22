@@ -1,7 +1,7 @@
 package gui.Controller.enums;
 
 /**
- * Created by Adrian on 09/04/2016.
+ * Type de visite
  */
 public enum VisitType {
     CHATEAU, VILLAGE

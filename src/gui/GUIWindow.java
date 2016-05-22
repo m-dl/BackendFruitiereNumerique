@@ -96,7 +96,7 @@ public class GUIWindow extends Application {
 
     /**
      * Charge les vues associés aux onglets
-     * @throws IOException
+     * @throws IOException en cas d'erreur de chargement
      */
     public void loadTabPane() throws IOException {
 

@@ -21,6 +21,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+/**
+ * Class GUIControllerChateau se charge de l'onglet village du gui
+ * Classe Singleton
+ */
 public class GUIControllerVillage implements Initializable{
 
     private static GUIControllerVillage INSTANCE = new GUIControllerVillage();
@@ -32,6 +36,9 @@ public class GUIControllerVillage implements Initializable{
     private GUIFormsController guiForms;
 
 
+    /**
+     * Constructor pour initialiser les listes des visites et points
+     */
     private GUIControllerVillage() {
         this.guiWindow = GUIWindow.getInstance();
         this.guiForms = GUIFormsController.getInstance();
@@ -39,10 +46,21 @@ public class GUIControllerVillage implements Initializable{
         iPListV = FXCollections.observableArrayList();
     }
 
+    /**
+     * Method getInstance retourne l'instance de la classe
+     *
+     * @return l'instance de la classe
+     */
     public static GUIControllerVillage getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Initialise le contenu des listes aisni que les listeners
+     *
+     * @param location of type URL
+     * @param resources of type ResourceBundle
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         visitListViewV.setItems(visitListV);
@@ -53,6 +71,9 @@ public class GUIControllerVillage implements Initializable{
 
     }
 
+    /**
+     * Method pour afficher les noms correspondant aux visites et points dans les listes.
+     */
     public void setFactories() {
 
         visitListViewV.setCellFactory(lv -> {
@@ -94,6 +115,9 @@ public class GUIControllerVillage implements Initializable{
         });
     }
 
+    /**
+     * Method pour initialiser les actions à effectuer lors d'un clic sur les items de la liste
+     */
     public void setListeners() {
 
         visitListViewV.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -107,12 +131,18 @@ public class GUIControllerVillage implements Initializable{
     }
 
 
+    /**
+     * Method pour l'action d'ajout d'une visite
+     */
     @FXML
     void addVisitV() {
         System.out.println("add visit");
         guiForms.displayVillageVisitForm(true, this.getSelectedVisit());
     }
 
+    /**
+     * Methode pour la modification d'une visite
+     */
     @FXML
     void editVisitV() {
         System.out.println("edit visit : "+ visitListViewV.getSelectionModel().getSelectedItem());
@@ -126,6 +156,9 @@ public class GUIControllerVillage implements Initializable{
         }
     }
 
+    /**
+     * Methode pour l'ajout d'un point
+     */
     @FXML
     void addPIV() {
         if(getSelectedVisit() != null) {
@@ -139,6 +172,9 @@ public class GUIControllerVillage implements Initializable{
         }
     }
 
+    /**
+     * Methode pour modifier un point d'intéret
+     */
     @FXML
     void editIPV() {
         if(getSelectedVisit() != null) {
@@ -152,6 +188,9 @@ public class GUIControllerVillage implements Initializable{
         }
     }
 
+    /**
+     * Method pour la suppresion d'une visite
+     */
     @FXML
     void deleteVisitV() {
         if(getSelectedVisit() != null) {
@@ -169,6 +208,9 @@ public class GUIControllerVillage implements Initializable{
         }
     }
 
+    /**
+     * Method pour la suppression d'un point
+     */
     @FXML
     void deleteIPV() {
         if(getSelectedPoint() != null) {
@@ -186,20 +228,44 @@ public class GUIControllerVillage implements Initializable{
         }
     }
 
+    /**
+     * Method pour récuperer la visite sélctionnée
+     *
+     *
+     *
+     * @return la visite sélectionnée
+     */
     public Visit getSelectedVisit() {
         return visitListViewV.getSelectionModel().getSelectedItem();
     }
 
+    /**
+     * Method pour récupérer le point sélectionné
+     *
+     *
+     *
+     * @return le point sélectionné
+     */
     public InterestPoint getSelectedPoint() {
         return iPListViewV.getSelectionModel().getSelectedItem();
     }
 
+    /**
+     * Charge les visites dans la liste
+     *
+     * @param visits la liste des visites a charger
+     */
     public void loadVisitData(ArrayList<Visit> visits) {
         for (int i = 0; i < visits.size(); i++) {
             this.visitListV.add(visits.get(i));
         }
     }
 
+    /**
+     * Charge les points dans la liste
+     *
+     * @param visit la visite depuis laquelle il faut charger les points
+     */
     public void loadIPData(Visit visit) {
 
         for (int i = 0; i < visit.getIP().size(); i++) {
@@ -207,6 +273,9 @@ public class GUIControllerVillage implements Initializable{
         }
     }
 
+    /**
+     * Permet de recharger les données des listes
+     */
     public void reloadVillageData() {
 
         Platform.runLater(() -> {

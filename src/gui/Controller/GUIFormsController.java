@@ -18,6 +18,9 @@ import javafx.stage.Stage;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+/**
+ * Classe gérant l'affichage des formulaires
+ */
 public class GUIFormsController {
 
     private static GUIFormsController INSTANCE = new GUIFormsController();
@@ -33,34 +36,59 @@ public class GUIFormsController {
     }
 
 
+    /**
+     * Fonction qui affichera le formulaire
+     *
+     * @param s le conteneur du formulaire
+     */
     public void displayForm(Stage s) {
         formStage = s;
         isFormDisplayed = true;
     }
 
+    /**
+     * Ferme le formulaire courant
+     */
     public void closeForm() {
         isFormDisplayed = false;
         GUIControllerPhotoForm.getInstance().wipePictures();
     }
 
+    /**
+     * Afficher le formualire au premier plan si il est déjà affiché
+     */
     public void formToFront() {
         formStage.toFront();
     }
 
+    /**
+     * Affichage du formulaire d'ajout d'images
+     * @param s le formulaire
+     */
     public void displayPictureForm(Stage s) {
         pictureFormStage = s;
         isPictureFormDisplayed = true;
     }
 
+    /**
+     * Ferme le formulaire d'ajout d'images
+     */
     public void closePictureForm() {
         isPictureFormDisplayed = false;
     }
 
+    /**
+     * Afficher le formulaire au premier plan
+     */
     public void pictureFormToFront() {
         pictureFormStage.toFront();
     }
 
-
+    /**
+     * Affichage du formulaire correspondant à la visite chateau
+     * @param isNewVisit si nouvelle visite ou visite modifiée
+     * @param selectedVisit la visite sélectionnée si modification
+     */
     public void displayChateauVisitForm(boolean isNewVisit, entities.chateau.Visit selectedVisit) {
 
         if(!isFormDisplayed)
@@ -69,6 +97,11 @@ public class GUIFormsController {
             formToFront();
     }
 
+    /**
+     * Affichage du formulaire correspondant au point d'intérêt chateau
+     * @param isNewVisit
+     * @param selectedPoint
+     */
     public void displayChateauIPForm(boolean isNewVisit, entities.chateau.InterestPoint selectedPoint) {
 
         if(!isFormDisplayed)
@@ -77,7 +110,11 @@ public class GUIFormsController {
             formToFront();
     }
 
-
+    /**
+     * Affichage du formulaire correspondant à la visite village
+     * @param isNewVisit si nouvelle visite ou visite modifiée
+     * @param selectedVisit la visite sélectionnée si modification
+     */
     public void displayVillageVisitForm(boolean isNewVisit, entities.village.Visit selectedVisit) {
 
         if(!isFormDisplayed)
@@ -86,6 +123,11 @@ public class GUIFormsController {
             formToFront();
     }
 
+    /**
+     * Affichage du formulaire correspondant au point d'intérêt village
+     * @param isNewVisit
+     * @param selectedPoint
+     */
     public void displayVillageIPForm(boolean isNewVisit, entities.village.InterestPoint selectedPoint) {
         if(!isFormDisplayed)
             GUIControllerVillageIPForm.getInstance().displayForm(isNewVisit, selectedPoint);
@@ -93,14 +135,31 @@ public class GUIFormsController {
             formToFront();
     }
 
+    /**
+     * Affichage du formulaire correspondant d'ajout de photos
+     * @param visitType type de visite appelant
+     * @param pictureFormType type de médias à ajouter
+     * @param isNew si l'objet appelant est nouveau ou modifié
+     */
     public void displayPhotoForm(VisitType visitType, PictureFormType pictureFormType, boolean isNew) {
             GUIControllerPhotoForm.getInstance().displayForm(visitType, pictureFormType);
     }
 
+    /**
+     * Affichage de la fene^re pour placer le point d'intérêt dans le château
+     * @param isNewPoint si c'est un nouveau point d'intérêt ou non
+     */
     public void displayPointPlacerFrom(boolean isNewPoint) {
         GUIControllerPointPlacer.getInstance().display(isNewPoint);
     }
 
+    /**
+     * Affichage d'une boite de dialogue d'erreur
+     * @param content le message du milieu de fenêtre
+     * @param labelText le message concerant l'erreur
+     * @param error le message d'erreur du ScrollPane
+     * @return la boite de dialogue
+     */
     public Alert displayErrorAlert(String content, String labelText, String error) {
 
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -126,6 +185,12 @@ public class GUIFormsController {
 
     }
 
+    /**
+     * Affichage d'une boite de dialogue pour les exceptions
+     * @param ex l'exception à afficher
+     * @param error le message d'erreur accompagnant l'erreur
+     * @return la boite de dialogue
+     */
     public Alert displayExceptionAlert(Exception ex, String error) {
 
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -161,6 +226,12 @@ public class GUIFormsController {
 
     }
 
+    /**
+     * Affichage d'une boite de dialogue d'alerte
+     * @param headerText le message intermediaire à afficher
+     * @param errorText le message d'erreur
+     * @return la boite de dialogue
+     */
     public Alert displayWarningAlert(String headerText, String errorText) {
 
         Alert alert = new Alert(Alert.AlertType.WARNING);

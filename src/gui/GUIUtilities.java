@@ -16,7 +16,7 @@ public class GUIUtilities {
      * @param resourcePath le chemin du FXML à charger
      * @param Controller   le controller associé à la vue
      * @return l'objet contenant les objets chargés
-     * @throws IOException
+     * @throws IOException en cas d'erreur de chargement
      */
     public static Object loadLayout(String resourcePath, Object Controller) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();

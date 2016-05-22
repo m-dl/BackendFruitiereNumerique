@@ -13,16 +13,17 @@ import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controlleur de la fenêtre principale
+ * Lie les actions aux items
+ */
 public class GUIMainViewController implements Initializable {
 
 
-    boolean operationInprogress = false;
-
+    private static GUIMainViewController INSTANCE = new GUIMainViewController();
     public TabPane tabPane;
 
     public ImageView logoL;
@@ -30,14 +31,10 @@ public class GUIMainViewController implements Initializable {
     public ProgressIndicator progressIndicator;
 
     public String operation = "";
-    private GUIMainViewController() {}
-
-    public static GUIMainViewController getInstance() {
-        return INSTANCE;
-    }
-
-    private static GUIMainViewController INSTANCE = new GUIMainViewController();
-
+    boolean operationInprogress = false;
+    /**
+     * Thread permettant les opérations Drive hors du thread JavaFX
+     */
     Service<Void> fileSaveService = new Service<Void>(){
         @Override
         protected Task<Void> createTask() {
@@ -106,16 +103,33 @@ public class GUIMainViewController implements Initializable {
 
     };
 
+    private GUIMainViewController() {
+    }
 
+    public static GUIMainViewController getInstance() {
+        return INSTANCE;
+    }
+
+    /**
+     * Met à jour le message du statut pour l'action en cours
+     *
+     * @param message le texte à afficher
+     */
     public void updateMessage(String message) {
         operationIP.setText(message);
     }
 
+    /**
+     * Affiche un message pour prévenir d'une action déjà en cours
+     */
     protected void displayError() {
         String error = "Une opération est déjà en cours, veuillez attendre al finalisation de celle-ci";
         GUIFormsController.getInstance().displayWarningAlert("Opération en cours",error).showAndWait();
     }
 
+    /**
+     * Lance le thread d'opérations GDrive
+     */
     private void runThread() {
         if (!operationInprogress) {
             fileSaveService.restart();
@@ -125,6 +139,9 @@ public class GUIMainViewController implements Initializable {
         }
     }
 
+    /**
+     * Set l'action à effectuer sur upload média selon le type appelant et lance le thread
+     */
     @FXML
     void uploadMedia() {
         operationIP.textProperty().bind(fileSaveService.messageProperty());
@@ -138,6 +155,9 @@ public class GUIMainViewController implements Initializable {
 
     }
 
+    /**
+     * Set l'action à effectuer sur download média selon le type appelant et lance le thread
+     */
     @FXML
     void downloadMedia() {
         operationIP.textProperty().bind(fileSaveService.messageProperty());
@@ -152,10 +172,19 @@ public class GUIMainViewController implements Initializable {
 
     }
 
+    /**
+     * Retourne le conteneur des onglets
+     * @return
+     */
     public TabPane getTabPane() {
         return tabPane;
     }
 
+    /**
+     * Initialise que données, notamment le logo
+     * @param location paramètre par défaut
+     * @param resources paramètre par défaut
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         logoL.setImage(new Image("logo.png"));

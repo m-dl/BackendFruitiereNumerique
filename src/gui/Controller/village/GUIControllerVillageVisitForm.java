@@ -21,6 +21,9 @@ import java.util.Objects;
 import static gui.Controller.enums.PictureFormType.*;
 import static gui.Controller.enums.VisitType.VILLAGE;
 
+/**
+ * Controlleur du form d'ajout et de modification de visite du village
+ */
 public class GUIControllerVillageVisitForm {
 
     private static GUIControllerVillageVisitForm INSTANCE = new GUIControllerVillageVisitForm();
@@ -45,29 +48,51 @@ public class GUIControllerVillageVisitForm {
     private boolean isNewVisit;
     private String errorList;
 
+    /**
+     * Constructeur initialisant les listes de média
+     */
     public GUIControllerVillageVisitForm() {
         overviewImages = new ArrayList<>();
         infoImages = new ArrayList<>();
         errorList = "";
     }
 
+    /**
+     * Classe singleton, retourne l'instance de la classe
+     *
+     * @return l'instance de la classe
+     */
     public static GUIControllerVillageVisitForm getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Affichage du form d'ajout d'images overview
+     */
     @FXML public void addOverviewPictures() {
         GUIFormsController.getInstance().displayPhotoForm(VILLAGE, OVERVIEW, this.isNewVisit);
     }
 
+    /**
+     * Affichage du form d'ajout d'images info
+     */
     @FXML public void addInfoPictures() {
         GUIFormsController.getInstance().displayPhotoForm(VILLAGE, INFO, this.isNewVisit);
     }
 
+    /**
+     * Affichage du form d'ajout de l'image descriptive
+     */
     @FXML
     public void addInfoDescPic() {
         GUIFormsController.getInstance().displayPhotoForm(VILLAGE, INFO_DESC, this.isNewVisit);
     }
 
+    /**
+     * Affichage de la fenêtre du formulaire
+     * @param isNewVisit si c'est une nouvelle visite ou existante
+     * @param selectedVisit la visite sélectionnée
+     */
     public void displayForm(boolean isNewVisit, Visit selectedVisit) {
 
         this.isNewVisit = isNewVisit;
@@ -108,7 +133,10 @@ public class GUIControllerVillageVisitForm {
         }
     }
 
-
+    /**
+     * Pré-remplissage des champs en cas de modification
+     * @param v la visite concernée
+     */
     public void fillInputs(Visit v) {
         visitName.setText(v.getName());
 
@@ -132,6 +160,10 @@ public class GUIControllerVillageVisitForm {
                 : v.getInfo().getPhotos().size() + " images sélectionnées");
 
     }
+
+    /**
+     * Enregistrement des données du formulaire
+     */
     @FXML public void saveChanges() {
 
         if( validForm() ) {
@@ -262,6 +294,9 @@ public class GUIControllerVillageVisitForm {
         }
     }
 
+    /**
+     * Remise à zéro des données
+     */
     private void wipeData() {
         infoDesctiptive = null;
         overviewImages.clear();
@@ -269,6 +304,12 @@ public class GUIControllerVillageVisitForm {
         GUIControllerPhotoForm.getInstance().wipePictures();
     }
 
+    /**
+     * Renommage d'une visite, déplacement du dossier
+     * @param oldVisit visite avant le renommage
+     * @param visitPath chemin de destination de la nouvelle visite
+     * @param newName nouveau nom de la visite
+     */
     private void renameVisit(Visit oldVisit, String visitPath, String newName) {
 
 
@@ -323,6 +364,10 @@ public class GUIControllerVillageVisitForm {
 
     }
 
+    /**
+     * Vérifie la validité du formulaire
+     * @return si le form est bien rempli
+     */
     private boolean validForm() {
         boolean isValid = true;
 
@@ -429,10 +474,18 @@ public class GUIControllerVillageVisitForm {
         return isValid;
     }
 
+    /**
+     * Getteur des photos overview
+     * @return les photos overview
+     */
     public ArrayList<File> getOverviewImages() {
         return overviewImages;
     }
 
+    /**
+     * setteur des photos overview
+     * @param selectedImages les photos overview à enregister
+     */
     public void setOverviewImages(ArrayList<File> selectedImages) {
 
         this.overviewImages = selectedImages;
@@ -441,10 +494,18 @@ public class GUIControllerVillageVisitForm {
                 : selectedImages.size() + " images sélectionnées");
     }
 
+    /**
+     * Getteur des photos info
+     * @return les photos info
+     */
     public ArrayList<File> getInfoImages() {
         return infoImages;
     }
 
+    /**
+     * setteur des photos info
+     * @param selectedImages les photos info à enregister
+     */
     public void setInfoImages(ArrayList<File> selectedImages) {
 
         this.infoImages = selectedImages;
@@ -453,10 +514,18 @@ public class GUIControllerVillageVisitForm {
                 : selectedImages.size() + " images sélectionnées");
     }
 
+    /**
+     * Getteur de l'image descriptive  de la visite
+     * @return l'image descriptive du point
+     */
     public File getInfoDesctiptive() {
         return this.infoDesctiptive;
     }
 
+    /**
+     * setteur de l'image descriptive
+     * @param descPic l'image descriptive à enregister
+     */
     public void setInfoDesctiptive(File descPic) {
         this.infoDesctiptive = descPic;
 

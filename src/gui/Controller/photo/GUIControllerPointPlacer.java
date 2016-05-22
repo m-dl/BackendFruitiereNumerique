@@ -17,6 +17,9 @@ import java.io.IOException;
 import static javafx.scene.paint.Color.BLACK;
 import static javafx.scene.paint.Color.RED;
 
+/**
+ * Classe pour la fenêtre de placement du point château
+ */
 public class GUIControllerPointPlacer {
 
     private static GUIControllerPointPlacer INSTANCE = new GUIControllerPointPlacer();
@@ -34,6 +37,11 @@ public class GUIControllerPointPlacer {
         return INSTANCE;
     }
 
+    /**
+     * Affichage de la fenêtre
+     *
+     * @param isNewPoint si c'est un point créé ou modifié
+     */
     public void display(boolean isNewPoint) {
 
         try {
@@ -64,6 +72,9 @@ public class GUIControllerPointPlacer {
         }
     }
 
+    /**
+     * Charge le contenu de la fenêtre
+     */
     private void loadContent() {
         currentFloor = GUIControllerChateauIPForm.getInstance().getFloor();
         loadFloor();
@@ -74,17 +85,29 @@ public class GUIControllerPointPlacer {
         displayContent();
     }
 
+    /**
+     * Initialise au premier étage
+     */
     private void initContent() {
         currentFloor = 0;
         loadFloor();
     }
 
+    /**
+     * Calcule la coordonnée X par rapport à l'image cliquée
+     * @return la coordonnée X
+     */
     private double calcX() {
         if (displayedImage.getFitWidth() != 0)
             return coordX/displayedImage.getFitWidth();
 
         return 0;
     }
+
+    /**
+     * Calcule la coordonnée Y par rapport à l'image cliquée
+     * @return la coordonnée Y
+     */
     private double calcY() {
         if (displayedImage.getFitHeight() != 0)
             return coordY/displayedImage.getFitHeight();
@@ -92,6 +115,11 @@ public class GUIControllerPointPlacer {
         return 0;
 
     }
+
+    /**
+     * Charge les image des étages
+     * Modifier ici pour ajouter de nouveaux étages
+     */
     private void loadFloor() {
         File f;
         switch (currentFloor) {
@@ -138,6 +166,9 @@ public class GUIControllerPointPlacer {
         addListeners();
     }
 
+    /**
+     * Changement d'étage, appellée par JavaFX
+     */
     public void increaseFloor() {
         if (currentFloor + 1 <= 2) {
             currentFloor++;
@@ -145,6 +176,9 @@ public class GUIControllerPointPlacer {
         }
     }
 
+    /**
+     * Changement d'étage, appellée par JavaFX
+     */
     public void decreaseFloor() {
         if (currentFloor - 1 >= 0) {
             currentFloor--;
@@ -152,6 +186,10 @@ public class GUIControllerPointPlacer {
         }
     }
 
+
+    /**
+     * Ajout des listener sur les actions utilisateur
+     */
     private void addListeners() {
         imagePanel.setOnMousePressed(event -> {
             coordX = event.getX();
@@ -166,6 +204,10 @@ public class GUIControllerPointPlacer {
     }
 
 
+    /**
+     * Création du cercle rouge à afficher
+     * @return le cercle
+     */
     public Circle createCircle()
     {
         Circle c = new Circle();
@@ -179,6 +221,9 @@ public class GUIControllerPointPlacer {
         return c;
     }
 
+    /**
+     * Affichage du contenu
+     */
     public void displayContent()
     {
         imagePanel.getChildren().clear();

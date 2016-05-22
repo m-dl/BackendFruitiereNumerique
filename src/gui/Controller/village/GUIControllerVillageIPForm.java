@@ -1,6 +1,5 @@
 package gui.Controller.village;
 
-//import com.lynden.gmapsfx.GMap;
 import com.lynden.gmapsfx.GMap;
 import com.lynden.gmapsfx.GPSContainer;
 import entities.village.InterestPoint;
@@ -22,6 +21,9 @@ import java.util.Objects;
 import static gui.Controller.enums.PictureFormType.*;
 import static gui.Controller.enums.VisitType.VILLAGE;
 
+/**
+ * Controlleur du form d'ajout et de modification de point du village
+ */
 public class GUIControllerVillageIPForm {
 
     private static GUIControllerVillageIPForm INSTANCE = new GUIControllerVillageIPForm();
@@ -46,6 +48,9 @@ public class GUIControllerVillageIPForm {
     private String errorList;
 
 
+    /**
+     * Constructeur initialisant les listes de média
+     */
     private GUIControllerVillageIPForm() {
         photos = new ArrayList<>();
         interieur = new ArrayList<>();
@@ -56,11 +61,20 @@ public class GUIControllerVillageIPForm {
     }
 
 
+    /**
+     * Classe singleton, retourne l'instance de la classe
+     *
+     * @return l'instance de la classe
+     */
     public static GUIControllerVillageIPForm getInstance() {
         return INSTANCE;
     }
 
-
+    /**
+     * Affichage de la fenêtre du formulaire
+     * @param isNewPoint si le point est un nouveau point ou existant
+     * @param selectedPoint le point sélectionné
+     */
     public void displayForm(boolean isNewPoint, InterestPoint selectedPoint) {
 
         this.isNewPoint = isNewPoint;
@@ -110,6 +124,10 @@ public class GUIControllerVillageIPForm {
     }
 
 
+    /**
+     * Pré-remplissage des champs en cas de modification
+     * @param p le point concerné
+     */
     public void fillInputs(InterestPoint p) {
         ipName.setText(p.getName());
         ipPresTextFR.setText(p.readPresentation_FR());
@@ -129,11 +147,15 @@ public class GUIControllerVillageIPForm {
     }
 
 
+    /**
+     * Enregistrement des données du formulaire
+     */
     @FXML
     public void saveChanges() {
 
-        if( validForm() ) {
-            if (isNewPoint) {
+        //Si les données sont bien remplies
+        if( validForm()) {
+            if (isNewPoint) { //si nouveau point
 
                 String ipName = this.ipName.getText();
 
@@ -170,8 +192,7 @@ public class GUIControllerVillageIPForm {
 
                 GUIControllerVillage.getInstance().iPListV.add(ip);
 
-            }
-            else {
+            } else { // si modif point
 
                 Visit selectedVisit = GUIControllerVillage.getInstance().getSelectedVisit();
                 InterestPoint selectedPoint = GUIControllerVillage.getInstance().getSelectedPoint();
@@ -186,13 +207,14 @@ public class GUIControllerVillageIPForm {
                         GUIControllerVillage.getInstance().getSelectedVisit().getName() + "/" + ipName;
 
 
+                // si le point doit être renommé, on doit bouger tout le dossier
                 if (!Objects.equals(ipNewName, originalName)) {
                     ipPath = FileManager.WORKSPACE + "/" + FileManager.VILLAGE + "/" +
                             GUIControllerVillage.getInstance().getSelectedVisit().getName();
 
                     renameIP(selectedPoint, ipPath, ipNewName, false);
 
-                } else {
+                } else { // on modifie juste les données directement dans le workspace
 
                     FileManager.getInstance().getVillageWorkspace().getV().get(visitIndex).getIP().get(ipIndex).writePresentation_FR(ipPresTextFR.getText());
                     FileManager.getInstance().getVillageWorkspace().getV().get(visitIndex).getIP().get(ipIndex).writePresentation_EN(ipPresTextEN.getText());
@@ -283,6 +305,9 @@ public class GUIControllerVillageIPForm {
         }
     }
 
+    /**
+     * Remise à zéro des données
+     */
     private void wipeData() {
         descPic = null;
         photos.clear();
@@ -292,6 +317,15 @@ public class GUIControllerVillageIPForm {
         GUIControllerPhotoForm.getInstance().wipePictures();
     }
 
+    /**
+     * Renommage d'un point d'intérêt, déplacement du dossier
+     *
+     * @param oldIP point d'intérêt avant le renommage
+     * @param newPath chemin de destination du nouveau point
+     * @param newName nouveau nom du point
+     * @param isFromVisit si l'appel de la fonction provient du controlleur de visite
+     * @return le nouveau point d'intérêt
+     */
     public InterestPoint renameIP(InterestPoint oldIP, String newPath, String newName, boolean isFromVisit) {
 
         String oldPath = FileManager.WORKSPACE + "/" + FileManager.VILLAGE + "/" +
@@ -364,6 +398,10 @@ public class GUIControllerVillageIPForm {
         return ip;
     }
 
+    /**
+     * Vérifie la validité du formulaire
+     * @return si le form est bien rempli
+     */
     private boolean validForm() {
         boolean isValid = true;
 
@@ -468,6 +506,9 @@ public class GUIControllerVillageIPForm {
         return isValid;
     }
 
+    /**
+     * Affichage de la fenêtre Google Map
+     */
     public void displayGmap() {
 
 
@@ -486,6 +527,9 @@ public class GUIControllerVillageIPForm {
 
     }
 
+    /**
+     * Remplit les champs des coordonnées avec le point placé sur la carte GMaps
+     */
     public void preFillPos() {
 
         coordLat.setText(String.valueOf(coords.getLat()));
@@ -493,67 +537,122 @@ public class GUIControllerVillageIPForm {
 
     }
 
+    /**
+     * Affichage du form d'ajout d'image descriptive
+     */
     @FXML public void addDescriptivePicture() {
         GUIFormsController.getInstance().displayPhotoForm(VILLAGE, DESCRIPTIVE_PICTURE, this.isNewPoint);
     }
 
+    /**
+     * Affichage du form d'ajout d'images du point
+     */
     @FXML public void addPictures() {
 
         GUIFormsController.getInstance().displayPhotoForm(VILLAGE, PICTURES, this.isNewPoint);
     }
 
+    /**
+     * Affichage du form d'ajout de vidéos du point
+     */
     @FXML public void addVideos() {
         GUIFormsController.getInstance().displayPhotoForm(VILLAGE, VIDEOS, this.isNewPoint);
     }
 
+    /**
+     * Affichage du form d'ajout d'images 360 du point
+     */
     @FXML public void addPanoramic() {
         GUIFormsController.getInstance().displayPhotoForm(VILLAGE, PANORAMIC_PICTURES, this.isNewPoint);
     }
 
+    /**
+     * Affichage du form d'ajout d'images intérieures du point
+     */
     @FXML public void addIndoors() {
         GUIFormsController.getInstance().displayPhotoForm(VILLAGE, INDOORS_PICTURES, this.isNewPoint);
     }
 
+    /**
+     * Getteur des photos du point
+     * @return les photos du point
+     */
     public ArrayList<File> getPhotos() {
         return photos;
     }
 
+    /**
+     * setteur des photos du point
+     * @param photos les photos à enregister dans le point
+     */
     public void setPhotos(ArrayList<File> photos) {
         imageLabel.setText((photos.size() <= 1) ? photos.size() + " image sélectionnée" : photos.size() + " images sélectionnées");
         this.photos = photos;
     }
 
+    /**
+     * Getteur des photos intérieures du point
+     * @return les photos intérieures du point
+     */
     public ArrayList<File> getInterieur() {
         return interieur;
     }
 
+    /**
+     * setteur des photos intérieures du point
+     * @param interieur les photos intérieures à enregister dans le point
+     */
     public void setInterieur(ArrayList<File> interieur) {
         indoorLabel.setText((interieur.size() <= 1) ? interieur.size() + " image sélectionnée" : interieur.size() + " images sélectionnées");
         this.interieur = interieur;
     }
 
+    /**
+     * Getteur des photos panoramiques du point
+     * @return les photos panoramique du point
+     */
     public ArrayList<File> get_360() {
         return _360;
     }
 
+    /**
+     * setteur des photos panoramiques du point
+     * @param _360 les photos panoramiques à enregister dans le point
+     */
     public void set_360(ArrayList<File> _360) {
         panoLabel.setText((_360.size() <= 1) ? _360.size() + " image sélectionnée" : _360.size() + " images sélectionnées");
         this._360 = _360;
     }
 
+    /**
+     * Getteur des vidéos  du point
+     * @return les vidéos  du point
+     */
     public ArrayList<File> getVideos() {
         return videos;
     }
 
+    /**
+     * setteur des vidéos  du point
+     * @param videos les vidéos  à enregister dans le point
+     */
     public void setVideos(ArrayList<File> videos) {
         videoLabel.setText((videos.size() <= 1) ? videos.size() + " vidéo sélectionnée" : videos.size() + " vidéos sélectionnées");
         this.videos = videos;
     }
 
+    /**
+     * Getteur de l'image descriptive  du point
+     * @return l'image descriptive du point
+     */
     public File getDescPic() {
         return descPic;
     }
 
+    /**
+     * setteur de l'image descriptive du point
+     * @param descPic l'image descriptive à enregister dans le point
+     */
     public void setDescPic(File descPic) {
         this.descPic = descPic;
 

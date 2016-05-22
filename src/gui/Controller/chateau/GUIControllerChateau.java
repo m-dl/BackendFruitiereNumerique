@@ -20,6 +20,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+/**
+ * Class GUIControllerChateau se charge de l'onglet chateau du gui
+ * Classe Singleton
+ */
 public class GUIControllerChateau implements Initializable{
 
 
@@ -32,6 +36,9 @@ public class GUIControllerChateau implements Initializable{
     private GUIFormsController guiForms;
 
 
+    /**
+     * Constructor pour initialiser les listes des visites et points
+     */
     private GUIControllerChateau() {
         this.guiWindow = GUIWindow.getInstance();
         this.guiForms = GUIFormsController.getInstance();
@@ -39,10 +46,21 @@ public class GUIControllerChateau implements Initializable{
         iPListC = FXCollections.observableArrayList();
     }
 
+    /**
+     * Method getInstance retourne l'instance de la classe
+     *
+     * @return l'instance de la classe
+     */
     public static GUIControllerChateau getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Initialise le contenu des listes aisni que les listeners
+     *
+     * @param location of type URL
+     * @param resources of type ResourceBundle
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         visitListViewC.setItems(visitListC);
@@ -52,6 +70,9 @@ public class GUIControllerChateau implements Initializable{
         setListeners();
     }
 
+    /**
+     * Method pour afficher les noms correspondant aux visites et points dans les listes.
+     */
     public void setFactories() {
 
         visitListViewC.setCellFactory(lv -> {
@@ -93,6 +114,9 @@ public class GUIControllerChateau implements Initializable{
         });
     }
 
+    /**
+     * Method pour initialiser les actions à effectuer lors d'un clic sur les items de la liste
+     */
     public void setListeners() {
 
         visitListViewC.setOnMouseClicked(event -> {
@@ -102,6 +126,9 @@ public class GUIControllerChateau implements Initializable{
     }
 
 
+    /**
+     * Method pour l'action d'ajout d'une visite
+     */
     @FXML
     void addVisitC() {
         System.out.println("add visit");
@@ -109,6 +136,9 @@ public class GUIControllerChateau implements Initializable{
 
     }
 
+    /**
+     * Methode pour la modification d'une visite
+     */
     @FXML
     void editVisitC() {
         System.out.println("edit visit : "+visitListViewC.getSelectionModel().getSelectedItem().getName());
@@ -123,6 +153,9 @@ public class GUIControllerChateau implements Initializable{
         }
     }
 
+    /**
+     * Methode pour l'ajout d'un point
+     */
     @FXML
     void addPIC() {
         if(getSelectedVisit() != null) {
@@ -136,6 +169,9 @@ public class GUIControllerChateau implements Initializable{
         }
     }
 
+    /**
+     * Methode pour modifier un point d'intéret
+     */
     @FXML
     void editIPC() {
         if(getSelectedVisit() != null) {
@@ -149,6 +185,9 @@ public class GUIControllerChateau implements Initializable{
         }
     }
 
+    /**
+     * Method pour la suppresion d'une visite
+     */
     @FXML
     void deleteVisitC() {
         if(getSelectedVisit() != null) {
@@ -167,6 +206,9 @@ public class GUIControllerChateau implements Initializable{
 
     }
 
+    /**
+     * Method pour la suppression d'un point
+     */
     @FXML
     void deleteIPC() {
         if(getSelectedPoint() != null) {
@@ -197,20 +239,44 @@ public class GUIControllerChateau implements Initializable{
         }
     }
 
+    /**
+     * Method pour récuperer la visite sélctionnée
+     *
+     *
+     *
+     * @return la visite sélectionnée
+     */
     public Visit getSelectedVisit() {
         return visitListViewC.getSelectionModel().getSelectedItem();
     }
 
+    /**
+     * Method pour récupérer le point sélectionné
+     *
+     *
+     *
+     * @return le point sélectionné
+     */
     public InterestPoint getSelectedPoint() {
         return iPListViewC.getSelectionModel().getSelectedItem();
     }
 
+    /**
+     * Charge les visites dans la liste
+     *
+     * @param visits la liste des visites a charger
+     */
     public void loadCastleData(ArrayList<Visit> visits) {
         for (int i = 0; i < visits.size(); i++) {
             this.visitListC.add(visits.get(i));
         }
     }
 
+    /**
+     * Charge les points dans la liste
+     *
+     * @param visit la visite depuis laquelle il faut charger les points
+     */
     public void loadIPData(Visit visit) {
         if(visit != null) {
             for (int i = 0; i < visit.getIP1().size(); i++) {
@@ -226,6 +292,9 @@ public class GUIControllerChateau implements Initializable{
         }
     }
 
+    /**
+     * Permet de recharger les données des listes
+     */
     public void reloadCastleData() {
 
         Platform.runLater(() -> {
